@@ -2,14 +2,25 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #171412;
+  --colorPrincipal: #4E2B1B;
+  --colorSecundario: #3A3128;
+  --colorMenus: #823C20;
+  --colorClaro: #FAF7F0;
+  --colorClaroDetalles: #DACAAE;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-principal: var(--colorPrincipal);
+  --color-secundario: var(--colorSecundario);
+  --color-menus: var(--colorMenus);
+  --color-claro: var(--colorClaro);
+  --color-claro-detalles: var(--colorClaroDetalles);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-newsreader: var(--font-pre-newsreader);
 }
 
 @media (prefers-color-scheme: dark) {
