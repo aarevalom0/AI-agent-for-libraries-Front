@@ -5,7 +5,8 @@
   --foreground: #171412;
   --colorPrincipal: #4E2B1B;
   --colorSecundario: #3A3128;
-  --colorMenus: #823C20;
+  --colorMenus: #A04D2C;
+  --colorHover: #e0ddd4;
   --colorClaro: #FAF7F0;
   --colorClaroDetalles: #DACAAE;
 }
@@ -17,7 +18,7 @@
   --color-secundario: var(--colorSecundario);
   --color-menus: var(--colorMenus);
   --color-claro: var(--colorClaro);
-  --color-claro-detalles: var(--colorClaroDetalles);
+  --color-claro-detalles: var(--colorClaroDetalles)
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-newsreader: var(--font-pre-newsreader);
