@@ -47,7 +47,7 @@ const NavBar = () => {
                             <Link href="/leerAhora" className="px-3 hover:text-gray-300">Leer Ahora</Link>
                         </li>
                         <li>
-                            <Link href="/leerAhora" className="px-3 hover:text-gray-300">Comunidad</Link>
+                            <Link href="/comunidad" className="px-3 hover:text-gray-300">Comunidad</Link>
                         </li>
                     </ul>  
                 </div>
