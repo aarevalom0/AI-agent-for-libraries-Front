@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Newsreader   } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
+import Chatbot from "@/components/Chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable}antialiased`}
       >
         <NavBar/>
+        <Chatbot />
         {children}
       </body>
     </html>
