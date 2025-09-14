@@ -15,7 +15,7 @@ const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     return (
         <header className="bg-[var(--color-background)]  p-4">
-        <nav className="w-screen flex justify-between items-center text-[var(--color-secundario)] font-newsreader border-b border-gray-200 p-3">
+        <nav className="w-full overflow-hidden flex justify-between items-center text-[var(--color-secundario)] font-newsreader border-b border-gray-200 pb-3">
             <div className=' flex items-center gap-2.5 '>
                 <div id='logo'>
                     <Link href="/mainPage" className="flex items-center space-x-2">

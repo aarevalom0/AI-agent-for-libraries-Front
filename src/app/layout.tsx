@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Newsreader   } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "../components/Footer";
+import LayoutWrapper from "./layoutWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable}antialiased`}
-      >
-        <NavBar/>
-        {children}
-        <Footer/>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable}antialiased`} >
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
