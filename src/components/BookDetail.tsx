@@ -64,7 +64,7 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
           {/* Botones */}
           <div className="flex gap-3">
             <a
-              href="https://www.britannica.com/topic/Nineteen-Eighty-four"
+              href={book.infoURL}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-2 border border-white text-white rounded-md text-sm hover:bg-gray-800"

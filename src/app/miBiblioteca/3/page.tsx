@@ -9,6 +9,7 @@ async function getBook(id: string) {
     cover: "/Images/harry-potter.jpg",
     description:
       "La primera entrega de la saga de Harry Potter, donde conocemos al joven mago y lo acompañamos en sus inicios en Hogwarts. Una historia mágica de amistad, valentía y aventuras.",
+    infoURL: "https://es.wikipedia.org/wiki/Harry_Potter_y_la_piedra_filosofal",
     reviews: [
       {
         id: "r7",
