@@ -1,4 +1,3 @@
-// src/lib/authClient.ts
 export type User = { name: string; email: string; password: string };
 
 const keyUsers = "lecturium_users";
