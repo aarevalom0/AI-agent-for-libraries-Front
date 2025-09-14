@@ -15,10 +15,10 @@ const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     return (
         <header className="bg-[var(--color-background)]  p-4">
-        <nav className="container mx-auto flex justify-between text-[var(--color-secundario)] font-newsreader">
-            <div className=' flex items-center gap-2.5'>
+        <nav className="w-full overflow-hidden flex justify-between items-center text-[var(--color-secundario)] font-newsreader border-b border-gray-200 pb-3">
+            <div className=' flex items-center gap-2.5 '>
                 <div id='logo'>
-                    <Link href="/" className="flex items-center space-x-2">
+                    <Link href="/mainPage" className="flex items-center space-x-2">
                         <Image
                             src="/Images/Logo.jpg"
                             alt="App's logo"
@@ -32,7 +32,7 @@ const NavBar = () => {
                 <div id='links hidden md:flex items-center'>
                     <ul className="hidden md:flex gap-3 font-medium">
                         <li>
-                            <Link href="/" className="px-3 hover:text-gray-300 font-newsreader">Home</Link>
+                            <Link href="/mainPage" className="px-3 hover:text-gray-300 font-newsreader">Home</Link>
                         </li>
                         <li>
                             <Link href="/eventos" className="px-3 hover:text-gray-300">Eventos</Link>
@@ -53,7 +53,7 @@ const NavBar = () => {
                 </div>
             </div>
 
-            <div id="Iconos" className="hidden md:flex justify-end items-center mx-auto flex gap-2">
+            <div id="Iconos" className="hidden md:flex justify-end items-center ml-auto flex gap-2 pr-6">
 
                 {/*Barra de busqueda*/}
                 <div className="pl-2 flex items-center w-40 h-10 rounded-lg border border-gray-300 bg-gray-50 focus-within:ring-1 focus-within:ring-[var(--color-principal)] ">
@@ -66,7 +66,7 @@ const NavBar = () => {
                 </div>
 
                 {/*Notificaciones*/}
-                <button className="p-2 flex items-center  rounded-lg border border-gray-300 bg-gray-50 focus-within:ring-1 focus-within:ring-[var(--color-principal)] ">
+                <button className="p-2 flex items-center  rounded-lg border border-gray-300 bg-gray-50 hover:underline focus-within:ring-1 focus-within:ring-[var(--color-principal)] ">
                     <NotificationsIcon className="text-gray-500"/>
                 </button>
 
@@ -148,9 +148,6 @@ const NavBar = () => {
            
 
         </nav>
-        
-        
-
         </header>
     );
 };
