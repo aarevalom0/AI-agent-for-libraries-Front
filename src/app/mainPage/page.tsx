@@ -4,7 +4,7 @@ import BookCard from "@/components/BookCard";
 import BookCardProgress from "@/components/BookCardProgress";
 import EventCard from "@/components/EventCard";
 import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
-import { useRouter } from "next/navigation";   // ✅ App Router
+import { useRouter } from "next/navigation";   
 import { useEffect, useState } from "react";
 
 export default function MainPage() {
@@ -33,7 +33,7 @@ export default function MainPage() {
           <h4 className='font-newsreader'>Sumérgete en tu próxima aventura literaria. </h4>
         </div>
 
-        <div title="Recomendaciones Libros" className='container flex gap-2 overflow-x-auto pb-6' >
+        <div title="Libros Recomendados" className='container flex gap-2 overflow-x-auto pb-6' >
           <BookCard
             title="Cien años de soledad"
             autor="Gabriel García Márquez"
@@ -94,7 +94,7 @@ export default function MainPage() {
 
           </div>
 
-          <div>
+          <div title="Evento Destacado">
             <EventCard
               pretitulo='Evento destacado'
               title='Club de lectura virtual'
