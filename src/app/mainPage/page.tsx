@@ -1,0 +1,101 @@
+"use client";
+
+import BookCard from '@/components/BookCard';
+import BookCardProgress from '@/components/BookCardProgress';
+import EventCard from '@/components/EventCard';
+import { useState } from 'react';
+
+
+export default function MainPage() {
+  const [usuario, setUsuario] = useState("Sara")
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-6 gap-6 pt-3">
+      <section title="Main section" className="md:col-span-4 pl-6 rounded-lg">
+        <div title="Titulos" className='pb-6'>
+          <h2 title="Saludo" className='font-newsreader'> Hola {usuario}! </h2>
+          <h4 className='font-newsreader'>Sumérgete en tu próxima aventura literaria. </h4>
+        </div>
+
+        <div className='container flex gap-2 overflow-x-auto pb-6' >
+          <BookCard
+            title="Cien años de soledad"
+            autor="Gabriel García Márquez"
+            imageUrl="/Images/CienAniosSoledad.jpg"
+            href='/libros/detalles/cienaniosdesoledad'
+          />
+          <BookCard
+            title="Dune"
+            autor="Frank Herbert"
+            imageUrl="/Images/dune.jpg"
+            href='/libros/detalles/dune'
+          />
+          <BookCard
+            title="El señor de los anillos"
+            autor="J.R.R. Tolkien"
+            imageUrl="/Images/lotr.jpg"
+            href='/libros/detalles/lotr'
+          />
+
+          <BookCard
+            title="Sapiens: De animales a dioses"
+            autor="Yuval Noah Harari"
+            imageUrl="/Images/sapiens.jpg"
+            href='/libros/detalles/sapiens'
+          />
+          <BookCard
+            title="La chica del tren"
+            autor="Paula Hawkins"
+            imageUrl="/Images/girl-train.jpg"
+            href='/libros/detalles/girl-train'
+          />
+        </div>
+
+        <div title='Lecturas Actuales' className='py-4'>
+          <h3 className='text-bold font-newsreader pb-4 '>Lecturas Actuales </h3>
+          <div title="Lecturas actuales" className='flex flex-col gap-3 pl-2'>
+            <BookCardProgress
+              title="La chica del tren"
+              autor="Paula Hawkins"
+              imageUrl="/Images/girl-train.jpg"
+              href='/leerahora/girl-train'
+              porcentaje={42}
+            />
+            <BookCardProgress
+              title="1984"
+              autor="George Orwell"
+              imageUrl="/Images/1984.jpg"
+              href="/libros/detalles/1984"
+              porcentaje={20}
+            />
+            <BookCardProgress
+              title="Harry Potter y la piedra filosofal"
+              autor="J.K. Rowling"
+              imageUrl="/Images/harry-potter.jpg"
+              href="/libros/detalles/harry-potter"
+              porcentaje={37}
+            />
+
+          </div>
+
+          <div>
+            <EventCard
+              pretitulo='Evento destacado'
+              title='Club de lectura virtual'
+              descripcion='Acompáñanos en una charla sobre “La última crónica” con la autora Emily Carter.'
+              imageUrl='/Images/clublecturavirtual.jpg'
+              href='/eventos/clublecturavirtual'
+            />
+          </div>
+
+        </div>
+        
+      </section>
+
+      <aside title="Side section" className="md:col-span-2 bg-[var(--colorMenus)] rounded-sm">
+
+      </aside>
+        
+    </div>
+
+  );
+}
