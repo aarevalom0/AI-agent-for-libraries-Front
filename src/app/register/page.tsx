@@ -14,6 +14,9 @@ export default function RegisterPage() {
     const name = String(form.get("name") || "").trim();
     const email = String(form.get("email") || "").trim().toLowerCase();
     const password = String(form.get("password") || "");
+    const sq = String(form.get("sq") || "");
+    const sa = String(form.get("sa") || "");
+    saveUser({ name, email, password, sq, sa: sa.trim() });
 
     if (!name || !email || !password) return setErr("Completa todos los campos.");
     if (password.length < 6) return setErr("La contraseña debe tener al menos 6 caracteres.");
@@ -49,12 +52,22 @@ export default function RegisterPage() {
             placeholder="Email"
             type="email"
           />
+
           <input
             className="border rounded-lg p-3 text-[var(--colorText)]"
             name="password"
             placeholder="Contraseña"
             type="password"
           />
+          <input className="border rounded-lg p-3 text-[var(--colorText)]" 
+          name="sq" 
+          placeholder="Pregunta de seguridad (ej. Nombre de tu primera mascota)" />
+          <input 
+
+          className="border rounded-lg p-3 text-[var(--colorText)]" 
+          name="sa" 
+          placeholder="Respuesta de seguridad" />
+
           <button className="rounded-lg bg-[var(--colorMenus)] text-white py-3">
             Registrarme
           </button>

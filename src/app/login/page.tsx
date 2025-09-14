@@ -5,6 +5,7 @@ import { useState } from "react";
 import { login } from "@/lib/authClient";
 import Link from "next/link";
 
+
 export default function LoginPage() {
   const router = useRouter();
   const [err, setErr] = useState<string | null>(null);
@@ -50,6 +51,12 @@ export default function LoginPage() {
           <button className="rounded-lg bg-[var(--colorMenus)] text-white py-3">
             Entrar
           </button>
+
+          <p className="text-sm mt-3 text-center text-[var(--colorText)]">
+          ¿Olvidaste tu contraseña?{" "}
+          <a href="/forgot" className="text-[var(--colorMenus)] hover:underline">Recupérala aquí</a>
+          </p>
+
         </form>
 
         <p className="text-sm mt-4 text-center text-[var(--colorText)]">
