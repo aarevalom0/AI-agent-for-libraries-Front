@@ -9,6 +9,7 @@ async function getBook(id: string) {
       cover: "/Images/girl-train.jpg",
       description:
         "Un thriller psicológico lleno de giros inesperados que mantiene al lector atrapado hasta la última página.",
+      genres: ['Thriller', 'Psicológico', 'Ficción'],
       infoURL: "https://es.wikipedia.org/wiki/La_chica_del_tren_(novela)",
       reviews: [
       {
