@@ -22,7 +22,7 @@ const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardPr
                     <p className='text-[var(--colorSecundario)] text-[0.8rem'>{descripcion}</p>
                 </div>
                 <div className='mt-auto pb-5'>
-                    <BotonPersonalizado texto='Unirse Ahora' href={href}/>
+                    <BotonPersonalizado texto='Ver más...' href={href}/>
                 </div>
             </div>
 

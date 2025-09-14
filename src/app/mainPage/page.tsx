@@ -16,7 +16,7 @@ export default function MainPage() {
           <h4 className='font-newsreader'>Sumérgete en tu próxima aventura literaria. </h4>
         </div>
 
-        <div className='container flex gap-2 overflow-x-auto pb-6' >
+        <div title="Recomendaciones Libros" className='container flex gap-2 overflow-x-auto pb-6' >
           <BookCard
             title="Cien años de soledad"
             autor="Gabriel García Márquez"
