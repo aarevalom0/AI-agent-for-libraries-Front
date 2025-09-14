@@ -1,13 +1,30 @@
 "use client";
 
-import BookCard from '@/components/BookCard';
-import BookCardProgress from '@/components/BookCardProgress';
-import EventCard from '@/components/EventCard';
-import { useState } from 'react';
-
+import BookCard from "@/components/BookCard";
+import BookCardProgress from "@/components/BookCardProgress";
+import EventCard from "@/components/EventCard";
+import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
+import { useRouter } from "next/navigation";   // ✅ App Router
+import { useEffect, useState } from "react";
 
 export default function MainPage() {
-  const [usuario, setUsuario] = useState("Sara")
+  const router = useRouter();
+  const [usuario, setUsuario] = useState<string>("");
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const ok = isLoggedIn();
+    if (!ok) {
+      router.replace("/login");
+      return;
+    }
+    const u = getCurrentUser();
+    setUsuario(u?.name ?? "Usuario");
+    setReady(true);
+  }, [router]);
+
+  if (!ready) return null;
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-6 gap-6 pt-3">
       <section title="Main section" className="md:col-span-4 pl-6 rounded-lg">
