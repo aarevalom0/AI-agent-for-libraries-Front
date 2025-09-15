@@ -8,6 +8,8 @@ import Insignias from "@/components/Insignias";
 import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
 import { useRouter } from "next/navigation";   
 import { useEffect, useState } from "react";
+import React from "react";
+
 
 export default function MainPage() {
   const router = useRouter();
