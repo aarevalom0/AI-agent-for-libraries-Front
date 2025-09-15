@@ -13,9 +13,13 @@ export default function ComunidadLayout({
   ];
 
   return (
-    <div className="grid grid-cols-[200px_1fr] min-h-screen">
-      <Sidebar items={sidebarItems} />
-      <main className="p-6">{children}</main>
+    <div className="flex min-h-screen gap-5">
+      <div>
+        <Sidebar items={sidebarItems} />
+      </div>
+      <div className="">
+        {children}
+      </div>
     </div>
   );
 }

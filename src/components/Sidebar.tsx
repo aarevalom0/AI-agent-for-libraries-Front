@@ -15,8 +15,8 @@ const Sidebar = ({ items }: SidebarProps) => {
 
   return (
     <aside
-      className={` bg-[var(--colorMenus)] text-white transition-all duration-300 
-      ${isCollapsed ? "w-16" : "w-48"}`}
+      className={`sidebar bg-[var(--colorMenus)] text-white transition-all duration-300 
+      ${isCollapsed ? "w-16" : "w-48"} h-full`}
     >
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -25,12 +25,12 @@ const Sidebar = ({ items }: SidebarProps) => {
         {isCollapsed ? "➡️" : "⬅️"}
       </button>
 
-      <nav className="mt-4 flex flex-col gap-2">
+      <nav className="mt-4 flex justify-between flex-col gap-2">
         {items.map((item, idx) => (
           <Link
             key={idx}
             href={item.link}
-            className="flex items-center gap-2 px-3 py-2 hover:bg-[var(--colorPrincipal)] rounded-md"
+            className="flex items-center gap-2 mx-auto p-3 hover:bg-[var(--colorPrincipal)] rounded-md"
           >
             <span className="text-lg">{item.icon}</span>
             {!isCollapsed && <span>{item.name}</span>}

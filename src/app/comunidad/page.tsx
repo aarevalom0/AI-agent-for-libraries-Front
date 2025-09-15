@@ -1,9 +1,10 @@
 import SearchIcon from "@mui/icons-material/Search";
-import CommunityCard from "@/components/CommunityCard";
+import EventCard from '@/components/EventCard';
 
 export default function ComunidadPage() {
   return (
-    <>
+    <div className="w-full">
+
       <div className="flex justify-between items-center gap-4 mb-4">
         <h1 title="Comunidad de Autores" className="text-2xl font-bold font-newsreader">
           Comunidad de Autores
@@ -12,7 +13,7 @@ export default function ComunidadPage() {
         <button 
           className="px-4 py-2 bg-[var(--colorMenus)] text-white rounded hover:bg-[var(--colorPrincipal)] transition"
         >
-          Unirse a la Comunidad
+          Crear Comunidad
         </button>
       </div>
 
@@ -24,35 +25,20 @@ export default function ComunidadPage() {
         className="flex-1 p-2 text-sm bg-transparent focus:outline-none"/>
       </div>
 
-      <CommunityCard
-        autor="Haruki Murakami"
-        descripcion="Sumérgete en el mundo surrealista de Murakami, donde lo cotidiano se mezcla con lo fantástico en relatos que exploran la soledad, el amor y la búsqueda de identidad."
-        imageUrl="/Images/circulo-lectores.jpg"
+      <EventCard
+        title="Club de Lectura: Ciencia Ficción"
+        descripcion="Únete a nuestro club de lectura mensual donde exploramos los mejores libros de ciencia ficción."
+        imageUrl="/Images/dune.jpg"
+        href="#"
       />
 
-      <CommunityCard
-        autor="Isabel Allende"
-        descripcion="Explora las ricas tradiciones y la historia de América Latina a través de las narrativas apasionadas de Allende, que entrelazan lo mágico con lo real en historias de amor, pérdida y esperanza."
-        imageUrl="/Images/comunidad2.jpg"
+      <EventCard
+        title="Foro de Autores Emergentes"
+        descripcion="Un espacio para que los autores emergentes compartan sus obras y reciban retroalimentación constructiva."
+        imageUrl="/Images/authors.jpg"
+        href="#"
       />
-      <CommunityCard
-        autor="Gabriel García Márquez"
-        descripcion="Adéntrate en el realismo mágico de García Márquez, donde lo extraordinario se convierte en parte de la vida cotidiana, revelando las complejidades de la naturaleza humana y la historia de América Latina."
-        imageUrl="/Images/comunidad3.jpg"
-      />
-      <CommunityCard
-        autor="Chimamanda Ngozi Adichie"
-        descripcion="Descubre las poderosas narrativas de Adichie, que abordan temas de identidad, feminismo y la diáspora africana, ofreciendo una perspectiva fresca y crítica sobre la sociedad contemporánea."
-        imageUrl="/Images/comunidad4.jpg"
-      />
-
-      <CommunityCard
-        autor="J.K. Rowling"
-        descripcion="Adéntrate en el mundo mágico de Harry Potter, donde la amistad, el coraje y la lucha contra el mal se entrelazan en una narrativa épica que ha cautivado a millones."
-        imageUrl="/Images/comunidad5.jpg"
-      />
-
-    </>
+    </div>
   );
 }
 
