@@ -2,9 +2,11 @@
 
 import BookCard from "@/components/BookCard";
 import BookCardProgress from "@/components/BookCardProgress";
+import CalendarioRachas from "@/components/Calendario";
 import EventCard from "@/components/EventCard";
+import Insignias from "@/components/Insignias";
 import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
-import { useRouter } from "next/navigation";   // ✅ App Router
+import { useRouter } from "next/navigation";   
 import { useEffect, useState } from "react";
 import React from "react";
 
@@ -28,14 +30,14 @@ export default function MainPage() {
   if (!ready) return null;
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-6 gap-6 pt-3">
-      <section title="Main section" className="md:col-span-4 pl-6 rounded-lg">
+    <div className="grid grid-cols-1 md:grid-cols-8 gap-6 pt-3">
+      <section title="Main section" className="md:col-span-6 pl-6 rounded-lg">
         <div title="Titulos" className='pb-6'>
           <h2 title="Saludo" className='font-newsreader'> Hola {usuario}! </h2>
           <h4 className='font-newsreader'>Sumérgete en tu próxima aventura literaria. </h4>
         </div>
 
-        <div title="Recomendaciones Libros" className='container flex gap-2 overflow-x-auto pb-6' >
+        <div title="Libros Recomendados" className='container flex gap-2 overflow-x-auto pb-6' >
           <BookCard
             title="Cien años de soledad"
             autor="Gabriel García Márquez"
@@ -96,7 +98,7 @@ export default function MainPage() {
 
           </div>
 
-          <div>
+          <div title="Evento Destacado">
             <EventCard
               pretitulo='Evento destacado'
               title='Club de lectura virtual'
@@ -105,12 +107,58 @@ export default function MainPage() {
               href='/eventos/clublecturavirtual'
             />
           </div>
-
         </div>
         
       </section>
 
       <aside title="Side section" className="md:col-span-2 bg-[var(--colorMenus)] rounded-sm">
+        <div title="Calendario">
+          <CalendarioRachas
+            numStreaks={9}
+          />
+        </div>
+
+        <div title="Insignias y logros" className=" justify-between items-center w-full px-4 pb-4">
+          <h2 title="Titulo sección" className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]">
+            Insignias y Logros
+          </h2>
+          <div className="grid grid-cols-2 gap-3"> 
+            <Insignias
+              nombre="Insignia Muchos Libros"
+              imageUrl= "/Images/Insignia1.jpg"
+            />
+            <Insignias
+              nombre="Insignia Gato lector"
+              imageUrl= "/Images/Insignia2.jpeg"
+            />
+            <Insignias
+              nombre="Insignia Gato cafetero"
+              imageUrl= "/Images/Insignia3.jpeg"
+            />
+            <Insignias
+              nombre="Insignia Libros muy altos"
+              imageUrl= "/Images/Insignia4.jpeg"
+            />
+            <Insignias
+              nombre="Insignia Libros cafeteros"
+              imageUrl= "/Images/Insignia5.jpeg"
+            />
+            <Insignias
+              nombre="Espacio nuevas Insignias"
+              imageUrl= ""
+            />
+             <Insignias
+              nombre="Espacio nuevas Insignias"
+              imageUrl= ""
+            />
+             <Insignias
+              nombre="Espacio nuevas Insignias"
+              imageUrl= ""
+            />
+            
+
+          </div>
+        </div>
 
       </aside>
         
