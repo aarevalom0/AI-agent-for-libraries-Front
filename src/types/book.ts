@@ -6,4 +6,7 @@ export interface Book {
   description?: string;
   genres?: string[];
   infoURL?: string;
+  status: 'leido' | 'leyendo' | 'por-leer';
+  progress?: number; 
+  completionDate?: string; 
 }

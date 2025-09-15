@@ -29,12 +29,15 @@
   --font-newsreader: var(--font-pre-newsreader);
 }
 
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+*/
+
 
 body {
   background: var(--background);
@@ -69,5 +72,3 @@ h5 {
   font-weight: 600;
   color:var(--colorPrincipal);
 }
-
-
