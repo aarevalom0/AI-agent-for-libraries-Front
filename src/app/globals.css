@@ -6,9 +6,12 @@
   --colorPrincipal: #4E2B1B;
   --colorSecundario: #3A3128;
   --colorMenus: #A04D2C;
+  --colorMenusTrans: #a04d2c8d;
   --colorHover: #e0ddd4;
   --colorClaro: #FAF7F0;
+  --colorClaroTrans: #faf7f096;
   --colorClaroDetalles: #DACAAE;
+  --colorClaroDetallesTransp: #dacaae90;
 }
 
 @theme inline {
