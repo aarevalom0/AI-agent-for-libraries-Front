@@ -7,7 +7,7 @@ const Friends = ({ friends }: FriendsProps) => {
   return (
     <div>
       {friends.map((friend, idx) => (
-        <div key={idx} className="flex ... gap-4 mb-4">
+        <div key={idx} title={"amigo "+friend.name} className="flex ... gap-4 mb-4">
           <img src={friend.avatar} alt={friend.name} className="size-14 grow-0 ..." />
           <div className="size-14 grow ...">
             <p className="font-semibold">{friend.name}</p>
