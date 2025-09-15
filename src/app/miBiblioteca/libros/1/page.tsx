@@ -1,4 +1,4 @@
-import BookDetail from '../../../components/BookDetail';
+import BookDetail from '../../../../components/BookDetail';
 
 async function getBook(id: string) {
     // Simula fetch a un backend
@@ -20,5 +20,5 @@ async function getBook(id: string) {
 export default async function Page({ params }: { params: { id: string } }) {
   const book = await getBook(params.id);
   if (!book) return <div> Libro no encontrado</div>;
-  return <BookDetail book={book} initialReviews={book.reviews} />;
+  return <BookDetail book={book} initialReviews={book.reviews} previousPage={'Mi biblioteca'} previousPageHref={'/miBiblioteca'} />;
 }

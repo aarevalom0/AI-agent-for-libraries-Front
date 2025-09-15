@@ -7,13 +7,16 @@ import AddReviewForm from './AddReviewForm';
 import ReviewList from './ReviewList';
 import type { Review } from '@/types/review';
 import type { Book } from '@/types/book';
+import BotonPersonalizado from './BotonPersonalizado';
 
 interface BookDetailProps {
   book: Book;
   initialReviews: Review[];
+  previousPage:string;
+  previousPageHref:string;
 }
 
-export default function BookDetail({ book, initialReviews }: BookDetailProps) {
+export default function BookDetail({ book, initialReviews, previousPage,previousPageHref }: BookDetailProps) {
     const pageUrl = typeof window !== "undefined" ? window.location.href : "";
 
     // Manejador para añadir reseñas (optimista)
@@ -36,12 +39,12 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
   return ( 
   <div className="max-w-5xl mx-auto text-black px-6 py-8 bg-white">
     {/* Path */}
-    <div className="text-sm text-gray-600 mb-4">
+    <div className="text-sm text-[var(--colorSecundario)] mb-4">
       <Link
-        href="/miBiblioteca"
-        className="hover:underline cursor-pointer text-[var(--colorCafe, #6B4226)]"
+        href={previousPageHref}
+        className="hover:underline cursor-pointer text-[var(--colorSecundario)]"
       >
-        Mi Biblioteca
+        {previousPage}
       </Link>{" "}
       / <span>{book.title}</span>
     </div>
@@ -58,37 +61,32 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
       </div>
 
       <div className="flex flex-col gap-4 flex-1">
-        <h1 className="text-3xl font-bold text-[var(--colorCafe, #6B4226)]">
+        <h1 className="text-3xl font-bold text-[var(--colorPrincipal)]">
           {book.title}
         </h1>
-        <p className="text-lg text-gray-700">por {book.author}</p>
+        <p className="text-lg text-[var(--colorSecundario)]">por {book.author}</p>
 
         {/* Botones */}
         <div className="flex gap-3">
-          <a
-            href={book.infoURL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-[var(--colorCafe,#6B4226)] text-white rounded-md text-sm flex items-center gap-1 hover:bg-[var(--colorCafe,#A67C52)] transition"
-          >
-            📖 Detalles del libro
-          </a>
-          <button
-            onClick={() => navigator.clipboard.writeText(pageUrl)}
-            className="px-4 py-2 bg-[var(--colorCafe,#6B4226)] text-white rounded-md text-sm flex items-center gap-1 hover:bg-[var(--colorCafe,#A67C52)] transition"
-          >
-            📤 Compartir
-          </button>
+          <BotonPersonalizado
+            texto="Detalles del libro"
+            href={book.infoURL || '#'}
+          />
+          <BotonPersonalizado
+            texto="Compartir"
+            href={'#'}
+          />
+          
         </div>
 
-        <p className="text-gray-800">{book.description}</p>
+        <p className="text-[var(--colorSecundario)]">{book.description}</p>
 
         {/* Géneros */}
         <div className="flex flex-wrap gap-2 mt-2">
           {book.genres?.map((g) => (
             <span
               key={g}
-              className="px-3 py-1 bg-[var(--colorCafeOscuro,#3E2723)] text-white rounded-full text-sm"
+              className="px-3 py-1 bg-[var(--colorMenus)] text-white rounded-full text-sm"
             >
               {g}
             </span>
@@ -97,8 +95,8 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
 
         {/* Añadir a colección */}
         <div className="mt-4">
-          <p className="font-semibold text-[var(--colorCafe,#6B4226)]">Añadir a colección:</p>
-          <select className="w-full mt-1 p-2 border border-gray-300 rounded bg-white text-gray-800">
+          <p className="font-semibold text-[var(--colorSecundario)]">Añadir a colección:</p>
+          <select className="w-full mt-1 p-2 border border-gray-300 rounded bg-white text-[var(--colorSecundario)]">
             <option value="">Selecciona colección</option>
             <option value="favoritos">Favoritos</option>
             <option value="pendientes">Pendientes</option>
@@ -112,9 +110,9 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
     <div className="mt-10 flex gap-8">
       {/* Promedio */}
       <div className="flex flex-col items-center w-1/4">
-        <h2 className="text-5xl font-bold text-[var(--colorCafe,#6B4226)]">{average.toFixed(1)}</h2>
+        <h2 className="text-5xl font-bold text-[var(--colorMenus)]">{average.toFixed(1)}</h2>
         <RatingStars value={average} readOnly />
-        <p className="text-gray-600">{total} reseñas</p>
+        <p className="text-[var(--colorSecundario)]">{total} reseñas</p>
       </div>
 
       {/* Barras */}
@@ -126,11 +124,11 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
               <span className="w-6">{star}★</span>
               <div className="flex-1 h-3 bg-gray-200 rounded">
                 <div
-                  className="h-3 bg-[var(--colorCafe,#A67C52)] rounded"
+                  className="h-3 bg-[var(--colorMenus)] rounded"
                   style={{ width: `${percent}%` }}
                 />
               </div>
-              <span className="w-10 text-right text-sm text-gray-600">
+              <span className="w-10 text-right text-sm text-[var(--colorSecundario)]">
                 {percent.toFixed(0)}%
               </span>
             </div>
@@ -141,7 +139,7 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
 
     {/* Reseñas */}
     <div className="mt-10">
-      <h3 className="text-xl font-semibold mb-4 text-[var(--colorCafe,#6B4226)]">Reseñas</h3>
+      <h3 className="text-xl font-semibold mb-4 text-[var(--colorSecundario)]">Reseñas</h3>
       <AddReviewForm onAdd={handleAddReview} />
       <ReviewList reviews={reviews} />
     </div>
