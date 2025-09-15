@@ -11,9 +11,11 @@ import type { Book } from '@/types/book';
 interface BookDetailProps {
   book: Book;
   initialReviews: Review[];
+  previousPage:string;
+  previousPageHref:string;
 }
 
-export default function BookDetail({ book, initialReviews }: BookDetailProps) {
+export default function BookDetail({ book, initialReviews, previousPage,previousPageHref }: BookDetailProps) {
     const pageUrl = typeof window !== "undefined" ? window.location.href : "";
 
     // Manejador para añadir reseñas (optimista)
@@ -38,10 +40,10 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
     {/* Path */}
     <div className="text-sm text-gray-600 mb-4">
       <Link
-        href="/miBiblioteca"
+        href={previousPageHref}
         className="hover:underline cursor-pointer text-[var(--colorCafe, #6B4226)]"
       >
-        Mi Biblioteca
+        {previousPage}
       </Link>{" "}
       / <span>{book.title}</span>
     </div>
