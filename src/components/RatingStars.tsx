@@ -47,10 +47,10 @@ const RatingStars = ({  value = 0,  onChange,  readOnly = false,}: RatingStarsPr
               viewBox="0 0 24 24"
               className={
                 filled
-                  ? "text-yellow-400 fill-yellow-400"
+                  ? "text-[var(--colorCafeOscuro,#6B4226)] fill-[var(--colorCafeOscuro,#6B4226)]"
                   : half
-                  ? "text-yellow-400"
-                  : "text-gray-500 stroke-gray-500"
+                  ? "text-[var(--colorCafeOscuro,#6B4226)]"
+                  : "text-gray-400 stroke-gray-400"
               }
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden
@@ -59,7 +59,7 @@ const RatingStars = ({  value = 0,  onChange,  readOnly = false,}: RatingStarsPr
                 <>
                   <defs>
                     <linearGradient id={`half-${i}`}>
-                      <stop offset="50%" stopColor="#facc15" />
+                      <stop offset="50%" stopColor="#6B4226" />
                       <stop offset="50%" stopColor="transparent" />
                     </linearGradient>
                   </defs>

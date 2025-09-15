@@ -69,13 +69,13 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
             href={book.infoURL}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 border border-[var(--colorCafe, #A67C52)] text-[var(--colorCafe, #6B4226)] rounded-md text-sm hover:bg-[var(--colorCafe, #A67C52)] hover:text-white transition"
+            className="px-4 py-2 bg-[var(--colorCafe,#6B4226)] text-white rounded-md text-sm flex items-center gap-1 hover:bg-[var(--colorCafe,#A67C52)] transition"
           >
             📖 Detalles del libro
           </a>
           <button
             onClick={() => navigator.clipboard.writeText(pageUrl)}
-            className="px-4 py-2 border border-[var(--colorCafe, #A67C52)] text-[var(--colorCafe, #6B4226)] rounded-md text-sm flex items-center gap-1 hover:bg-[var(--colorCafe, #A67C52)] hover:text-white transition"
+            className="px-4 py-2 bg-[var(--colorCafe,#6B4226)] text-white rounded-md text-sm flex items-center gap-1 hover:bg-[var(--colorCafe,#A67C52)] transition"
           >
             📤 Compartir
           </button>
@@ -88,7 +88,7 @@ export default function BookDetail({ book, initialReviews }: BookDetailProps) {
           {book.genres?.map((g) => (
             <span
               key={g}
-              className="px-3 py-1 bg-[var(--colorCafeSuave,#F5E6DA)] text-[var(--colorCafe,#6B4226)] rounded-full text-sm"
+              className="px-3 py-1 bg-[var(--colorCafeOscuro,#3E2723)] text-white rounded-full text-sm"
             >
               {g}
             </span>
