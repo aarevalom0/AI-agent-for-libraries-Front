@@ -6,6 +6,8 @@ import EventCard from "@/components/EventCard";
 import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
 import { useRouter } from "next/navigation";   // ✅ App Router
 import { useEffect, useState } from "react";
+import React from "react";
+
 
 export default function MainPage() {
   const router = useRouter();
