@@ -13,6 +13,8 @@ import { useState } from 'react';
 
 const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [selected, setSelected] = useState("Home");
+
     return (
         <header className="bg-[var(--color-background)]  p-4">
         <nav className="w-full overflow-hidden flex justify-between items-center text-[var(--color-secundario)] font-newsreader border-b border-gray-200 pb-3">
@@ -32,22 +34,28 @@ const NavBar = () => {
                 <div id='links hidden md:flex items-center'>
                     <ul className="hidden md:flex gap-3 font-medium">
                         <li>
-                            <Link href="/mainPage" className="px-3 hover:text-gray-300 font-newsreader">Home</Link>
+                            <Link href="/mainPage" className={`px-3 hover:text-gray-300 font-newsreader ${ selected === "Home" ? "font-bold" : "" }`} 
+                            onClick={() => setSelected("Home")}>Home</Link>
                         </li>
                         <li>
-                            <Link href="/eventos" className="px-3 hover:text-gray-300">Eventos</Link>
+                            <Link href="/eventos" className={`px-3 hover:text-gray-300 font-newsreader ${ selected === "Eventos" ? "font-bold" : "" }`} 
+                            onClick={() => setSelected("Eventos")}>Eventos</Link>
                         </li>
                         <li>
-                            <Link href="/estadisticas" className="px-3 hover:text-gray-300">Estadísticas</Link>
+                            <Link href="/estadisticas" className={`px-3 hover:text-gray-300 font-newsreader ${ selected === "Estadísticas" ? "font-bold" : "" }`} 
+                            onClick={() => setSelected("Estadísticas")}>Estadísticas</Link>
                         </li>
                         <li>
-                            <Link href="/miBiblioteca" className="px-3 hover:text-gray-300">Mi biblioteca</Link>
+                            <Link href="/miBiblioteca" className={`px-3 hover:text-gray-300 font-newsreader ${ selected === "Mi Biblioteca" ? "font-bold" : "" }`} 
+                            onClick={() => setSelected("Mi Biblioteca")}>Mi biblioteca</Link>
                         </li>
                         <li>
-                            <Link href="/leerAhora" className="px-3 hover:text-gray-300">Leer Ahora</Link>
+                            <Link href="/leerAhora" className={`px-3 hover:text-gray-300 font-newsreader ${ selected === "Leer Ahora" ? "font-bold" : "" }`} 
+                            onClick={() => setSelected("Leer Ahora")}>Leer Ahora</Link>
                         </li>
                         <li>
-                            <Link href="/comunidad" className="px-3 hover:text-gray-300">Comunidad</Link>
+                            <Link href="/comunidad" className={`px-3 hover:text-gray-300 font-newsreader ${ selected === "Comunidad" ? "font-bold" : "" }`} 
+                            onClick={() => setSelected("Comunidad")}>Comunidad</Link>
                         </li>
                     </ul>  
                 </div>

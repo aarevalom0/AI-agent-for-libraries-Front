@@ -1,4 +1,4 @@
-import BookDetail from '../../../components/BookDetail';
+import BookDetail from '../../../../components/BookDetail';
 
 async function getBook(id: string) {
   // Simula fetch a un backend

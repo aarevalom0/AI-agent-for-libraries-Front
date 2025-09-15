@@ -47,9 +47,9 @@ const RatingStars = ({  value = 0,  onChange,  readOnly = false,}: RatingStarsPr
               viewBox="0 0 24 24"
               className={
                 filled
-                  ? "text-[var(--colorCafeOscuro,#6B4226)] fill-[var(--colorCafeOscuro,#6B4226)]"
+                  ? "text-[var(--colorMenus)] fill-[var(--colorMenus)]"
                   : half
-                  ? "text-[var(--colorCafeOscuro,#6B4226)]"
+                  ? "text-[var(--colorMenus)] fill-[var(--colorMenus)]"
                   : "text-gray-400 stroke-gray-400"
               }
               xmlns="http://www.w3.org/2000/svg"
@@ -59,14 +59,14 @@ const RatingStars = ({  value = 0,  onChange,  readOnly = false,}: RatingStarsPr
                 <>
                   <defs>
                     <linearGradient id={`half-${i}`}>
-                      <stop offset="50%" stopColor="#6B4226" />
+                      <stop offset="50%" stopColor="#A04D2C" />
                       <stop offset="50%" stopColor="transparent" />
                     </linearGradient>
                   </defs>
                   <path
                     d="M12 .587l3.668 7.431L23.5 9.75l-5.75 5.6L19.335 24 12 20.013 4.665 24l1.585-8.65L0.5 9.75l7.832-1.732L12 .587z"
                     fill={`url(#half-${i})`}
-                    stroke="#facc15"
+                    stroke="#A04D2C"
                   />
                 </>
               ) : (

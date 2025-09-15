@@ -38,11 +38,11 @@ const AddReviewForm = ({ onAdd }: AddReviewFormProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-xl border border-gray-700 shadow-md space-y-4"
+      className="bg-white p-6 rounded-xl border border-[var(--colorSecundario)] shadow-md space-y-4"
     >
       {/* Estrellas */}
       <div>
-        <p className="text-sm text-gray-700 mb-1">Tu calificación:</p>
+        <p className="text-sm text-[var(--colorSecundario)] mb-1">Tu calificación:</p>
         <RatingStars value={rating} onChange={setRating} />
       </div>
 
@@ -52,7 +52,7 @@ const AddReviewForm = ({ onAdd }: AddReviewFormProps) => {
         onChange={(e) => setText(e.target.value)}
         placeholder="Escribe un comentario..."
         rows={4}
-        className="w-full p-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--colorCafe,#A47551)]"
+        className="w-full p-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--colorPrincipal)]"
       />
 
       {/* Botón */}
@@ -60,7 +60,7 @@ const AddReviewForm = ({ onAdd }: AddReviewFormProps) => {
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-[var(--colorCafe,#A47551)] hover:bg-[var(--colorCafeOscuro,#6B4226)] text-white font-semibold rounded-lg transition disabled:opacity-50"
+          className="px-4 py-2 bg-[var(--colorMenus)] hover:bg-[var(--colorSecundario)] text-white font-semibold rounded-lg transition disabled:opacity-50"
         >
           {loading ? "Enviando..." : "Enviar Reseña"}
         </button>

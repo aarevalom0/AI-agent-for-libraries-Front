@@ -1,53 +1,85 @@
+"use client";
+import BarraBusqueda from '@/components/BarraBusqueda';
 import BookCard from '@/components/BookCard';
+import BotonPersonalizado from '@/components/BotonPersonalizado';
+import FormularioCrearColeccion from '@/components/FormularioCrearColeecion';
 import SideMenu from '@/components/SideMenu';
-import Search from '@mui/icons-material/Search';
+import { BookOpen, List, Check, Star, Plus } from "lucide-react";
+import { useState } from "react";
 
-const books = [
-  { id: '1', title: '1984', autor: 'George Orwell', imageUrl: '/Images/1984.jpg', href: '/miBiblioteca/1' },
-  { id: '2', title: 'La chica del tren', autor: 'Paula Hawkins', imageUrl: '/Images/girl-train.jpg', href: '/miBiblioteca/2' },
-  { id: '3', title: 'Harry Potter y la piedra filosofal', autor: 'J.K. Rowling', imageUrl: '/Images/harry-potter.jpg', href: '/miBiblioteca/3' },
+const collections = {
+  miBiblioteca: [
+    { id: "1", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg" },
+    { id: "2", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg" },
+    { id: "3", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg" },
+  ],
+  leer: [
+    { id: "4", title: "El principito", autor: "Antoine de Saint-Exupéry", imageUrl: "/Images/principito.jpg" },
+  ],
+  leidos: [
+    { id: "5", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg" },
+  ],
+  favoritos: [],
+  crear: [], // Podrías mostrar un formulario aquí
+};
+
+const menuOptions = [
+  { path: "miBiblioteca", label: "Mi Biblioteca", icon: <BookOpen size={18} /> },
+  { path: "leer", label: "Para leer", icon: <List size={18} /> },
+  { path: "leidos", label: "Leídos", icon: <Check size={18} /> },
+  { path: "favoritos", label: "Favoritos", icon: <Star size={18} /> },
+  { path: "crear", label: "Crear Colección", icon: <Plus size={18} /> },
 ];
 
 export default function BibliotecaPage() {
+  const [selected, setSelected] = useState<keyof typeof collections>("miBiblioteca");
+  const selectedLabel = menuOptions.find(opt => opt.path === selected)?.label ?? "Mi Biblioteca";
+
   return (
-    <div className="p-8 flex gap-5">
+    <div className="flex gap-5">
       <div>
-        <SideMenu/>
+        <SideMenu
+          options={menuOptions}
+          selectedF={{ path: "miBiblioteca", label: "Mi Biblioteca", icon: <BookOpen size={18} /> }}
+          onSelect={(option) => setSelected(option.path as keyof typeof collections)}
+        />
       </div>
 
-      <div className='w-full'>
-        {/* Header con título y botón */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Mi Biblioteca</h1>
-          <button className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition">
-            Solicitar libro
-          </button>
-        </div>
 
-        {/* Barra de búsqueda */}
-        <div className="mb-8 w-full">
-          <div className="flex items-center w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-[var(--colorPrimario)]">
-            <Search className="w-5 h-5 text-gray-400 mr-3" />
-            <input
-              type="text"
-              placeholder="Buscar en mi biblioteca"
-              className="w-full bg-transparent outline-none text-white placeholder-gray-400"
-            />
+        <div title='Coleeciones' className="w-full">
+          {/* Header con título y botón */}
+          <div title="Mi Biblioteca titulos" className="flex justify-between items-center p-4">
+            <h2 title='Titulo' className="text-3xl items-center font-bold">{selectedLabel}</h2>
+            <div title='Solicitar libro' className="pr-5 flex items-center">
+              <BotonPersonalizado  texto="Solicitar libro" href="/miBiblioteca/solicitarlibro" />
+            </div>
           </div>
-        </div>
 
-        {/* Grid de libros */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {books.map((b) => (
-            <BookCard
-              key={b.id}
-              title={b.title}
-              autor={b.autor}
-              imageUrl={b.imageUrl}
-              href={`/miBiblioteca/${b.id}`}
-            />
-          ))}
-        </div>
+          {selected === "crear" ? (
+            <FormularioCrearColeccion />
+          ) : (
+          <div className="flex flex-col w-full">
+            
+            {/* Barra de búsqueda */}
+            <div className="mb-8 w-full">
+              <div title='Barra de Busqueda' className="flex items-center w-full px-4 py-2">
+                <BarraBusqueda textHolder="Buscar en mi biblioteca" ancho="lg" />
+              </div>
+            </div>
+
+            <div title='Libros de coleccion' className="grid pb-5 grid-cols-2 md:grid-cols-4 gap-6">
+              {collections[selected]?.map((b) => (
+                <BookCard
+                  key={b.id}
+                  title={b.title}
+                  autor={b.autor}
+                  imageUrl={b.imageUrl}
+                  href={`/miBiblioteca/libros/${b.id}`}
+                />
+              ))}
+            </div>
+          </div>
+          )}
       </div>
     </div>
   );
