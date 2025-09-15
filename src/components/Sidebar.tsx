@@ -3,37 +3,51 @@
 import Link from "next/link";
 import { useState } from "react";
 import { JSX } from "react";
-import { FaUsers, FaUserFriends, FaBook } from "react-icons/fa";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 interface SidebarProps {
   items: { name: string; link: string; icon: JSX.Element }[];
-  
 }
 
 const Sidebar = ({ items }: SidebarProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const [selected, setSelected] = useState<string>(items[0]?.name || "");
 
   return (
     <aside
-      className={`sidebar bg-[var(--colorMenus)] text-white transition-all duration-300 
-      ${isCollapsed ? "w-16" : "w-48"} h-full`}
+      title="Menú lateral"
+      className={`${
+        isOpen ? "w-52" : "w-16"
+      }  bg-[var(--colorMenus)] p-4 flex flex-col space-y-4 rounded-md shadow-md transition-all duration-300`}
     >
+
       <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="p-2 w-full text-center hover:bg-[var(--colorPrincipal)]"
+        onClick={() => setIsOpen(!isOpen)}
+        className="ml-auto mb-2 text-[var(--colorClaro)] hover:opacity-80 pb-2"
       >
-        {isCollapsed ? "➡️" : "⬅️"}
+        {isOpen ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
       </button>
 
-      <nav className="mt-4 flex justify-between flex-col gap-2">
-        {items.map((item, idx) => (
+      <nav
+        className={`flex flex-col space-y-2 text-[var(--colorClaro)] font-newsreader ${
+          !isOpen && "justify-center"
+        }`}
+      >
+        {items.map((item) => (
           <Link
-            key={idx}
+            key={item.name}
             href={item.link}
-            className="flex items-center gap-2 mx-auto p-3 hover:bg-[var(--colorPrincipal)] rounded-md"
+            title={item.name}
+            onClick={() => setSelected(item.name)}
+            className={`flex items-center gap-2 cursor-pointer hover:opacity-80 p-2 rounded-md ${
+              selected === item.name
+                ? "bg-[var(--colorClaro)] text-[var(--colorSecundario)] font-bold"
+                : ""
+            }`}
           >
             <span className="text-lg">{item.icon}</span>
-            {!isCollapsed && <span>{item.name}</span>}
+            {isOpen && <span>{item.name}</span>}
           </Link>
         ))}
       </nav>
@@ -42,5 +56,3 @@ const Sidebar = ({ items }: SidebarProps) => {
 };
 
 export default Sidebar;
-
-
