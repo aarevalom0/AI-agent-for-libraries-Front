@@ -1,6 +1,7 @@
+import { Book } from '@/types/book';
 import BookDetail from '../../../../components/BookDetail';
 
-async function getBook(id: string) {
+async function getBook(id: string): Promise<Book> {
     // Simula fetch a un backend
   return {
     id,
@@ -43,6 +44,7 @@ async function getBook(id: string) {
           dislikes: 10,
         }
       ],
+      status: "leyendo"
   };
 }
 

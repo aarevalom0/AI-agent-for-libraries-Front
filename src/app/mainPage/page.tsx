@@ -30,8 +30,8 @@ export default function MainPage() {
   if (!ready) return null;
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-8 gap-6 pt-3">
-      <section title="Main section" className="md:col-span-6 pl-6 rounded-lg">
+    <div className="grid grid-cols-1 md:grid-cols-7 gap-6 pt-3">
+      <section title="Main section" className="md:col-span-5 pl-6 rounded-lg">
         <div title="Titulos" className='pb-6'>
           <h2 title="Saludo" className='font-newsreader'> Hola {usuario}! </h2>
           <h4 className='font-newsreader'>Sumérgete en tu próxima aventura literaria. </h4>
@@ -122,7 +122,7 @@ export default function MainPage() {
           <h2 title="Titulo sección" className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]">
             Insignias y Logros
           </h2>
-          <div className="grid grid-cols-2 gap-3"> 
+          <div className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]"> 
             <Insignias
               nombre="Insignia Muchos Libros"
               imageUrl= "/Images/Insignia1.jpg"

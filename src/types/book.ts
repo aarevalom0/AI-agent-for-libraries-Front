@@ -1,3 +1,5 @@
+import { Review } from "./review";
+
 export interface Book {
   id: string;
   title: string;
@@ -9,4 +11,5 @@ export interface Book {
   status: 'leido' | 'leyendo' | 'por-leer';
   progress?: number; 
   completionDate?: string; 
+  reviews: Review[];
 }
