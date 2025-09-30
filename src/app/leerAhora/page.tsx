@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import BookReading from "@/components/books/BookReading";
-import Pagination from "@/components/leerAhora/Pagination";
+import Pagination from "@/components/navigation/Pagination";
 import BookGrid from "@/components/books/BookGrid";
 
 type Libro = {
