@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import BarraBusqueda from '@/components/elementos/BarraBusqueda';
 import BookCard from '@/components/books/BookCard';
 import BotonPersonalizado from '@/components/elementos/BotonPersonalizado';

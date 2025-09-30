@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import BotonPersonalizado from '@/components/elementos/BotonPersonalizado';
-import styles from './Estadisticas.module.css';
 
 interface EventCardProp {
     pretitulo?: string;
