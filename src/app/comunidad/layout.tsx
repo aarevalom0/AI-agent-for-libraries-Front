@@ -1,4 +1,6 @@
 import Sidebar from "@/components/navigation/Sidebar";
+import SideMenu from '@/components/navigation/SideMenu';
+
 import { FaUsers, FaUserFriends, FaBook } from "react-icons/fa";
 
 export default function ComunidadLayout({
@@ -13,13 +15,14 @@ export default function ComunidadLayout({
   ];
 
   return (
-    <div className="flex min-h-screen gap-5">
-      <div>
-        <Sidebar items={sidebarItems} />
-      </div>
-      <div className="">
+    <div className="flex">
+
+      <Sidebar items={sidebarItems} />
+
+      
+      <main className="flex-1 p-5">
         {children}
-      </div>
+      </main>
     </div>
   );
 }

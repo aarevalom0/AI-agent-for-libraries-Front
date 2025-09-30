@@ -1,5 +1,5 @@
 
-import Friends from "@/components/Friends";
+import Friends from "@/components/community/Friends";
 
 export default function AmigosPage() {
   const friendsList = [
