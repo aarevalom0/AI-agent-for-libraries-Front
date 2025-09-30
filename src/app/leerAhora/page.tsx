@@ -78,11 +78,8 @@ export default function LeerAhoraPage() {
                 progreso={b.progreso}
               />
 
-              <Link
-                href={`/reader/${b.slug}`}
-                className="rounded-xl bg-gray-100 px-5 py-2 hover:bg-gray-200"
-              >
-                Seguir Leyendo
+              <Link href={`/reader/${b.slug}`} className="btn">
+              Seguir Leyendo
               </Link>
             </div>
           ))}

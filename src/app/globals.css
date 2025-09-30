@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
+/* =========================================================
+   1) VARIABLES DE COLOR Y MARCA (MODO CLARO)
+   ========================================================= */
 :root {
+  /* Paleta de la marca */
   --background: #ffffff;
   --foreground: #171412;
+
   --colorPrincipal: #4E2B1B;
   --colorPrincipalHover: #6e3b24;
   --colorSecundario: #3A3128;
@@ -10,13 +15,89 @@
   --colorMenusTrans: #a04d2c8d;
   --colorHover: #e0ddd4;
   --colorBarras: #f8f7f7;
+
   --colorClaro: #FAF7F0;
   --colorClaroTrans: #faf7f096;
   --colorClaroHover: #e8e6df;
   --colorClaroDetalles: #DACAAE;
   --colorClaroDetallesTransp: #dacaae90;
+
+  /* Sistema (UI) */
+  --bg: #ffffff;            /* fondo general */
+  --text: #2b2116;          /* texto base */
+
+  --elev: #ffffff;          /* superficies elevadas (cards/nav/footer) */
+  --border: #e7e1db;        /* bordes suaves */
+
+  --brand: var(--colorMenus, #8b4a2e);  /* acento principal */
+
+  /* Campos de formulario */
+  --input-bg: #ffffff;
+  --input-border: #d8d2cc;
+  --input-text: #2b2116;
+
+  /* Botones (claro) */
+  --btn-bg: #f3f4f6;
+  --btn-text: #2b2116;
+  --btn-border: #e5e7eb;
+  --btn-bg-hover: #e9ecef;
+
+  --colorText: var(--text);
+  --colorTextMuted: #6b6259;         /* subtítulos en claro */
+
+
+  --colorPrincipal: #4E2B1B;
+  --colorSecundario: #3A3128
 }
 
+/* =========================================================
+   2) VARIABLES PARA MODO OSCURO (SOBREESCRIBE TOKENS)
+   ========================================================= */
+html.dark {
+  --bg: #0f0e0d;
+  --text: #F8F6F3;            /* más claro que #EEE8E1 */
+  --elev: #1a1918;
+  --border: #2a2826;
+  --brand: #f28b5c;           /* un acento más vivo */
+
+  /* Opcional: textos secundarios */
+  --text-muted: #c9c4bd;      /* para subtítulos, autores, etc. */
+
+
+  --input-bg: #171614;
+  --input-border: #373432;
+  --input-text: #EEE8E1;
+
+  /* Botones (oscuro) */
+  --btn-bg: #2a2928;
+  --btn-text: #F7F3EE;
+  --btn-border: #3b3a39;
+  --btn-bg-hover: #343331;
+
+  --text: #F8F6F3;
+
+  /* subtítulos más legibles en oscuro */
+  --text-muted: #c9c4bd;
+  --colorText: var(--text);           /* mapea a la base en oscuro también */
+  --colorTextMuted: var(--text-muted);
+
+  /* títulos y secundarios aclaran un poco en oscuro */
+  --colorPrincipal: #ecc0ab;
+  --colorSecundario: #ecc0ab;
+
+  /* si usas acento de marca en textos, un poco más vivo en oscuro */
+  --brand: #f28b5c;
+}
+
+.reader-surface{
+  background: var(--elev);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* =========================================================
+   3) MAPEO PARA @theme (TAILWIND CSS)
+   ========================================================= */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -24,12 +105,84 @@
   --color-secundario: var(--colorSecundario);
   --color-menus: var(--colorMenus);
   --color-claro: var(--colorClaro);
-  --color-claro-detalles: var(--colorClaroDetalles)
+  --color-claro-detalles: var(--colorClaroDetalles);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-newsreader: var(--font-pre-newsreader);
 }
 
+/* =========================================================
+   4) BASE GLOBAL
+   ========================================================= */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================================
+   5) TIPOGRAFÍA (HEADINGS)
+   ========================================================= */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-principal);
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--colorPrincipal);
+  margin-top: 0;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 350;
+  color: var(--colorSecundario);
+  margin-top: 0;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--colorPrincipal);
+}
+
+/* =========================================================
+   6) FORMULARIOS (INPUTS / SELECTS / TEXTAREA)
+   ========================================================= */
+input, select, textarea {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+/* =========================================================
+   7) UTILIDADES (CLASES REUTILIZABLES)
+   ========================================================= */
+.bg-elev    { background: var(--elev); }
+.border-elev{ border-color: var(--border); }
+.text-brand { color: var(--brand); }
+
+/* Botón consistente claro/oscuro */
+.btn {
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-radius: 0.75rem;          /* rounded-xl */
+  padding: 0.5rem 1.25rem;         /* px-5 py-2 */
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.btn:hover   { background: var(--btn-bg-hover); }
+.btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+/* =========================================================
+   8) (OPCIONAL) PREFERENCIA DE SISTEMA
+   Si quisieras que siga la preferencia del sistema *por defecto*,
+   descomenta este bloque. Tu toggle global lo puede sobrescribir.
+   ========================================================= */
 /*
 @media (prefers-color-scheme: dark) {
   :root {
@@ -39,37 +192,12 @@
 }
 */
 
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-h2 {
-  font-size: 1.5rem; 
-  font-weight: 700;   
-  color: var(--color-principal);
-  margin-bottom: 0.5rem;
-}
-
-h3 {
-  font-size: 1.3rem;
-  font-weight: 700;  
-  color:var(--colorPrincipal);
-  margin-top: 0;
-}
-
-h4 {
-  font-size: 1rem;
-  font-weight: 350;
-  color:var(--colorSecundario);
-  margin-top: 0;
-}
+/* === Mapeos para compatibilidad con clases existentes === */
 
 
-h5 {
-  font-size: 1rem;
-  font-weight: 600;
-  color:var(--colorPrincipal);
-}
+.text-primary   { color: var(--colorText); }
+.text-secondary { color: var(--colorTextMuted); }
+.text-brand     { color: var(--brand); }
+
+
+
