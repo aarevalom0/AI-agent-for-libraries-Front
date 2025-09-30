@@ -1,5 +1,4 @@
 import Sidebar from "@/components/navigation/Sidebar";
-import SideMenu from '@/components/navigation/SideMenu';
 
 import { FaUsers, FaUserFriends, FaBook } from "react-icons/fa";
 
