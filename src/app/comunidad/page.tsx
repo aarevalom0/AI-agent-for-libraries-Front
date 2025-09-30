@@ -1,5 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import EventCard from '@/components/EventCard';
+import EventCard from '@/components/eventos/EventCard';
 
 export default function ComunidadPage() {
   return (

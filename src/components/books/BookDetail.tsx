@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import RatingStars from './RatingStars';
-import AddReviewForm from './AddReviewForm';
-import ReviewList from './ReviewList';
+import RatingStars from '../reviews/RatingStars';
+import AddReviewForm from '../reviews/AddReviewForm';
+import ReviewList from '../reviews/ReviewList';
 import type { Review } from '@/types/review';
 import type { Book } from '@/types/book';
-import BotonPersonalizado from './BotonPersonalizado';
+import BotonPersonalizado from '../elementos/BotonPersonalizado';
 
 interface BookDetailProps {
   book: Book;

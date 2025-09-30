@@ -1,5 +1,5 @@
 import React from 'react';
-import EventCard from '@/components/EventCard';
+import EventCard from '@/components/eventos/EventCard';
 import { eventsData } from '@/lib/mock-data';
 
 const EventosPage = () => {

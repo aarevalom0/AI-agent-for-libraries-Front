@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import BotonPersonalizado from '@/components/BotonPersonalizado';
+import BotonPersonalizado from '@/components/elementos/BotonPersonalizado';
 import styles from './Estadisticas.module.css';
 
 interface EventCardProp {
@@ -11,7 +11,7 @@ interface EventCardProp {
 }
 
 
-const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardProp) => {
+const ComunidadCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardProp) => {
     return(
         <div className='flex py-8'>
             <div className='flex flex-col gap-3'>
@@ -23,7 +23,7 @@ const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardPr
                     <p className='text-[var(--colorSecundario)] text-[0.8rem'>{descripcion}</p>
                 </div>
                 <div className='mt-auto pb-5'>
-                    <BotonPersonalizado texto='Ver más...' href={href}/>
+                    <BotonPersonalizado texto='Unirse' href={href}/>
                 </div>
             </div>
 
@@ -42,4 +42,4 @@ const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardPr
     );
 }
 
-export default EventCard;
+export default ComunidadCard;

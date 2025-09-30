@@ -16,7 +16,7 @@ import {
 } from 'chart.js';
 import { userBooks } from '@/lib/mock-data'; // Importar datos simulados
 import { Book } from '@/types/book';
-import RankingLectores from '@/components/RankingLectores';
+import RankingLectores from '@/components/estadisticas/RankingLectores';
 
 ChartJS.register(
   CategoryScale,

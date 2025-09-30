@@ -1,10 +1,10 @@
 "use client";
 
-import BookCard from "@/components/BookCard";
-import BookCardProgress from "@/components/BookCardProgress";
-import CalendarioRachas from "@/components/Calendario";
-import EventCard from "@/components/EventCard";
-import Insignias from "@/components/Insignias";
+import BookCard from "@/components/books/BookCard";
+import BookCardProgress from "@/components/books/BookCardProgress";
+import CalendarioRachas from "@/components/mainPage/Calendario";
+import EventCard from "@/components/eventos/EventCard";
+import Insignias from "@/components/mainPage/Insignias";
 import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
 import { useRouter } from "next/navigation";   
 import { useEffect, useState } from "react";

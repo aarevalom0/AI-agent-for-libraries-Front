@@ -1,4 +1,4 @@
-import EstadisticasPersonales from '@/components/EstadisticasPersonales';
+import EstadisticasPersonales from '@/components/estadisticas/EstadisticasPersonales';
 import React from 'react';
 
 const EstadisticasPage = () => {

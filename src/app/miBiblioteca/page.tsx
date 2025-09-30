@@ -1,9 +1,9 @@
 "use client";
-import BarraBusqueda from '@/components/BarraBusqueda';
-import BookCard from '@/components/BookCard';
-import BotonPersonalizado from '@/components/BotonPersonalizado';
-import FormularioCrearColeccion from '@/components/FormularioCrearColeecion';
-import SideMenu from '@/components/SideMenu';
+import BarraBusqueda from '@/components/elementos/BarraBusqueda';
+import BookCard from '@/components/books/BookCard';
+import BotonPersonalizado from '@/components/elementos/BotonPersonalizado';
+import FormularioCrearColeccion from '@/components/formularios/FormularioCrearColeecion';
+import SideMenu from '@/components/navigation/SideMenu';
 import { BookOpen, List, Check, Star, Plus } from "lucide-react";
 import { useState } from "react";
 

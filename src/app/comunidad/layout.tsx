@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/navigation/Sidebar";
 import { FaUsers, FaUserFriends, FaBook } from "react-icons/fa";
 
 export default function ComunidadLayout({

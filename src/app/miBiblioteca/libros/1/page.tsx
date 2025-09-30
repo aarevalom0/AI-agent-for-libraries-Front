@@ -1,5 +1,5 @@
 import { Book } from '@/types/book';
-import BookDetail from '../../../../components/BookDetail';
+import BookDetail from '../../../../components/books/BookDetail';
 
 async function getBook(id: string): Promise<Book> {
     // Simula fetch a un backend
