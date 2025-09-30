@@ -1,7 +1,7 @@
 // components/navigation/NavBar.tsx
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SearchIcon from "@mui/icons-material/Search";
@@ -19,16 +19,25 @@ const NavBar = () => {
   const [selected, setSelected] = useState("Home");
   const [dark, setDark] = useState(false);
 
-  // leer estado inicial
+  // Leer estado inicial (preferencia guardada o sistema)
   useEffect(() => {
-    const saved = typeof localStorage !== "undefined" && localStorage.getItem(THEME_KEY) === "1";
-    setDark(saved || (typeof document !== "undefined" && document.documentElement.classList.contains("dark")));
+    try {
+      const saved = localStorage.getItem(THEME_KEY);
+      const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
+      const enabled = saved == null ? prefersDark : saved === "1";
+      setDark(
+        enabled ||
+        document.documentElement.classList.contains("dark")
+      );
+    } catch {
+      setDark(document.documentElement.classList.contains("dark"));
+    }
   }, []);
 
   const toggleDark = () => {
     const next = !dark;
     setDark(next);
-    setGlobalDarkMode(next);
+    setGlobalDarkMode(next); // único sitio que modifica el modo global
   };
 
   const linkCls = (name: string) =>
