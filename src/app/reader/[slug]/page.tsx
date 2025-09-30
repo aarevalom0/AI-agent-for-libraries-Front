@@ -10,7 +10,7 @@ import {
 import { useParams } from "next/navigation";
 
 export default function ReaderPage({ params }: { params: { slug: string } }) {
-    const { slug } = useParams<{ slug: string }>(); 
+  const { slug } = useParams<{ slug: string }>(); 
   const book = CHAPTERS[slug];
   const containerRef = useRef<HTMLDivElement>(null);
 

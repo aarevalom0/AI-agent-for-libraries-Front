@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import BookCard from "@/components/books/BookCard";
 import Link from "next/link";
+import BookReading from "@/components/books/BookReading";
+import Pagination from "@/components/leerAhora/Pagination";
+import BookGrid from "@/components/books/BookGrid";
 
 type Libro = {
   slug: string;
@@ -69,19 +71,12 @@ export default function LeerAhoraPage() {
         <div className="flex flex-col gap-8">
           {LECTURAS_ACTUALES.map(b => (
             <div key={b.slug} className="flex items-center justify-between">
-              <div className="flex items-center gap-5">
-                <img src={b.imageUrl} alt={b.title} className="w-20 h-28 object-cover rounded-md border" />
-                <div>
-                  <h3 className="text-2xl font-newsreader text-[var(--colorMenus)]">{b.title}</h3>
-                  <p className="text-[var(--colorText)]">Autor: {b.autor}</p>
-                  <div className="flex items-center gap-3 mt-1">
-                    <div className="h-2 w-36 bg-gray-200 rounded">
-                      <div className="h-2 rounded bg-[var(--colorMenus)]" style={{ width: `${b.progreso ?? 0}%` }} />
-                    </div>
-                    <span className="text-sm text-[var(--colorText)]">{b.progreso ?? 0}%</span>
-                  </div>
-                </div>
-              </div>
+              <BookReading
+                title={b.title}
+                autor={b.autor}
+                imageUrl={b.imageUrl}
+                progreso={b.progreso}
+              />
 
               <Link
                 href={`/reader/${b.slug}`}
@@ -126,47 +121,14 @@ export default function LeerAhoraPage() {
         </div>
 
         {/* grilla de libros */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-8">
-          {pageBooks.map(b => (
-            <BookCard
-              key={b.slug}
-              title={b.title}
-              autor={b.autor}
-              imageUrl={b.imageUrl}
-              href={`/reader/${b.slug}`}
-            />
-          ))}
-          {pageBooks.length === 0 && (
-            <p className="text-[var(--colorText)] col-span-full">No se encontraron libros con los filtros actuales.</p>
-          )}
-        </div>
+        <BookGrid books={pageBooks} />
 
         {/* paginación simple */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <button
-            onClick={() => setPage(p => Math.max(1, p - 1))}
-            className="px-3 py-2 rounded-full border disabled:opacity-40"
-            disabled={page === 1}
-          >
-            ‹
-          </button>
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`w-9 h-9 rounded-full border ${page === i + 1 ? "bg-[var(--colorMenus)] text-white" : ""}`}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-            className="px-3 py-2 rounded-full border disabled:opacity-40"
-            disabled={page === totalPages}
-          >
-            ›
-          </button>
-        </div>
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
       </section>
     </main>
   );
