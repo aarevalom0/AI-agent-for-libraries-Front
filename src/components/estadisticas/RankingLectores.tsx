@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import styles from '@/components/Estadisticas.module.css';
+import styles from '@/components/estadisticas/Estadisticas.module.css';
 import { rankingData } from '@/lib/mock-data';
 
 // Función para formatear minutos a "X h Y min"

@@ -1,5 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import {ClubCard} from "@/components/CommunityCard";
+import {ClubCard} from "@/components/community/CommunityCard";
 
 export default function ClubesPage() {
   return (
