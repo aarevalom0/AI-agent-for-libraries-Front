@@ -178,21 +178,6 @@ input, select, textarea {
 .btn:hover   { background: var(--btn-bg-hover); }
 .btn:disabled{ opacity:.5; cursor:not-allowed; }
 
-/* =========================================================
-   8) (OPCIONAL) PREFERENCIA DE SISTEMA
-   Si quisieras que siga la preferencia del sistema *por defecto*,
-   descomenta este bloque. Tu toggle global lo puede sobrescribir.
-   ========================================================= */
-/*
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-*/
-
-/* === Mapeos para compatibilidad con clases existentes === */
 
 
 .text-primary   { color: var(--colorText); }
