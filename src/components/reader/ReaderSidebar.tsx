@@ -6,10 +6,7 @@ import NotesList, { Note } from "./NotesList";
 export default function ReaderSidebar({
   settings, onSet, notes, onAddNote, onDeleteNote, onToggleSidebar,
 }: {
-  settings: {
-    night: boolean; font: "Newsreader"|"serif"|"sans";
-    fontSize: number; bg: "default"|"cream"|"sepia";
-  };
+  settings: { night: boolean; font: "Newsreader"|"serif"|"sans"; fontSize: number; bg: "default"|"cream"|"sepia"; };
   onSet: (s: Partial<typeof settings>) => void;
   notes: Note[];
   onAddNote: (text: string) => void;
@@ -17,13 +14,14 @@ export default function ReaderSidebar({
   onToggleSidebar: () => void;
 }) {
   return (
-    <aside className="relative lg:col-span-4 border rounded-xl p-4">
+    <aside className="relative lg:col-span-4 border reader-border rounded-xl p-4 reader-surface">
       <button
         onClick={onToggleSidebar}
         aria-label="Ocultar herramientas"
-        className="flex items-center justify-center w-8 h-8 rounded-full border bg-white shadow
-                   absolute -left-4 top-6 z-10"
         title="Ocultar herramientas"
+        className="absolute -left-4 top-6 z-10
+                   flex h-8 w-8 items-center justify-center rounded-full
+                   border border-[var(--colorMenus)] bg-[var(--colorMenus)] text-white shadow"
       >
         ‹
       </button>
@@ -31,10 +29,14 @@ export default function ReaderSidebar({
       <h3 className="font-semibold mb-3 text-[var(--colorMenus)]">Herramientas de Lectura</h3>
 
       <div className="space-y-4">
-        <label className="flex items-center gap-3"></label>
+        <label className="flex items-center gap-3">
+          <input type="checkbox" checked={settings.night} onChange={(e) => onSet({ night: e.target.checked })} />
+          <span>Modo nocturno</span>
+        </label>
+
         <div>
           <label className="block text-sm mb-1">Fuente</label>
-          <select className="w-full border rounded-lg px-3 py-2"
+          <select className="w-full border reader-border rounded-lg px-3 py-2 reader-surface"
                   value={settings.font}
                   onChange={(e) => onSet({ font: e.target.value as any })}>
             <option value="Newsreader">Newsreader</option>
@@ -54,12 +56,12 @@ export default function ReaderSidebar({
           <label className="block text-sm mb-1">Color de fondo</label>
           <div className="flex gap-2">
             {[
-              { key: "default", className: "bg-white border" },
-              { key: "cream",   className: "bg-[#F8F4EA] border" },
-              { key: "sepia",   className: "bg-[#F3E5D0] border" },
+              { key: "default", className: "border reader-border reader-surface" },
+              { key: "cream",   className: "border bg-[#F8F4EA]" },
+              { key: "sepia",   className: "border bg-[#F3E5D0]" },
             ].map(b => (
               <button key={b.key as string}
-                onClick={() => onSet({ bg: b.key as any, night: false })}
+                onClick={() => onSet({ bg: b.key as any })}
                 aria-label={b.key as string}
                 className={`w-7 h-7 rounded-full ${b.className} ${
                   settings.bg === b.key ? "outline outline-2 outline-[var(--colorMenus)]" : ""
@@ -68,7 +70,7 @@ export default function ReaderSidebar({
           </div>
         </div>
 
-        <div className="pt-2 border-t">
+        <div className="pt-2 border-t reader-border">
           <h4 className="font-medium mb-2">Notas</h4>
           <NoteForm onAdd={onAddNote} />
           <NotesList notes={notes} onDelete={onDeleteNote} />

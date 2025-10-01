@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { CHAPTERS } from "./chapters";
@@ -12,6 +13,7 @@ import ReaderSidebar from "@/components/reader/ReaderSidebar";
 export default function ReaderPage() {
   const { slug } = useParams<{ slug: string }>();
   const book = CHAPTERS[slug];
+
   if (!book) {
     return (
       <main className="px-6 py-10">
@@ -29,45 +31,71 @@ export default function ReaderPage() {
 
   const chapterText = book.chapters[state.chapter] ?? "";
 
+  useEffect(() => {
+    setSetting({ night: false });
+    // opcional: limpiar rastro si se venía en dark por error
+    document.documentElement.classList.remove("dark");
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (state.settings.night) root.classList.add("dark");
+    else root.classList.remove("dark");
+
+    return () => root.classList.remove("dark");
+  }, [state.settings.night]);
+
   return (
-    <main className="grid grid-cols-1 lg:grid-cols-12 gap-6 px-6 md:px-10 py-6">
-      <section className={["border rounded-xl p-6",
-        state.settings.sidebarOpen ? "lg:col-span-8" : "lg:col-span-12"].join(" ")}>
-        <ReaderHeader title={book.title} chapter={state.chapter} />
-        <ReaderViewport ref={containerRef} className={applyClasses} fontSize={state.settings.fontSize}>
-          {chapterText}
-        </ReaderViewport>
-        <ReaderNavButtons
-          onPrev={goPrev}
-          onNext={goNext}
-          disablePrev={state.chapter === 0}
-          disableNext={state.chapter >= book.chapters.length - 1}
-        />
-      </section>
+    <div className={`reader ${state.settings.night ? "reader-dark" : ""}`} data-bg={state.settings.bg}>
+      <main className="grid grid-cols-1 lg:grid-cols-12 gap-6 px-6 md:px-10 py-6">
+        <section className={[
+          "border reader-border rounded-xl p-6 reader-surface",
+          state.settings.sidebarOpen ? "lg:col-span-8" : "lg:col-span-12",
+        ].join(" ")}>
+          <ReaderHeader title={book.title} chapter={state.chapter} />
 
-      {!state.settings.sidebarOpen && (
-        <button
-          onClick={toggleSidebar}
-          aria-label="Mostrar herramientas"
-          className="fixed right-6 top-1/2 -translate-y-1/2
-                     w-9 h-9 rounded-full border bg-white shadow z-20
-                     flex items-center justify-center"
-          title="Mostrar herramientas"
-        >
-          ›
-        </button>
-      )}
+          <ReaderViewport
+            ref={containerRef}
+            className={`${applyClasses} reader-surface reader-border`}
+            fontSize={state.settings.fontSize}
+            invertProse={state.settings.night}
+          >
+            {chapterText}
+          </ReaderViewport>
 
-      {state.settings.sidebarOpen && (
-        <ReaderSidebar
-          settings={state.settings}
-          onSet={setSetting}
-          notes={state.notes.filter(n => n.chapter === state.chapter)}
-          onAddNote={onAddNote}
-          onDeleteNote={onDeleteNote}
-          onToggleSidebar={toggleSidebar}
-        />
-      )}
-    </main>
+          <ReaderNavButtons
+            onPrev={goPrev}
+            onNext={goNext}
+            disablePrev={state.chapter === 0}
+            disableNext={state.chapter >= book.chapters.length - 1}
+          />
+        </section>
+
+        {!state.settings.sidebarOpen && (
+          <button
+            onClick={toggleSidebar}
+            aria-label="Mostrar herramientas"
+            title="Mostrar herramientas"
+            className="fixed right-6 top-1/2 -translate-y-1/2
+                       w-9 h-9 rounded-full border
+                       border-[var(--colorMenus)] bg-[var(--colorMenus)] text-white
+                       shadow z-20 flex items-center justify-center"
+          >
+            ›
+          </button>
+        )}
+
+        {state.settings.sidebarOpen && (
+          <ReaderSidebar
+            settings={state.settings}
+            onSet={setSetting}
+            notes={state.notes.filter(n => n.chapter === state.chapter)}
+            onAddNote={onAddNote}
+            onDeleteNote={onDeleteNote}
+            onToggleSidebar={toggleSidebar}
+          />
+        )}
+      </main>
+    </div>
   );
 }

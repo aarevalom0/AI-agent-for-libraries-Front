@@ -1,44 +1,16 @@
-// components/navigation/NavBar.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import { setGlobalDarkMode } from "@/app/layoutWrapper";
-
-const THEME_KEY = "lecturium_dark";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("Home");
-  const [dark, setDark] = useState(false);
-
-  // Leer estado inicial (preferencia guardada o sistema)
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(THEME_KEY);
-      const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
-      const enabled = saved == null ? prefersDark : saved === "1";
-      setDark(
-        enabled ||
-        document.documentElement.classList.contains("dark")
-      );
-    } catch {
-      setDark(document.documentElement.classList.contains("dark"));
-    }
-  }, []);
-
-  const toggleDark = () => {
-    const next = !dark;
-    setDark(next);
-    setGlobalDarkMode(next); // único sitio que modifica el modo global
-  };
 
   const linkCls = (name: string) =>
     `px-3 font-newsreader hover:text-brand ${selected === name ? "font-bold text-brand" : "text-[var(--text)]"}`;
@@ -92,15 +64,6 @@ const NavBar = () => {
           <button className="px-3 py-2 rounded-lg border border-elev bg-[var(--input-bg)] text-[var(--text)]/80">
             EN/ES
           </button>
-
-          {/* Toggle Dark */}
-          <button
-            onClick={toggleDark}
-            title={dark ? "Modo claro" : "Modo oscuro"}
-            className="p-2 rounded-lg border border-elev bg-[var(--input-bg)] hover:opacity-80"
-          >
-            {dark ? <LightModeIcon className="text-[var(--text)]/80" /> : <DarkModeIcon className="text-[var(--text)]/80" />}
-          </button>
         </div>
 
         {/* Botón menú móvil */}
@@ -136,15 +99,6 @@ const NavBar = () => {
             <li><Link href="/leerAhora" className={linkCls("Leer Ahora")} onClick={() => setSelected("Leer Ahora")}>Leer Ahora</Link></li>
             <li><Link href="/comunidad" className={linkCls("Comunidad")} onClick={() => setSelected("Comunidad")}>Comunidad</Link></li>
           </ul>
-
-          {/* Toggle Dark en móvil */}
-          <button
-            onClick={toggleDark}
-            className="mt-2 inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-elev bg-[var(--input-bg)] text-[var(--text)]"
-          >
-            {dark ? <LightModeIcon /> : <DarkModeIcon />}
-            {dark ? "Modo claro" : "Modo oscuro"}
-          </button>
         </div>
       )}
     </header>
