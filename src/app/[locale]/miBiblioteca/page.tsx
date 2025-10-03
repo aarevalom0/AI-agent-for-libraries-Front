@@ -7,7 +7,7 @@ import FormularioCrearColeccion from '@/components/formularios/FormularioCrearCo
 import SideMenu from '@/components/navigation/SideMenu';
 import { BookOpen, List, Check, Star, Plus } from "lucide-react";
 import { useState } from "react";
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 const collections = {
   miBiblioteca: [
@@ -22,47 +22,78 @@ const collections = {
     { id: "1", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg" },
   ],
   favoritos: [],
-  crear: [], // Podrías mostrar un formulario aquí
+  crear: [],
 };
 
 export default function BibliotecaPage() {
-  const t = useTranslations('miBiblioteca');
+  const locale = useLocale(); // Detecta el idioma actual
+  const t = useTranslations('miBiblioteca'); // Hook de next-intl
   const [selected, setSelected] = useState<keyof typeof collections>("miBiblioteca");
 
+  // Función helper para obtener traducciones con fallback
+  const getTranslation = (key: string, fallback: string) => {
+    try {
+      // Usa el hook de next-intl
+      return t(key);
+    } catch {
+      // Si falla, usa el fallback correspondiente al idioma
+      if (locale === 'en') {
+        // Fallbacks en inglés
+        const englishFallbacks: Record<string, string> = {
+          'menu.myLibrary': 'My Library',
+          'menu.toRead': 'To Read',
+          'menu.read': 'Read',
+          'menu.favorites': 'Favorites',
+          'menu.createCollection': 'Create Collection',
+          'buttons.requestBook': 'Request Book',
+          'searchPlaceholder': 'Search books...',
+          'emptyStates.createFirstCollection': 'Create your first custom collection!',
+          'emptyStates.noFavorites': 'You have no favorite books yet',
+          'emptyStates.noBooks': 'You have no books in this collection',
+          'emptyStates.markAsFavorite': 'Mark some books as favorites to see them here',
+          'emptyStates.addFirstBook': 'Add your first book to get started'
+        };
+        return englishFallbacks[key] || fallback;
+      } else {
+        // Fallbacks en español
+        return fallback;
+      }
+    }
+  };
+
   const menuOptions = [
-    { path: "miBiblioteca", label: t('menu.myLibrary'), icon: <BookOpen size={18} /> },
-    { path: "leer", label: t('menu.toRead'), icon: <List size={18} /> },
-    { path: "leidos", label: t('menu.read'), icon: <Check size={18} /> },
-    { path: "favoritos", label: t('menu.favorites'), icon: <Star size={18} /> },
-    { path: "crear", label: t('menu.createCollection'), icon: <Plus size={18} /> },
+    { path: "miBiblioteca", label: getTranslation('menu.myLibrary', 'Mi Biblioteca'), icon: <BookOpen size={18} /> },
+    { path: "leer", label: getTranslation('menu.toRead', 'Para leer'), icon: <List size={18} /> },
+    { path: "leidos", label: getTranslation('menu.read', 'Leídos'), icon: <Check size={18} /> },
+    { path: "favoritos", label: getTranslation('menu.favorites', 'Favoritos'), icon: <Star size={18} /> },
+    { path: "crear", label: getTranslation('menu.createCollection', 'Crear Colección'), icon: <Plus size={18} /> },
   ];
 
-  const selectedLabel = menuOptions.find(opt => opt.path === selected)?.label ?? t('menu.myLibrary');
+  const selectedLabel = menuOptions.find(opt => opt.path === selected)?.label ?? getTranslation('menu.myLibrary', 'Mi Biblioteca');
 
   return (
     <div className="flex gap-5">
       <div>
         <SideMenu
           options={menuOptions}
-          selectedF={{ path: "miBiblioteca", label: t('menu.myLibrary'), icon: <BookOpen size={18} /> }}
+          selectedF={{ path: "miBiblioteca", label: getTranslation('menu.myLibrary', 'Mi Biblioteca'), icon: <BookOpen size={18} /> }}
           onSelect={(option) => setSelected(option.path as keyof typeof collections)}
         />
       </div>
-
 
         <div title='Coleeciones' className="w-full">
           {/* Header con título y botón */}
           <div title="Mi Biblioteca titulos" className="flex justify-between items-center p-4">
             <h2 title='Titulo' className="text-3xl items-center font-bold">{selectedLabel}</h2>
             <div title='Solicitar libro' className="pr-5 flex items-center">
-              <BotonPersonalizado texto={t('buttons.requestBook')} href="/miBiblioteca/solicitarlibro" />
+              <BotonPersonalizado texto={getTranslation('buttons.requestBook', 'Solicitar libro')} href="/miBiblioteca/solicitarlibro" />
             </div>
           </div>
 
           {selected === "crear" ? (
             <div className="p-6">
               <div className="text-center py-12 text-gray-500">
-                <p className="text-lg mb-2">{t('emptyStates.createFirstCollection')}</p>
+                <p className="text-lg mb-2">{getTranslation('emptyStates.createFirstCollection', '¡Crea tu primera colección personalizada!')}</p>
               </div>
               <FormularioCrearColeccion />
             </div>
@@ -72,7 +103,7 @@ export default function BibliotecaPage() {
             {/* Barra de búsqueda */}
             <div className="mb-8 w-full">
               <div title='Barra de Busqueda' className="flex items-center w-full px-4 py-2">
-                <BarraBusqueda textHolder={t('searchPlaceholder')} ancho="lg" />
+                <BarraBusqueda textHolder={getTranslation('searchPlaceholder', 'Buscar libros...')} ancho="lg" />
               </div>
             </div>
 
@@ -81,14 +112,14 @@ export default function BibliotecaPage() {
                 <div className="col-span-full text-center py-12 text-gray-500">
                   <p className="text-lg mb-2">
                     {selected === "favoritos" 
-                      ? t('emptyStates.noFavorites')
-                      : t('emptyStates.noBooks')
+                      ? getTranslation('emptyStates.noFavorites', 'No tienes libros favoritos aún')
+                      : getTranslation('emptyStates.noBooks', 'No tienes libros en esta colección')
                     }
                   </p>
                   <p className="text-sm">
                     {selected === "favoritos" 
-                      ? t('emptyStates.markAsFavorite')
-                      : t('emptyStates.addFirstBook')
+                      ? getTranslation('emptyStates.markAsFavorite', 'Marca algunos libros como favoritos para verlos aquí')
+                      : getTranslation('emptyStates.addFirstBook', 'Agrega tu primer libro para comenzar')
                     }
                   </p>
                 </div>

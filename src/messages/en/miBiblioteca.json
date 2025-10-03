@@ -1,31 +1,29 @@
 {
-  "miBiblioteca": {
-    "title": "My Library",
-    "searchPlaceholder": "Search books...",
-    "menu": {
-      "myLibrary": "My Library",
-      "toRead": "To Read",
-      "read": "Read",
-      "favorites": "Favorites",
-      "createCollection": "Create Collection"
-    },
-    "buttons": {
-      "requestBook": "Request book",
-      "seeAll": "See all"
-    },
-    "emptyStates": {
-      "noBooks": "You have no books in this collection",
-      "addFirstBook": "Add your first book to get started",
-      "noFavorites": "You don't have favorite books yet",
-      "markAsFavorite": "Mark some books as favorites to see them here",
-      "createFirstCollection": "Create your first custom collection!"
-    },
-    "collection": {
-      "createTitle": "Create New Collection",
-      "nameLabel": "Collection name",
-      "descriptionLabel": "Description (optional)",
-      "createButton": "Create Collection",
-      "cancel": "Cancel"
-    }
+  "title": "My Library",
+  "searchPlaceholder": "Search books...",
+  "menu": {
+    "myLibrary": "My Library",
+    "toRead": "To Read",
+    "read": "Read",
+    "favorites": "Favorites",
+    "createCollection": "Create Collection"
+  },
+  "buttons": {
+    "requestBook": "Request book",
+    "seeAll": "See all"
+  },
+  "emptyStates": {
+    "noBooks": "You have no books in this collection",
+    "addFirstBook": "Add your first book to get started",
+    "noFavorites": "You don't have favorite books yet",
+    "markAsFavorite": "Mark some books as favorites to see them here",
+    "createFirstCollection": "Create your first custom collection!"
+  },
+  "collection": {
+    "createTitle": "Create New Collection",
+    "nameLabel": "Collection name",
+    "descriptionLabel": "Description (optional)",
+    "createButton": "Create Collection",
+    "cancel": "Cancel"
   }
 }
