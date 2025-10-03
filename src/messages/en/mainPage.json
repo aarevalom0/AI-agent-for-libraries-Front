@@ -1,0 +1,17 @@
+{
+  "mainPage":{
+    "greeting": "Hello {name}!",
+    "subtitle": "Dive into your next literary adventure.",
+    "currentReads": "Current Reads",
+    "featuredEvent": {
+      "pretitle": "Featured Event",
+      "title": "Virtual Book Club",
+      "description": "Join us for a talk on “The Last Chronicle” with author Emily Carter."
+    },
+    "badgesTitle": "Badges and Achievements"
+
+  }
+
+}
+  
+  

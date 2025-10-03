@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export default function Landing() {
+export default async function Landing({ 
+  params 
+}: { 
+  params: Promise<{ locale: string }> 
+}) {
+  const { locale } = await params;
+
   return (
     <main className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md rounded-2xl border p-8 shadow-sm text-center">

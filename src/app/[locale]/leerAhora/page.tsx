@@ -59,6 +59,7 @@ export default function LeerAhoraPage() {
 
   // reset página si cambian filtros
   function onChangeFiltro<T extends React.SetStateAction<string>>(setter: (v: T) => void) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (e: React.ChangeEvent<HTMLSelectElement>) => { setter(e.target.value as any); setPage(1); };
   }
 

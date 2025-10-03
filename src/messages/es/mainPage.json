@@ -1,0 +1,14 @@
+{
+  
+  "mainPage":{
+    "greeting": "Hola {name}!",
+    "subtitle": "Sumérgete en tu próxima aventura literaria.",
+    "currentReads": "Lecturas Actuales",
+    "featuredEvent": {
+      "pretitle": "Evento destacado",
+      "title": "Club de lectura virtual",
+      "description": "Acompáñanos en una charla sobre “La última crónica” con la autora Emily Carter."
+    },
+    "badgesTitle": "Insignias y Logros"
+  }
+}

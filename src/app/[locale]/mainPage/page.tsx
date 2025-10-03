@@ -9,9 +9,13 @@ import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
 import { useRouter } from "next/navigation";   
 import { useEffect, useState } from "react";
 import React from "react";
+import { useTranslations } from 'next-intl';
+
 
 
 export default function MainPage() {
+  const t = useTranslations('mainPage');
+
   const router = useRouter();
   const [usuario, setUsuario] = useState<string>("");
   const [ready, setReady] = useState(false);
@@ -33,8 +37,8 @@ export default function MainPage() {
     <div className="grid grid-cols-1 md:grid-cols-7 gap-6 pt-3">
       <section title="Main section" className="md:col-span-5 pl-6 rounded-lg">
         <div title="Titulos" className='pb-6'>
-          <h2 title="Saludo" className='font-newsreader'> Hola {usuario}! </h2>
-          <h4 className='font-newsreader'>Sumérgete en tu próxima aventura literaria. </h4>
+          <h2 title="Saludo" className='font-newsreader'>{t('mainPage.greeting', { name: usuario })}</h2>
+          <h4 className='font-newsreader'>{t('mainPage.subtitle')}</h4>
         </div>
 
         <div title="Libros Recomendados" className='container flex gap-2 overflow-x-auto pb-6' >
@@ -72,7 +76,7 @@ export default function MainPage() {
         </div>
 
         <div title='Lecturas Actuales' className='py-4'>
-          <h3 className='text-bold font-newsreader pb-4 '>Lecturas Actuales </h3>
+          <h3 className='text-bold font-newsreader pb-4 '>{t('mainPage.currentReads')} </h3>
           <div title="Lecturas actuales" className='flex flex-col gap-3 pl-2'>
             <BookCardProgress
               title="La chica del tren"
@@ -120,7 +124,7 @@ export default function MainPage() {
 
         <div title="Insignias y logros" className=" justify-between items-center w-full px-4 pb-4">
           <h2 title="Titulo sección" className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]">
-            Insignias y Logros
+            {t('mainPage.badgesTitle')}
           </h2>
           <div className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]"> 
             <Insignias

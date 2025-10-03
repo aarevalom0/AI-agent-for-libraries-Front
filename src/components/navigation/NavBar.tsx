@@ -7,8 +7,19 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 
 const NavBar = () => {
+  const AVAILABLE_LOCALES = ["es", "en"];
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+
+  const switchLocale = (newLocale: string) => {
+    router.replace(pathname, { locale: newLocale });
+  };
+  
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("Home");
 
@@ -64,6 +75,20 @@ const NavBar = () => {
           <button className="px-3 py-2 rounded-lg border border-elev bg-[var(--input-bg)] text-[var(--text)]/80">
             EN/ES
           </button>
+          <div className="flex gap-2">
+            {AVAILABLE_LOCALES.map((l) => (
+              <button
+                key={l}
+                onClick={() => switchLocale(l)}
+                className={`px-3 py-1 rounded ${
+                  locale === l ? "bg-blue-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          
         </div>
 
         {/* Botón menú móvil */}
