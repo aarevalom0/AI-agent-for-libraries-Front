@@ -26,6 +26,17 @@ export default function BookDetail({ book, initialReviews, previousPage,previous
        setReviews([newReview, ...reviews]);
     };
 
+    // Manejador para actualizar likes/dislikes
+    const handleLikeUpdate = (reviewId: string, likes: number, dislikes: number) => {
+      setReviews(prevReviews => 
+        prevReviews.map(review => 
+          review.id === reviewId 
+            ? { ...review, likes, dislikes }
+            : review
+        )
+      );
+    };
+
     //Calcular el promedio de las reseñas y que no sea estatico
     const total = reviews.length;
     const average = total
@@ -141,7 +152,7 @@ export default function BookDetail({ book, initialReviews, previousPage,previous
     <div className="mt-10">
       <h3 className="text-xl font-semibold mb-4 text-[var(--colorSecundario)]">Reseñas</h3>
       <AddReviewForm onAdd={handleAddReview} />
-      <ReviewList reviews={reviews} />
+      <ReviewList reviews={reviews} onLikeUpdate={handleLikeUpdate} />
     </div>
   </div>
 );  

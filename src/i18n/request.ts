@@ -13,10 +13,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const messages = locale === 'es'
     ? {
         mainPage: (await import('../messages/es/mainPage.json')).default,
-
+        miBiblioteca: (await import('../messages/es/miBiblioteca.json')).default,
       }
     : {
         mainPage: (await import('../messages/en/mainPage.json')).default,
+        miBiblioteca: (await import('../messages/en/miBiblioteca.json')).default,
     };
 
   return {
