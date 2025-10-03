@@ -1,0 +1,31 @@
+{
+  "miBiblioteca": {
+    "title": "Mi Biblioteca",
+    "searchPlaceholder": "Buscar libros...",
+    "menu": {
+      "myLibrary": "Mi Biblioteca",
+      "toRead": "Para leer",
+      "read": "Leídos",
+      "favorites": "Favoritos",
+      "createCollection": "Crear Colección"
+    },
+    "buttons": {
+      "requestBook": "Solicitar libro",
+      "seeAll": "Ver todo"
+    },
+    "emptyStates": {
+      "noBooks": "No tienes libros en esta colección",
+      "addFirstBook": "Agrega tu primer libro para comenzar",
+      "noFavorites": "No tienes libros favoritos aún",
+      "markAsFavorite": "Marca algunos libros como favoritos para verlos aquí",
+      "createFirstCollection": "¡Crea tu primera colección personalizada!"
+    },
+    "collection": {
+      "createTitle": "Crear Nueva Colección",
+      "nameLabel": "Nombre de la colección",
+      "descriptionLabel": "Descripción (opcional)",
+      "createButton": "Crear Colección",
+      "cancel": "Cancelar"
+    }
+  }
+}
