@@ -10,15 +10,15 @@ import { useState } from "react";
 
 const collections = {
   miBiblioteca: [
-    { id: "1", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg" },
-    { id: "2", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg" },
-    { id: "3", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg" },
+    { id: "2", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg" },
+    { id: "8", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg" },
+    { id: "9", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg" },
   ],
   leer: [
-    { id: "4", title: "El principito", autor: "Antoine de Saint-Exupéry", imageUrl: "/Images/principito.jpg" },
+    { id: "4", title: "El Señor de los Anillos", autor: "J.R.R. Tolkien", imageUrl: "/Images/lotr.jpg" },
   ],
   leidos: [
-    { id: "5", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg" },
+    { id: "1", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg" },
   ],
   favoritos: [],
   crear: [], // Podrías mostrar un formulario aquí
