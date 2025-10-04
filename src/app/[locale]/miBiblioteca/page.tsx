@@ -73,49 +73,79 @@ export default function BibliotecaPage() {
 
   return (
     <div className="flex gap-5">
-      <div>
+      {/* Skip link para accesibilidad */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50 focus:outline-none focus:ring-2 focus:ring-blue-300"
+      >
+        {getTranslation('skipToContent', 'Ir al contenido principal')}
+      </a>
+      
+      <nav aria-label={getTranslation('navigation.collections', 'Navegación de colecciones')}>
         <SideMenu
           options={menuOptions}
           selectedF={{ path: "miBiblioteca", label: getTranslation('menu.myLibrary', 'Mi Biblioteca'), icon: <BookOpen size={18} /> }}
           onSelect={(option) => setSelected(option.path as keyof typeof collections)}
         />
-      </div>
+      </nav>
 
-        <div title='Coleeciones' className="w-full">
+        <main id="main-content" className="w-full" role="main" aria-label={getTranslation('main.libraryContent', 'Contenido de la biblioteca')}>
           {/* Header con título y botón */}
-          <div title="Mi Biblioteca titulos" className="flex justify-between items-center p-4">
-            <h2 title='Titulo' className="text-3xl items-center font-bold">{selectedLabel}</h2>
-            <div title='Solicitar libro' className="pr-5 flex items-center">
-              <BotonPersonalizado texto={getTranslation('buttons.requestBook', 'Solicitar libro')} href="/miBiblioteca/solicitarlibro" />
+          <header className="flex justify-between items-center p-4">
+            <h1 className="text-3xl items-center font-bold text-[var(--colorPrincipal)]" id="page-title">
+              {selectedLabel}
+            </h1>
+            <div className="pr-5 flex items-center">
+              <BotonPersonalizado 
+                texto={getTranslation('buttons.requestBook', 'Solicitar libro')} 
+                href="/miBiblioteca/solicitarlibro"
+                ariaLabel={getTranslation('buttons.requestBookAriaLabel', 'Solicitar un nuevo libro para la biblioteca')}
+              />
             </div>
-          </div>
+          </header>
 
           {selected === "crear" ? (
-            <div className="p-6">
+            <section className="p-6" aria-labelledby="create-collection-heading">
               <div className="text-center py-12 text-gray-500">
-                <p className="text-lg mb-2">{getTranslation('emptyStates.createFirstCollection', '¡Crea tu primera colección personalizada!')}</p>
+                <h2 id="create-collection-heading" className="text-lg mb-2 font-semibold text-[var(--colorSecundario)]">
+                  {getTranslation('emptyStates.createFirstCollection', '¡Crea tu primera colección personalizada!')}
+                </h2>
               </div>
               <FormularioCrearColeccion />
-            </div>
+            </section>
           ) : (
           <div className="flex flex-col w-full">
             
             {/* Barra de búsqueda */}
-            <div className="mb-8 w-full">
-              <div title='Barra de Busqueda' className="flex items-center w-full px-4 py-2">
-                <BarraBusqueda textHolder={getTranslation('searchPlaceholder', 'Buscar libros...')} ancho="lg" />
+            <section className="mb-8 w-full" aria-labelledby="search-section">
+              <h2 id="search-section" className="sr-only">
+                {getTranslation('search.heading', 'Buscar en la colección')}
+              </h2>
+              <div className="flex items-center w-full px-4 py-2">
+                <BarraBusqueda 
+                  textHolder={getTranslation('searchPlaceholder', 'Buscar libros...')} 
+                  ancho="lg"
+                  ariaLabel={getTranslation('search.ariaLabel', 'Buscar libros en tu biblioteca')}
+                />
               </div>
-            </div>
+            </section>
 
-            <div title='Libros de coleccion' className="grid pb-5 grid-cols-2 md:grid-cols-4 gap-6">
+            <section 
+              className="grid pb-5 grid-cols-2 md:grid-cols-4 gap-6" 
+              aria-labelledby="books-section"
+              role="region"
+            >
+              <h2 id="books-section" className="sr-only">
+                {getTranslation('books.heading', 'Libros en')} {selectedLabel}
+              </h2>
               {collections[selected]?.length === 0 ? (
-                <div className="col-span-full text-center py-12 text-gray-500">
-                  <p className="text-lg mb-2">
+                <div className="col-span-full text-center py-12 text-gray-500" role="status" aria-live="polite">
+                  <h3 className="text-lg mb-2 font-semibold">
                     {selected === "favoritos" 
                       ? getTranslation('emptyStates.noFavorites', 'No tienes libros favoritos aún')
                       : getTranslation('emptyStates.noBooks', 'No tienes libros en esta colección')
                     }
-                  </p>
+                  </h3>
                   <p className="text-sm">
                     {selected === "favoritos" 
                       ? getTranslation('emptyStates.markAsFavorite', 'Marca algunos libros como favoritos para verlos aquí')
@@ -134,10 +164,10 @@ export default function BibliotecaPage() {
                   />
                 ))
               )}
-            </div>
+            </section>
           </div>
           )}
-      </div>
+        </main>
     </div>
   );
 }

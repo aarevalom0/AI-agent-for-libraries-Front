@@ -1,6 +1,7 @@
 {
   "title": "My Library",
   "searchPlaceholder": "Search books...",
+  "skipToContent": "Skip to main content",
   "menu": {
     "myLibrary": "My Library",
     "toRead": "To Read",
@@ -8,8 +9,22 @@
     "favorites": "Favorites",
     "createCollection": "Create Collection"
   },
+  "navigation": {
+    "collections": "Collections navigation"
+  },
+  "main": {
+    "libraryContent": "Library content"
+  },
+  "search": {
+    "heading": "Search in collection",
+    "ariaLabel": "Search books in your library"
+  },
+  "books": {
+    "heading": "Books in"
+  },
   "buttons": {
     "requestBook": "Request book",
+    "requestBookAriaLabel": "Request a new book for the library",
     "seeAll": "See all"
   },
   "emptyStates": {
