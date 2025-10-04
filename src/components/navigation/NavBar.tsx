@@ -50,15 +50,6 @@ const NavBar = () => {
 
         {/* Acciones derecha (desktop) */}
         <div className="hidden md:flex items-center gap-3">
-          {/* buscador */}
-          <div className="pl-2 flex items-center w-44 h-10 rounded-lg border border-elev bg-[var(--input-bg)]">
-            <SearchIcon className="text-[var(--text)]/60" />
-            <input
-              type="text"
-              placeholder={t('navbar.searchPlaceholder')} 
-              className="flex-1 px-2 text-sm bg-transparent outline-none text-[var(--text)] placeholder:text-[var(--text)]/50"
-            />
-          </div>
 
           {/* notificaciones */}
           <button title={t('navbar.notifications')}  className="cursor-pointer p-2 rounded-lg border border-elev bg-[var(--input-bg)] hover:opacity-80">
