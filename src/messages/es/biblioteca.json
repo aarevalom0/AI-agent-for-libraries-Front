@@ -1,0 +1,38 @@
+{
+  "menu": {
+    "miBiblioteca": "Mi Biblioteca",
+    "leer": "Para leer",
+    "leidos": "Leídos",
+    "favoritos": "Favoritos",
+    "crear": "Crear Colección"
+  },
+  "header": {
+    "solicitarLibro": "Solicitar libro",
+    "buscarPlaceholder": "Buscar en mi biblioteca"
+  },
+  "collections": {
+    "miBiblioteca": {
+      "label": "Mi Biblioteca",
+      "books": [
+        { "id": "1", "title": "1984", "autor": "George Orwell", "imageUrl": "/Images/1984.jpg" },
+        { "id": "2", "title": "La chica del tren", "autor": "Paula Hawkins", "imageUrl": "/Images/girl-train.jpg" },
+        { "id": "3", "title": "Harry Potter y la piedra filosofal", "autor": "J.K. Rowling", "imageUrl": "/Images/harry-potter.jpg" }
+      ]
+    },
+    "leer": {
+      "label": "Para leer",
+      "books": [
+        { "id": "4", "title": "El principito", "autor": "Antoine de Saint-Exupéry", "imageUrl": "/Images/principito.jpg" }
+      ]
+    },
+    "leidos": {
+      "label": "Leídos",
+      "books": [
+        { "id": "5", "title": "Cien años de soledad", "autor": "Gabriel García Márquez", "imageUrl": "/Images/CienAniosSoledad.jpg" }
+      ]
+    },
+    "favoritos": { "label": "Favoritos", "books": [] },
+    "crear": { "label": "Crear Colección", "books": [] }
+  }
+
+}

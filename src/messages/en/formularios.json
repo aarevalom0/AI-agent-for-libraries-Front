@@ -1,0 +1,68 @@
+{
+    "formulario_sol_libro":{
+        "page": {
+            "title": "Request Book",
+            "breadcrumb": {
+            "home": "My Library",
+            "current": "Request Book"
+            },
+            "instructions": "Please complete the following form to request a book."
+        },
+        "form": {
+            "fields": {
+            "titulo": "Title",
+            "nombreAutor": "Author's Name",
+            "isbn": "ISBN",
+            "editorial": "Publisher",
+            "anioPublicacion": "Year of Publication",
+            "numeroPaginas": "Number of Pages",
+            "idioma": "Language",
+            "generos": "Genres",
+            "resumen": "Summary",
+            "imagenPortada": "Cover Image"
+            },
+            "placeholders": {
+            "genero": "Genre"
+            },
+            "buttons": {
+            "agregarGenero": "Add Genre",
+            "eliminar": "Remove",
+            "submit": "Create Request"
+            }
+        },
+        "errors": {
+            "titulo": "The book title is required",
+            "nombreAutor": "The author's name is required",
+            "isbn": "The ISBN is required",
+            "editorial": "The publisher is required",
+            "anioPublicacion": "The year of publication is required",
+            "numeroPaginas": "The number of pages is required",
+            "idioma": "The language is required",
+            "genero": "At least one genre is required",
+            "resumenCorto": "The summary must be longer",
+            "resumen": "The summary cannot exceed 255 characters",
+            "imagenPortada": "The image must be a valid URL"
+        }
+
+    },
+    "formulario_crear_coleccion": {
+        "title": "Create Collection Form",
+        "nameCollection": {
+            "label": "Name:",
+            "placeholder": "",
+            "errors": {
+            "required": "The collection name is required"
+            }
+        },
+        "description": {
+            "label": "Description:",
+            "placeholder": "The description is optional",
+            "errors": {
+            "maxLength": "The description cannot exceed 255 characters"
+            }
+        },
+        "button": {
+        "submit": "Create Collection"
+        }
+    }
+}

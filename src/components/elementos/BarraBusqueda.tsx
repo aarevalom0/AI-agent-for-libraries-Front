@@ -18,7 +18,7 @@ const BarraBusqueda = ({textHolder, ancho}: BarraBusquedaProps) => {
             <input
                 type="text"
                 placeholder={textHolder}
-                className="bg-transparent text-[var(--colorSecundario)] outline-none flex-1 "
+                className="!bg-[var(--colorBarras)] text-[var(--colorSecundario)] outline-none flex-1 "
                 onChange={(e) => setBusqueda(e.target.value)}
             />
         </div>

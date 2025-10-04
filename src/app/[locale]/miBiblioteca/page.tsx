@@ -7,6 +7,7 @@ import FormularioCrearColeccion from '@/components/formularios/FormularioCrearCo
 import SideMenu from '@/components/navigation/SideMenu';
 import { BookOpen, List, Check, Star, Plus } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const collections = {
   miBiblioteca: [
@@ -24,16 +25,28 @@ const collections = {
   crear: [], // Podrías mostrar un formulario aquí
 };
 
-const menuOptions = [
-  { path: "miBiblioteca", label: "Mi Biblioteca", icon: <BookOpen size={18} /> },
-  { path: "leer", label: "Para leer", icon: <List size={18} /> },
-  { path: "leidos", label: "Leídos", icon: <Check size={18} /> },
-  { path: "favoritos", label: "Favoritos", icon: <Star size={18} /> },
-  { path: "crear", label: "Crear Colección", icon: <Plus size={18} /> },
-];
+interface Book{
+  id:string,
+  title:string,
+  autor:string,
+  imageUrl:string
+}
+
+
 
 export default function BibliotecaPage() {
+  const t = useTranslations("biblioteca");
+  const collections = t.raw("collections");
   const [selected, setSelected] = useState<keyof typeof collections>("miBiblioteca");
+  
+  const menuOptions = [
+    { path: "miBiblioteca", label: t("menu.miBiblioteca"), icon: <BookOpen size={18} /> },
+    { path: "leer", label: t("menu.leer"), icon: <List size={18} /> },
+    { path: "leidos", label: t("menu.leidos"), icon: <Check size={18} /> },
+    { path: "favoritos", label: t("menu.favoritos"), icon: <Star size={18} /> },
+    { path: "crear", label: t("menu.crear"), icon: <Plus size={18} /> },
+  ];
+
   const selectedLabel = menuOptions.find(opt => opt.path === selected)?.label ?? "Mi Biblioteca";
 
   return (
@@ -52,7 +65,7 @@ export default function BibliotecaPage() {
           <div title="Mi Biblioteca titulos" className="flex justify-between items-center p-4">
             <h2 title='Titulo' className="text-3xl items-center font-bold">{selectedLabel}</h2>
             <div title='Solicitar libro' className="pr-5 flex items-center">
-              <BotonPersonalizado  texto="Solicitar libro" href="/miBiblioteca/solicitarlibro" />
+              <BotonPersonalizado  texto={t("header.solicitarLibro")} href="/miBiblioteca/solicitarlibro" />
             </div>
           </div>
 
@@ -64,12 +77,12 @@ export default function BibliotecaPage() {
             {/* Barra de búsqueda */}
             <div className="mb-8 w-full">
               <div title='Barra de Busqueda' className="flex items-center w-full px-4 py-2">
-                <BarraBusqueda textHolder="Buscar en mi biblioteca" ancho="lg" />
+                <BarraBusqueda textHolder={t("header.buscarPlaceholder")} ancho="lg" />
               </div>
             </div>
 
-            <div title='Libros de coleccion' className="grid pb-5 grid-cols-2 md:grid-cols-4 gap-6">
-              {collections[selected]?.map((b) => (
+            <div title="Libros de coleccion" className="grid pb-5 grid-cols-2 md:grid-cols-4 gap-6">
+              {collections[selected]?.books.map((b: Book) => (
                 <BookCard
                   key={b.id}
                   title={b.title}

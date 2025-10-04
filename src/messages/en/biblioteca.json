@@ -1,0 +1,38 @@
+{
+  "menu": {
+    "miBiblioteca": "My Library",
+    "leer": "To Read",
+    "leidos": "Read",
+    "favoritos": "Favorites",
+    "crear": "Create Collection"
+  },
+  "header": {
+    "solicitarLibro": "Request book",
+    "buscarPlaceholder": "Search in my library"
+  },
+  "collections": {
+    "miBiblioteca": {
+      "label": "My Library",
+      "books": [
+        { "id": "1", "title": "1984", "autor": "George Orwell", "imageUrl": "/Images/1984.jpg" },
+        { "id": "2", "title": "The Girl on the Train", "autor": "Paula Hawkins", "imageUrl": "/Images/girl-train.jpg" },
+        { "id": "3", "title": "Harry Potter and the Philosopher's Stone", "autor": "J.K. Rowling", "imageUrl": "/Images/harry-potter.jpg" }
+      ]
+    },
+    "leer": {
+      "label": "To Read",
+      "books": [
+        { "id": "4", "title": "The Little Prince", "autor": "Antoine de Saint-Exupéry", "imageUrl": "/Images/principito.jpg" }
+      ]
+    },
+    "leidos": {
+      "label": "Read",
+      "books": [
+        { "id": "5", "title": "One Hundred Years of Solitude", "autor": "Gabriel García Márquez", "imageUrl": "/Images/CienAniosSoledad.jpg" }
+      ]
+    },
+    "favoritos": { "label": "Favorites", "books": [] },
+    "crear": { "label": "Create Collection", "books": [] }
+  }
+}
+
