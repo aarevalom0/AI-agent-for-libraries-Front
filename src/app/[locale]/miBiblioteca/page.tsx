@@ -16,11 +16,24 @@ export default function BibliotecaPage() {
   const t = useTranslations('miBiblioteca'); // Hook de next-intl
   const { getTranslatedBooks } = useTranslatedContent(); // Hook para contenido traducido
 
+  // Estado para la búsqueda
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selected, setSelected] = useState<"miBiblioteca" | "leer" | "leidos" | "favoritos" | "crear">("miBiblioteca");
+
   // Obtener libros traducidos según el idioma actual
   const translatedBooks = getTranslatedBooks(userBooks);
 
-  // Crear colecciones con libros traducidos
-  const collections = {
+  // Función para filtrar libros por búsqueda
+  const filterBooksBySearch = (books: typeof translatedBooks) => {
+    if (!searchTerm.trim()) return books;
+    
+    return books.filter(book => 
+      book.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  // Crear colecciones con libros traducidos y filtrados
+  const allCollections = {
     miBiblioteca: translatedBooks.filter(book => ['2', '8', '9'].includes(book.id)),
     leer: translatedBooks.filter(book => book.id === '4'),
     leidos: translatedBooks.filter(book => book.id === '1'),
@@ -28,7 +41,11 @@ export default function BibliotecaPage() {
     crear: [] as typeof translatedBooks,
   };
 
-  const [selected, setSelected] = useState<keyof typeof collections>("miBiblioteca");
+  // Aplicar filtro de búsqueda a la colección seleccionada
+  const collections = {
+    ...allCollections,
+    [selected]: filterBooksBySearch(allCollections[selected])
+  };
 
   // Función helper para obtener traducciones con fallback
   const getTranslation = (key: string, fallback: string) => {
@@ -85,7 +102,11 @@ export default function BibliotecaPage() {
         <SideMenu
           options={menuOptions}
           selectedF={{ path: "miBiblioteca", label: getTranslation('menu.myLibrary', 'Mi Biblioteca'), icon: <BookOpen size={18} /> }}
-          onSelect={(option) => setSelected(option.path as keyof typeof collections)}
+          onSelect={(option) => {
+            const newSelected = option.path as "miBiblioteca" | "leer" | "leidos" | "favoritos" | "crear";
+            setSelected(newSelected);
+            setSearchTerm(""); // Limpiar búsqueda al cambiar de colección
+          }}
         />
       </nav>
 
@@ -126,6 +147,7 @@ export default function BibliotecaPage() {
                   textHolder={getTranslation('searchPlaceholder', 'Buscar libros...')} 
                   ancho="lg"
                   ariaLabel={getTranslation('search.ariaLabel', 'Buscar libros en tu biblioteca')}
+                  onSearch={setSearchTerm}
                 />
               </div>
             </section>
