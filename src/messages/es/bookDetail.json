@@ -1,24 +1,43 @@
 {
+  "skipToBookContent": "Ir al contenido del libro",
+  "breadcrumb": {
+    "navigation": "Navegación de migas de pan"
+  },
   "buttons": {
     "bookDetails": "Detalles del libro",
+    "bookDetailsAriaLabel": "Ver más detalles sobre este libro",
     "share": "Compartir",
+    "shareAriaLabel": "Compartir este libro",
     "addReview": "Agregar reseña",
     "submitReview": "Enviar reseña",
     "cancel": "Cancelar"
   },
+  "actions": {
+    "bookActions": "Acciones del libro"
+  },
   "labels": {
+    "description": "Descripción del libro",
+    "genres": "Géneros del libro",
     "addToCollection": "Añadir a colección:",
     "selectCollection": "Selecciona colección",
+    "selectCollectionLabel": "Seleccionar colección para añadir el libro",
     "favoritos": "Favoritos",
     "pendientes": "Pendientes",
     "leidos": "Leídos",
     "reviews": "reseñas",
     "reviewsTitle": "Reseñas",
+    "addReviewTitle": "Añadir nueva reseña",
+    "reviewsListTitle": "Lista de reseñas",
+    "ratingStatistics": "Estadísticas de calificaciones",
+    "ratingDistribution": "Distribución de calificaciones",
     "rating": "Tu calificación:",
     "comment": "Comentario",
     "by": "por",
     "like": "Me gusta",
     "dislike": "No me gusta"
+  },
+  "help": {
+    "collectionSelect": "Usa las flechas para navegar y Enter para seleccionar una colección"
   },
   "placeholders": {
     "writeReview": "Escribe un comentario...",

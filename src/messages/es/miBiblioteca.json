@@ -1,6 +1,7 @@
 {
   "title": "Mi Biblioteca",
   "searchPlaceholder": "Buscar libros...",
+  "skipToContent": "Ir al contenido principal",
   "menu": {
     "myLibrary": "Mi Biblioteca",
     "toRead": "Para leer",
@@ -8,8 +9,22 @@
     "favorites": "Favoritos",
     "createCollection": "Crear Colección"
   },
+  "navigation": {
+    "collections": "Navegación de colecciones"
+  },
+  "main": {
+    "libraryContent": "Contenido de la biblioteca"
+  },
+  "search": {
+    "heading": "Buscar en la colección",
+    "ariaLabel": "Buscar libros en tu biblioteca"
+  },
+  "books": {
+    "heading": "Libros en"
+  },
   "buttons": {
     "requestBook": "Solicitar libro",
+    "requestBookAriaLabel": "Solicitar un nuevo libro para la biblioteca",
     "seeAll": "Ver todo"
   },
   "emptyStates": {
