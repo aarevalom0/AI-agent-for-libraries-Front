@@ -8,26 +8,26 @@ import SideMenu from '@/components/navigation/SideMenu';
 import { BookOpen, List, Check, Star, Plus } from "lucide-react";
 import { useState } from "react";
 import { useTranslations, useLocale } from 'next-intl';
-
-const collections = {
-  miBiblioteca: [
-    { id: "2", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg" },
-    { id: "8", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg" },
-    { id: "9", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg" },
-  ],
-  leer: [
-    { id: "4", title: "El Señor de los Anillos", autor: "J.R.R. Tolkien", imageUrl: "/Images/lotr.jpg" },
-  ],
-  leidos: [
-    { id: "1", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg" },
-  ],
-  favoritos: [],
-  crear: [],
-};
+import { useTranslatedContent } from '@/lib/useTranslatedContent';
+import { userBooks } from '@/lib/mock-data';
 
 export default function BibliotecaPage() {
   const locale = useLocale(); // Detecta el idioma actual
   const t = useTranslations('miBiblioteca'); // Hook de next-intl
+  const { getTranslatedBooks } = useTranslatedContent(); // Hook para contenido traducido
+
+  // Obtener libros traducidos según el idioma actual
+  const translatedBooks = getTranslatedBooks(userBooks);
+
+  // Crear colecciones con libros traducidos
+  const collections = {
+    miBiblioteca: translatedBooks.filter(book => ['2', '8', '9'].includes(book.id)),
+    leer: translatedBooks.filter(book => book.id === '4'),
+    leidos: translatedBooks.filter(book => book.id === '1'),
+    favoritos: [] as typeof translatedBooks,
+    crear: [] as typeof translatedBooks,
+  };
+
   const [selected, setSelected] = useState<keyof typeof collections>("miBiblioteca");
 
   // Función helper para obtener traducciones con fallback
@@ -128,8 +128,8 @@ export default function BibliotecaPage() {
                   <BookCard
                     key={b.id}
                     title={b.title}
-                    autor={b.autor}
-                    imageUrl={b.imageUrl}
+                    autor={b.author}
+                    imageUrl={b.cover || '/placeholder-cover.png'}
                     href={`/miBiblioteca/libros/${b.id}`}
                   />
                 ))

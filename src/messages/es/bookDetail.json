@@ -1,0 +1,43 @@
+{
+  "buttons": {
+    "bookDetails": "Detalles del libro",
+    "share": "Compartir",
+    "addReview": "Agregar reseña",
+    "submitReview": "Enviar reseña",
+    "cancel": "Cancelar"
+  },
+  "labels": {
+    "addToCollection": "Añadir a colección:",
+    "selectCollection": "Selecciona colección",
+    "favoritos": "Favoritos",
+    "pendientes": "Pendientes",
+    "leidos": "Leídos",
+    "reviews": "reseñas",
+    "reviewsTitle": "Reseñas",
+    "rating": "Tu calificación:",
+    "comment": "Comentario",
+    "by": "por",
+    "like": "Me gusta",
+    "dislike": "No me gusta"
+  },
+  "placeholders": {
+    "writeReview": "Escribe un comentario...",
+    "reviewTitle": "Título de tu reseña (opcional)"
+  },
+  "messages": {
+    "noReviews": "Aún no hay reseñas para este libro.",
+    "beFirst": "¡Sé el primero en escribir una!",
+    "thankYou": "¡Gracias por tu reseña!",
+    "reviewAdded": "Tu reseña ha sido agregada exitosamente.",
+    "submitting": "Enviando..."
+  },
+  "validation": {
+    "pleaseRate": "Pon tu calificación (estrellas) y un comentario.",
+    "pleaseComment": "Por favor, escribe un comentario"
+  },
+  "errors": {
+    "bookNotFound": "Libro no encontrado",
+    "bookNotFoundDesc": "El libro que buscas no existe o ha sido movido.",
+    "backToLibrary": "Volver a Mi Biblioteca"
+  }
+}
