@@ -9,21 +9,7 @@ import { BookOpen, List, Check, Star, Plus } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-const collections = {
-  miBiblioteca: [
-    { id: "1", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg" },
-    { id: "2", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg" },
-    { id: "3", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg" },
-  ],
-  leer: [
-    { id: "4", title: "El principito", autor: "Antoine de Saint-Exupéry", imageUrl: "/Images/principito.jpg" },
-  ],
-  leidos: [
-    { id: "5", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg" },
-  ],
-  favoritos: [],
-  crear: [], // Podrías mostrar un formulario aquí
-};
+
 
 interface Book{
   id:string,
@@ -38,6 +24,7 @@ export default function BibliotecaPage() {
   const t = useTranslations("biblioteca");
   const collections = t.raw("collections");
   const [selected, setSelected] = useState<keyof typeof collections>("miBiblioteca");
+  const [search, setSearch] = useState("");
   
   const menuOptions = [
     { path: "miBiblioteca", label: t("menu.miBiblioteca"), icon: <BookOpen size={18} /> },
@@ -48,6 +35,11 @@ export default function BibliotecaPage() {
   ];
 
   const selectedLabel = menuOptions.find(opt => opt.path === selected)?.label ?? "Mi Biblioteca";
+
+  const filteredBooks = collections[selected]?.books.filter((b: Book) =>
+    b.title.toLowerCase().includes(search.toLowerCase()) ||
+    b.autor.toLowerCase().includes(search.toLowerCase())
+  ) ?? [];
 
   return (
     <div className="flex gap-5">
@@ -77,12 +69,12 @@ export default function BibliotecaPage() {
             {/* Barra de búsqueda */}
             <div className="mb-8 w-full">
               <div title='Barra de Busqueda' className="flex items-center w-full px-4 py-2">
-                <BarraBusqueda textHolder={t("header.buscarPlaceholder")} ancho="lg" />
+                <BarraBusqueda textHolder={t("header.buscarPlaceholder")} ancho="lg" value={search} onChange={setSearch}/>
               </div>
             </div>
 
             <div title="Libros de coleccion" className="grid pb-5 grid-cols-2 md:grid-cols-4 gap-6">
-              {collections[selected]?.books.map((b: Book) => (
+              {filteredBooks.map((b: Book) => (
                 <BookCard
                   key={b.id}
                   title={b.title}
