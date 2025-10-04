@@ -8,6 +8,7 @@ import ReviewList from '../reviews/ReviewList';
 import type { Review } from '@/types/review';
 import type { Book } from '@/types/book';
 import BotonPersonalizado from '../elementos/BotonPersonalizado';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface BookDetailProps {
   book: Book;
@@ -17,7 +18,34 @@ interface BookDetailProps {
 }
 
 export default function BookDetail({ book, initialReviews, previousPage,previousPageHref }: BookDetailProps) {
-    const pageUrl = typeof window !== "undefined" ? window.location.href : "";
+    const locale = useLocale();
+    const t = useTranslations('bookDetail');
+
+    // Función helper para obtener traducciones con fallback
+    const getTranslation = (key: string, fallback: string) => {
+      try {
+        return t(key);
+      } catch {
+        if (locale === 'en') {
+          // Fallbacks en inglés
+          const englishFallbacks: Record<string, string> = {
+            'buttons.bookDetails': 'Book Details',
+            'buttons.share': 'Share',
+            'labels.addToCollection': 'Add to collection:',
+            'labels.selectCollection': 'Select collection',
+            'labels.favoritos': 'Favorites',
+            'labels.pendientes': 'To Read',
+            'labels.leidos': 'Read',
+            'labels.reviews': 'reviews',
+            'labels.reviewsTitle': 'Reviews',
+            'labels.by': 'by'
+          };
+          return englishFallbacks[key] || fallback;
+        } else {
+          return fallback;
+        }
+      }
+    };
 
     // Manejador para añadir reseñas (optimista)
     const [reviews, setReviews] = useState<Review[]>(initialReviews);
@@ -75,16 +103,16 @@ export default function BookDetail({ book, initialReviews, previousPage,previous
         <h1 className="text-3xl font-bold text-[var(--colorPrincipal)]">
           {book.title}
         </h1>
-        <p className="text-lg text-[var(--colorSecundario)]">por {book.author}</p>
+        <p className="text-lg text-[var(--colorSecundario)]">{getTranslation('labels.by', 'por')} {book.author}</p>
 
         {/* Botones */}
         <div className="flex gap-3">
           <BotonPersonalizado
-            texto="Detalles del libro"
+            texto={getTranslation('buttons.bookDetails', 'Detalles del libro')}
             href={book.infoURL || '#'}
           />
           <BotonPersonalizado
-            texto="Compartir"
+            texto={getTranslation('buttons.share', 'Compartir')}
             href={'#'}
           />
           
@@ -106,12 +134,12 @@ export default function BookDetail({ book, initialReviews, previousPage,previous
 
         {/* Añadir a colección */}
         <div className="mt-4">
-          <p className="font-semibold text-[var(--colorSecundario)]">Añadir a colección:</p>
+          <p className="font-semibold text-[var(--colorSecundario)]">{getTranslation('labels.addToCollection', 'Añadir a colección:')}</p>
           <select className="w-full mt-1 p-2 border border-gray-300 rounded bg-white text-[var(--colorSecundario)]">
-            <option value="">Selecciona colección</option>
-            <option value="favoritos">Favoritos</option>
-            <option value="pendientes">Pendientes</option>
-            <option value="leídos">Leídos</option>
+            <option value="">{getTranslation('labels.selectCollection', 'Selecciona colección')}</option>
+            <option value="favoritos">{getTranslation('labels.favoritos', 'Favoritos')}</option>
+            <option value="pendientes">{getTranslation('labels.pendientes', 'Pendientes')}</option>
+            <option value="leídos">{getTranslation('labels.leidos', 'Leídos')}</option>
           </select>
         </div>
       </div>
@@ -123,7 +151,7 @@ export default function BookDetail({ book, initialReviews, previousPage,previous
       <div className="flex flex-col items-center w-1/4">
         <h2 className="text-5xl font-bold text-[var(--colorMenus)]">{average.toFixed(1)}</h2>
         <RatingStars value={average} readOnly />
-        <p className="text-[var(--colorSecundario)]">{total} reseñas</p>
+        <p className="text-[var(--colorSecundario)]">{total} {getTranslation('labels.reviews', 'reseñas')}</p>
       </div>
 
       {/* Barras */}
@@ -150,7 +178,7 @@ export default function BookDetail({ book, initialReviews, previousPage,previous
 
     {/* Reseñas */}
     <div className="mt-10">
-      <h3 className="text-xl font-semibold mb-4 text-[var(--colorSecundario)]">Reseñas</h3>
+      <h3 className="text-xl font-semibold mb-4 text-[var(--colorSecundario)]">{getTranslation('labels.reviewsTitle', 'Reseñas')}</h3>
       <AddReviewForm onAdd={handleAddReview} />
       <ReviewList reviews={reviews} onLikeUpdate={handleLikeUpdate} />
     </div>

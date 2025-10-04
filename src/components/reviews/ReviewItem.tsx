@@ -3,6 +3,7 @@ import Image from 'next/image';
 import RatingStars from './RatingStars';
 import type { Review } from '@/types/review';
 import { useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface ReviewItemProps {
   review: Review;
@@ -10,6 +11,26 @@ interface ReviewItemProps {
 }
 
 const ReviewItem = ({ review, onLikeUpdate }: ReviewItemProps) => {
+  const locale = useLocale();
+  const t = useTranslations('bookDetail');
+  
+  // Función helper para obtener traducciones con fallback
+  const getTranslation = (key: string, fallback: string) => {
+    try {
+      return t(key);
+    } catch {
+      if (locale === 'en') {
+        const englishFallbacks: Record<string, string> = {
+          'labels.like': 'Like',
+          'labels.dislike': 'Dislike'
+        };
+        return englishFallbacks[key] || fallback;
+      } else {
+        return fallback;
+      }
+    }
+  };
+
   const [currentLikes, setCurrentLikes] = useState(review.likes ?? 0);
   const [currentDislikes, setCurrentDislikes] = useState(review.dislikes ?? 0);
   const [userVote, setUserVote] = useState<'like' | 'dislike' | null>(null);
@@ -90,7 +111,7 @@ const ReviewItem = ({ review, onLikeUpdate }: ReviewItemProps) => {
                 ? 'bg-green-100 text-green-700'
                 : 'text-gray-600 hover:bg-gray-100'
             }`}
-            title="Me gusta"
+            title={getTranslation('labels.like', 'Me gusta')}
           >
             <span className={userVote === 'like' ? '👍' : '👍'}>👍</span>
             <span>{currentLikes}</span>
@@ -103,7 +124,7 @@ const ReviewItem = ({ review, onLikeUpdate }: ReviewItemProps) => {
                 ? 'bg-red-100 text-red-700'
                 : 'text-gray-600 hover:bg-gray-100'
             }`}
-            title="No me gusta"
+            title={getTranslation('labels.dislike', 'No me gusta')}
           >
             <span className={userVote === 'dislike' ? '👎' : '👎'}>👎</span>
             <span>{currentDislikes}</span>
