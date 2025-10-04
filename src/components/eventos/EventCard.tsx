@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import BotonPersonalizado from '@/components/elementos/BotonPersonalizado';
+import { useTranslations } from 'next-intl';
 
 interface EventCardProp {
     pretitulo?: string;
@@ -11,6 +12,7 @@ interface EventCardProp {
 
 
 const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardProp) => {
+    const t = useTranslations('componentes');
     return(
         <div className='flex py-8'>
             <div className='flex flex-col gap-3'>
@@ -22,7 +24,7 @@ const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardPr
                     <p className='text-[var(--colorSecundario)] text-[0.8rem'>{descripcion}</p>
                 </div>
                 <div className='mt-auto pb-5'>
-                    <BotonPersonalizado texto='Ver más...' href={href}/>
+                    <BotonPersonalizado texto={t('botonEventos.texto')} href={href}/>
                 </div>
             </div>
 
