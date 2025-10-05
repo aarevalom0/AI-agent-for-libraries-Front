@@ -11,9 +11,9 @@ interface BookCardProgressProps {
 }
 
 
-const BookCardProgress = ({ title, autor, imageUrl, porcentaje, href}: BookCardProgressProps) => {
+const BookCardProgress = ({ title, autor, imageUrl, porcentaje, href, ...props}: BookCardProgressProps) => {
     return(
-        <Link href={href} className='grid grid-cols-1 md:grid-cols-4 items-center gap-0 w-full'>
+        <Link href={href} className='grid grid-cols-1 md:grid-cols-4 items-center gap-0 w-full' {...props}>
             <div className='mr-auto md:col-span-1 flex items-center'>
                 <div className="relative w-[90px] h-[150px]">
                     <Image 

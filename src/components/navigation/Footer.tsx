@@ -11,7 +11,7 @@ const Footer = () => {
   const t = useTranslations("navegacion");
   
   return (
-    <footer className="bg-[var(--colorSecundario)] border-t border-elev">
+    <footer data-testid="main-footer" className="bg-[var(--colorSecundario)] border-t border-elev">
       <div className=" container mx-auto flex flex-col items-center gap-4 py-10">
         <nav className="flex flex-wrap justify-center gap-4 font-newsreader">
           <Link href="/mainPage" className="text-white hover:text-brand"> {t("footer.links.home")} </Link>

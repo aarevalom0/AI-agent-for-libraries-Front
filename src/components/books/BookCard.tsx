@@ -8,9 +8,9 @@ interface BookCardProps {
   href: string;
 }
 
-const BookCard = ({ title, autor, imageUrl, href}: BookCardProps) => {
+const BookCard = ({ title, autor, imageUrl, href, ...props}: BookCardProps) => {
     return(
-        <article className="flex mx-auto flex-col items-center gap-1 group">
+        <article className="flex mx-auto flex-col items-center gap-1 group" {...props}>
             <Link 
                 href={href} 
                 className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg "
