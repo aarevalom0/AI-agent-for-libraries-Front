@@ -21,7 +21,7 @@ describe('BookDetail Page', () => {
     // Verificar elementos básicos del libro
     cy.get('img[alt*="Portada del libro"]').should('exist');
     cy.get('h1').should('exist'); // Título del libro
-    cy.get('nav[aria-label="Navegación de ruta"]').should('exist'); // Breadcrumb
+    cy.get('nav[aria-label*="migas de pan"]').should('exist'); // Breadcrumb con el texto real
   });
 
   it('muestra la información del libro correctamente', () => {
@@ -33,9 +33,9 @@ describe('BookDetail Page', () => {
   });
 
   it('permite navegación de regreso a Mi Biblioteca', () => {
-    // Verificar enlace en el breadcrumb
-    cy.get('nav[aria-label="Navegación de ruta"] a[href="/miBiblioteca"]').should('exist');
-    cy.get('nav[aria-label="Navegación de ruta"] a[href="/miBiblioteca"]').first().click();
+    // Verificar enlace en el breadcrumb (href viene del prop previousPageHref que es '/miBiblioteca')
+    cy.get('nav ol li a').should('exist').and('have.attr', 'href', '/miBiblioteca');
+    cy.get('nav ol li a').first().click();
     cy.url().should('include', '/miBiblioteca');
   });
 
