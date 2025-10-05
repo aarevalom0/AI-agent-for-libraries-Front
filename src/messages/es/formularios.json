@@ -1,0 +1,68 @@
+{
+    "formulario_sol_libro":{
+        "page": {
+            "title": "Solicitar libro",
+            "breadcrumb": {
+            "home": "Mi Biblioteca",
+            "current": "Solicitar Libro"
+            },
+            "instructions": "Por favor, complete el siguiente formulario para solicitar un libro."
+        },
+        "form": {
+            "fields": {
+            "titulo": "Título",
+            "nombreAutor": "Nombre del Autor",
+            "isbn": "ISBN",
+            "editorial": "Editorial",
+            "anioPublicacion": "Año de Publicación",
+            "numeroPaginas": "Número de Páginas",
+            "idioma": "Idioma",
+            "generos": "Géneros",
+            "resumen": "Resumen",
+            "imagenPortada": "Imagen de Portada"
+            },
+            "placeholders": {
+            "genero": "Género"
+            },
+            "buttons": {
+            "agregarGenero": "Agregar género",
+            "eliminar": "Eliminar",
+            "submit": "Crear Solicitud"
+            }
+        },
+        "errors": {
+            "titulo": "El título del libro es obligatorio",
+            "nombreAutor": "El nombre del autor es obligatorio",
+            "isbn": "El ISBN es obligatorio",
+            "editorial": "La editorial es obligatoria",
+            "anioPublicacion": "El año de publicación es obligatorio",
+            "numeroPaginas": "El número de páginas es obligatorio",
+            "idioma": "El idioma es obligatorio",
+            "genero": "Debe haber al menos un género",
+            "resumenCorto": "El resumen debe ser más largo",
+            "resumen": "El resumen no puede tener más de 255 caracteres",
+            "imagenPortada": "La imagen debe ser una URL válida"
+        }
+    },
+    "formulario_crear_coleccion": {
+        "title": "Formulario Crear Colección",
+        "nameCollection": {
+            "label": "Nombre:",
+            "placeholder": "",
+            "errors": {
+            "required": "El nombre de la colección es obligatorio"
+            }
+        },
+        "description": {
+            "label": "Descripción:",
+            "placeholder": "La descripción es opcional",
+            "errors": {
+            "maxLength": "La descripción no puede tener más de 255 caracteres"
+            }
+        },
+        "button": {
+        "submit": "Crear Colección"
+        }
+    }
+
+}

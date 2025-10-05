@@ -1,0 +1,26 @@
+{
+  "navbar": {
+    "home": "Home",
+    "events": "Events",
+    "stats": "Statistics",
+    "library": "My Library",
+    "readNow": "Read Now",
+    "community": "Community",
+    "searchPlaceholder": "Search",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "language": "Language"
+  },
+  "footer":{
+    "links": {
+      "home": "Home",
+      "events": "Events",
+      "stats": "Statistics",
+      "library": "My Library",
+      "readNow": "Read Now",
+      "community": "Community"
+    },
+    "rights": "All rights reserved"
+  }
+    
+}

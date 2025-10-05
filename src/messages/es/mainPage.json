@@ -1,0 +1,85 @@
+{
+  
+  "mainPage":{
+    "greeting": "Hola {name}!",
+    "subtitle": "Sumérgete en tu próxima aventura literaria.",
+    "currentReads": "Lecturas Actuales",
+    "featuredEvent": {
+      "pretitle": "Eventos destacado",
+      "title": "Club de lectura virtual",
+      "description": "Acompáñanos en una charla sobre “La última crónica” con la authora Emily Carter.",
+      "imageUrl": "/Images/clublecturavirtual.jpg",
+      "href": "/eventos/clublecturavirtual"
+    },
+    "calendar":{
+      "title":"Racha de lectura",
+      "tiempo":"día",
+      "days": [
+        { "title": "Domingo", "abbr": "D" },
+        { "title": "Lunes", "abbr": "L" },
+        { "title": "Martes", "abbr": "M" },
+        { "title": "Miércoles", "abbr": "M" },
+        { "title": "Jueves", "abbr": "J" },
+        { "title": "Viernes", "abbr": "V" },
+        { "title": "Sábado", "abbr": "S" }
+      ]
+    },
+    "badgesTitle": "Insignias y Logros",
+    "books":[
+    {
+        "title": "Cien años de soledad",
+        "author": "Gabriel García Márquez",
+        "imageUrl": "/Images/CienAniosSoledad.jpg",
+        "href": "/libros/detalles/cienaniosdesoledad"
+      },
+      {
+        "title": "Dune",
+        "author": "Frank Herbert",
+        "imageUrl": "/Images/dune.jpg",
+        "href": "/libros/detalles/dune"
+      },
+      {
+        "title": "El señor de los anillos",
+        "author": "J.R.R. Tolkien",
+        "imageUrl": "/Images/lotr.jpg",
+        "href": "/libros/detalles/lotr"
+      },
+      {
+        "title": "Sapiens: De animales a dioses",
+        "author": "Yuval Noah Harari",
+        "imageUrl": "/Images/sapiens.jpg",
+        "href": "/libros/detalles/sapiens"
+      },
+      {
+        "title": "La chica del tren",
+        "author": "Paula Hawkins",
+        "imageUrl": "/Images/girl-train.jpg",
+        "href": "/libros/detalles/girl-train"
+      }
+    ],
+    "books_actuales": [
+      {
+        "title": "La chica del tren",
+        "author": "Paula Hawkins",
+        "imageUrl": "/Images/girl-train.jpg",
+        "href": "/leerahora/girl-train",
+        "porcentaje": 42
+      },
+      {
+        "title": "1984",
+        "author": "George Orwell",
+        "imageUrl": "/Images/1984.jpg",
+        "href": "/libros/detalles/1984",
+        "porcentaje": 20
+      },
+      {
+        "title": "Harry Potter y la piedra filosofal",
+        "author": "J.K. Rowling",
+        "imageUrl": "/Images/harry-potter.jpg",
+        "href": "/libros/detalles/harry-potter",
+        "porcentaje": 37
+      }
+    ]
+  }
+}
+

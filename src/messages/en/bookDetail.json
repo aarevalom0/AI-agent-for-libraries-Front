@@ -1,0 +1,62 @@
+{
+  "skipToBookContent": "Skip to book content",
+  "breadcrumb": {
+    "navigation": "Breadcrumb navigation"
+  },
+  "buttons": {
+    "bookDetails": "Book Details",
+    "bookDetailsAriaLabel": "View more details about this book",
+    "share": "Share",
+    "shareAriaLabel": "Share this book",
+    "addReview": "Add Review",
+    "submitReview": "Submit Review",
+    "cancel": "Cancel"
+  },
+  "actions": {
+    "bookActions": "Book actions"
+  },
+  "labels": {
+    "description": "Book description",
+    "genres": "Book genres",
+    "addToCollection": "Add to collection:",
+    "selectCollection": "Select collection",
+    "selectCollectionLabel": "Select collection to add the book",
+    "favoritos": "Favorites",
+    "pendientes": "To Read",
+    "leidos": "Read",
+    "reviews": "reviews",
+    "reviewsTitle": "Reviews",
+    "addReviewTitle": "Add new review",
+    "reviewsListTitle": "Reviews list",
+    "ratingStatistics": "Rating statistics",
+    "ratingDistribution": "Rating distribution",
+    "rating": "Your rating:",
+    "comment": "Comment",
+    "by": "by",
+    "like": "Like",
+    "dislike": "Dislike"
+  },
+  "help": {
+    "collectionSelect": "Use arrow keys to navigate and Enter to select a collection"
+  },
+  "placeholders": {
+    "writeReview": "Write your review here...",
+    "reviewTitle": "Review title (optional)"
+  },
+  "messages": {
+    "noReviews": "No reviews yet for this book.",
+    "beFirst": "Be the first to write one!",
+    "thankYou": "Thank you for your review!",
+    "reviewAdded": "Your review has been successfully added.",
+    "submitting": "Submitting..."
+  },
+  "validation": {
+    "pleaseRate": "Please provide your rating (stars) and a comment.",
+    "pleaseComment": "Please write a comment"
+  },
+  "errors": {
+    "bookNotFound": "Book not found",
+    "bookNotFoundDesc": "The book you are looking for does not exist or has been moved.",
+    "backToLibrary": "Back to My Library"
+  }
+}

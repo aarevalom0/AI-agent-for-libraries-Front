@@ -1,0 +1,88 @@
+{
+  "mainPage":{
+    "greeting": "Hello {name}!",
+    "subtitle": "Dive into your next literary adventure.",
+    "currentReads": "Current Reads",
+    "featuredEvent": {
+      "pretitle": "Featured Event",
+      "title": "Virtual Book Club",
+      "description": "Join us for a talk on “The Last Chronicle” with author Emily Carter.",
+      "imageUrl": "/Images/clublecturavirtual.jpg",
+      "href": "/eventos/clublecturavirtual"
+    },
+    "calendar":{
+      "title":"Lecture Streak",
+      "tiempo":"days",
+      "days": [
+      { "title": "Sunday", "abbr": "S" },
+      { "title": "Monday", "abbr": "M" },
+      { "title": "Tuesday", "abbr": "T" },
+      { "title": "Wednesday", "abbr": "W" },
+      { "title": "Thursday", "abbr": "T" },
+      { "title": "Friday", "abbr": "F" },
+      { "title": "Saturday", "abbr": "S" }
+      ]
+    },
+    "badgesTitle": "Badges and Achievements",
+    "books":[
+      {
+        "title": "One Hundred Years of Solitude",
+        "author": "Gabriel García Márquez",
+        "imageUrl": "/Images/CienAniosSoledad.jpg",
+        "href": "/books/details/onehundredyearsofsolitude"
+      },
+      {
+        "title": "Dune",
+        "author": "Frank Herbert",
+        "imageUrl": "/Images/dune.jpg",
+        "href": "/books/details/dune"
+      },
+      {
+        "title": "The Lord of the Rings",
+        "author": "J.R.R. Tolkien",
+        "imageUrl": "/Images/lotr.jpg",
+        "href": "/books/details/lotr"
+      },
+      {
+        "title": "Sapiens: From Animals to Gods",
+        "author": "Yuval Noah Harari",
+        "imageUrl": "/Images/sapiens.jpg",
+        "href": "/books/details/sapiens"
+      },
+      {
+        "title": "The Girl on the Train",
+        "author": "Paula Hawkins",
+        "imageUrl": "/Images/girl-train.jpg",
+        "href": "/books/details/girl-train"
+      }
+    ],
+    "books_actuales":[
+      {
+        "title": "The Girl on the Train",
+        "author": "Paula Hawkins",
+        "imageUrl": "/Images/girl-train.jpg",
+        "href": "/readnow/girl-train",
+        "porcentaje": 42
+      },
+      {
+        "title": "1984",
+        "author": "George Orwell",
+        "imageUrl": "/Images/1984.jpg",
+        "href": "/books/details/1984",
+        "porcentaje": 20
+      },
+      {
+        "title": "Harry Potter and the Philosopher's Stone",
+        "author": "J.K. Rowling",
+        "imageUrl": "/Images/harry-potter.jpg",
+        "href": "/books/details/harry-potter",
+        "porcentaje": 37
+      }
+    ]
+
+
+  }
+
+}
+  
+  

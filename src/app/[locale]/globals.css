@@ -1,0 +1,338 @@
+@import "tailwindcss";
+
+/* =========================================================
+   1) VARIABLES DE COLOR Y MARCA (MODO CLARO)
+   ========================================================= */
+:root {
+  /* Paleta de la marca */
+  --background: #ffffff;
+  --foreground: #171412;
+
+  --colorPrincipal: #4E2B1B;
+  --colorPrincipalHover: #6e3b24;
+  --colorSecundario: #3A3128;
+  --colorMenus: #A04D2C;
+  --colorMenusTrans: #a04d2c8d;
+  --colorHover: #e0ddd4;
+  --colorBarras: #f8f7f7;
+
+  --colorClaro: #FAF7F0;
+  --colorClaroTrans: #faf7f096;
+  --colorClaroHover: #e8e6df;
+  --colorClaroDetalles: #DACAAE;
+  --colorClaroDetallesTransp: #dacaae90;
+
+  /* Sistema (UI) */
+  --bg: #ffffff;            /* fondo general */
+  --text: #2b2116;          /* texto base */
+
+  --elev: #ffffff;          /* superficies elevadas (cards/nav/footer) */
+  --border: #e7e1db;        /* bordes suaves */
+
+  --brand: var(--colorMenus, #8b4a2e);  /* acento principal */
+
+  /* Campos de formulario */
+  --input-bg: #ffffff;
+  --input-border: #d8d2cc;
+  --input-text: #2b2116;
+
+  /* Botones (claro) */
+  --btn-bg: #f3f4f6;
+  --btn-text: #2b2116;
+  --btn-border: #e5e7eb;
+  --btn-bg-hover: #e9ecef;
+
+  --colorText: var(--text);
+  --colorTextMuted: #6b6259;         /* subtítulos en claro */
+
+
+  --colorPrincipal: #4E2B1B;
+  --colorSecundario: #3A3128
+}
+
+/* =========================================================
+   2) VARIABLES PARA MODO OSCURO (SOBREESCRIBE TOKENS)
+   ========================================================= */
+html.dark {
+  --bg: #0f0e0d;
+  --text: #F8F6F3;            /* más claro que #EEE8E1 */
+  --elev: #1a1918;
+  --border: #2a2826;
+  --brand: #f28b5c;           /* un acento más vivo */
+
+  /* Opcional: textos secundarios */
+  --text-muted: #c9c4bd;      /* para subtítulos, autores, etc. */
+
+
+  --input-bg: #171614;
+  --input-border: #373432;
+  --input-text: #EEE8E1;
+
+  /* Botones (oscuro) */
+  --btn-bg: #2a2928;
+  --btn-text: #F7F3EE;
+  --btn-border: #3b3a39;
+  --btn-bg-hover: #343331;
+
+  --text: #F8F6F3;
+
+  /* subtítulos más legibles en oscuro */
+  --text-muted: #c9c4bd;
+  --colorText: var(--text);           /* mapea a la base en oscuro también */
+  --colorTextMuted: var(--text-muted);
+
+  /* títulos y secundarios aclaran un poco en oscuro */
+  --colorPrincipal: #ecc0ab;
+  --colorSecundario: #ecc0ab;
+
+  /* si usas acento de marca en textos, un poco más vivo en oscuro */
+  --brand: #f28b5c;
+}
+
+.reader-surface{
+  background: var(--elev);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* =========================================================
+   3) MAPEO PARA @theme (TAILWIND CSS)
+   ========================================================= */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-principal: var(--colorPrincipal);
+  --color-secundario: var(--colorSecundario);
+  --color-menus: var(--colorMenus);
+  --color-claro: var(--colorClaro);
+  --color-claro-detalles: var(--colorClaroDetalles);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-newsreader: var(--font-pre-newsreader);
+}
+
+/* =========================================================
+   4) BASE GLOBAL
+   ========================================================= */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================================
+   5) TIPOGRAFÍA (HEADINGS)
+   ========================================================= */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-principal);
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--colorPrincipal);
+  margin-top: 0;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 350;
+  color: var(--colorSecundario);
+  margin-top: 0;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--colorPrincipal);
+}
+
+/* =========================================================
+   6) FORMULARIOS (INPUTS / SELECTS / TEXTAREA)
+   ========================================================= */
+input, select, textarea {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+/* =========================================================
+   7) UTILIDADES (CLASES REUTILIZABLES)
+   ========================================================= */
+.bg-elev    { background: var(--elev); }
+.border-elev{ border-color: var(--border); }
+.text-brand { color: var(--brand); }
+
+/* Botón consistente claro/oscuro */
+.btn {
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-radius: 0.75rem;          /* rounded-xl */
+  padding: 0.5rem 1.25rem;         /* px-5 py-2 */
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.btn:hover   { background: var(--btn-bg-hover); }
+.btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+
+
+.text-primary   { color: var(--colorText); }
+.text-secondary { color: var(--colorTextMuted); }
+.text-brand     { color: var(--brand); }
+
+/* =========================================================
+   8) ACCESIBILIDAD
+   ========================================================= */
+
+/* Screen reader only - contenido visible solo para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mostrar contenido sr-only cuando recibe focus */
+.sr-only:focus,
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus indicators mejorados */
+*:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Focus indicators específicos para diferentes tipos de elementos */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Focus para elementos interactivos custom */
+[role="button"]:focus,
+[role="tab"]:focus,
+[role="menuitem"]:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Mejorar visibilidad del focus en elementos oscuros */
+.bg-\[var\(--colorMenus\)\]:focus,
+.text-white:focus {
+  outline-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+}
+
+/* Skip links styling */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Indicadores de estado para elementos interactivos */
+[aria-expanded="true"]:after {
+  content: " (expandido)";
+  position: absolute;
+  left: -9999px;
+}
+
+[aria-expanded="false"]:after {
+  content: " (contraído)";
+  position: absolute;
+  left: -9999px;
+}
+
+/* Mejorar contraste en estados hover */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Estados de loading/disabled más claros */
+[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Mejorar legibilidad de texto en fondos de color */
+.bg-\[var\(--colorMenus\)\] {
+  color: white;
+  font-weight: 500;
+}
+
+/* Indicadores visuales para elementos requeridos */
+[aria-required="true"]::after {
+  content: " *";
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Media query para respetar preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Media query para modo de alto contraste */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #000000;
+    --colorSecundario: #000000;
+  }
+  
+  button,
+  a,
+  input,
+  select {
+    border: 2px solid #000000;
+  }
+  
+  .focus\:ring-2:focus {
+    --tw-ring-width: 4px;
+  }
+}
+
+

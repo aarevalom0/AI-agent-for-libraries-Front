@@ -12,6 +12,7 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 417,
     completionDate: '2025-02-15',
+    reviews: []
   },
   {
     id: '2',
@@ -22,6 +23,11 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 328,
     completionDate: '2025-04-05',
+    reviews: [
+      { id: 'r1', author: 'Angie Gutiérrez', avatar: '/Images/Perfil1.png', rating: 5, text: 'Un libro impactante y provocador, realmente te hace reflexionar sobre la sociedad actual.', date: '2025-01-01', likes: 50, dislikes: 5 },
+      { id: 'r2', author: 'Juan Díaz', avatar: '/Images/Perfil2.jpg', rating: 4, text: 'Buen libro, muy interesante y bien escrito.', date: '2025-02-01', likes: 30, dislikes: 10 },
+      { id: 'r3', author: 'María López', avatar: '/Images/Perfil3.jpg', rating: 5, text: 'Una obra divina que se debería leer al menos una vez en la vida.', date: '2025-03-01', likes: 40, dislikes: 2 }
+    ]
   },
   {
     id: '3',
@@ -32,6 +38,7 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 150,
     completionDate: '2025-04-05',   
+    reviews: []
   },
   {
     id: '4',
@@ -42,6 +49,7 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 500,
     completionDate: '2025-08-22',
+    reviews: []
   },
   {
     id: '5',
@@ -54,6 +62,7 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 350,
     completionDate: '2024-11-10', // Libro del año pasado
+    reviews: []
   },
   {
     id: '6',
@@ -66,6 +75,7 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 100,    
     completionDate: '2025-01-20',
+    reviews: []
   },
   {
     id: '7',
@@ -78,6 +88,39 @@ export const userBooks: Book[] = [
     status: 'leido',
     progress: 1000,    
     completionDate: '2025-09-05',
+    reviews: []
+  },
+  {
+    id: '8',
+    title: 'La chica del tren',
+    author: 'Paula Hawkins',
+    cover: '/Images/girl-train.jpg',
+    description: 'Un thriller psicológico lleno de giros inesperados que mantiene al lector atrapado hasta la última página.',
+    genres: ['Thriller', 'Psicológico', 'Ficción'],
+    infoURL: 'https://es.wikipedia.org/wiki/La_chica_del_tren_(novela)',
+    status: 'leyendo',
+    progress: 200,
+    reviews: [
+      { id: 'r4', author: 'Carlos Ramírez', avatar: '/Images/Perfil4.jpg', rating: 4, text: 'Muy atrapante, aunque algunas partes son un poco lentas.', date: '2025-04-01', likes: 20, dislikes: 3 },
+      { id: 'r5', author: 'Sofía Torres', avatar: '/Images/Perfil5.jpg', rating: 5, text: 'No pude soltarlo, el final me dejó sin palabras.', date: '2025-05-01', likes: 35, dislikes: 2 },
+      { id: 'r6', author: 'Luis Fernández', avatar: '/Images/Perfil6.jpg', rating: 3, text: 'El libro es bueno, pero esperaba más acción.', date: '2025-06-01', likes: 15, dislikes: 10 }
+    ]
+  },
+  {
+    id: '9',
+    title: 'Harry Potter y la piedra filosofal',
+    author: 'J.K. Rowling',
+    cover: '/Images/harry-potter.jpg',
+    description: 'La primera entrega de la saga de Harry Potter, donde conocemos al joven mago y lo acompañamos en sus inicios en Hogwarts. Una historia mágica de amistad, valentía y aventuras.',
+    genres: ['Fantasía', 'Aventura', 'Juvenil'],
+    infoURL: 'https://es.wikipedia.org/wiki/Harry_Potter_y_la_piedra_filosofal',
+    status: 'leyendo',
+    progress: 310,
+    reviews: [
+      { id: 'r7', author: 'Ana Morales', avatar: '/Images/Perfil7.jpg', rating: 5, text: 'Un inicio espectacular para una saga mágica. Me encantó desde la primera página.', date: '2025-07-01', likes: 60, dislikes: 4 },
+      { id: 'r8', author: 'Pedro Sánchez', avatar: '/Images/Perfil8.jpg', rating: 4, text: 'Muy bueno, aunque al ser introductorio tiene partes más infantiles.', date: '2025-07-15', likes: 25, dislikes: 6 },
+      { id: 'r9', author: 'Laura Vélez', avatar: '/Images/Perfil9.jpg', rating: 5, text: 'Un clásico moderno que marcó mi infancia. Siempre lo recomiendo.', date: '2025-08-01', likes: 70, dislikes: 2 }
+    ]
   },
 ];
 export interface RankingUser {

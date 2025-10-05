@@ -1,0 +1,106 @@
+{
+  "books": {
+    "1": {
+      "title": "Cien Años de Soledad",
+      "author": "Gabriel García Márquez",
+      "description": "Una obra maestra del realismo mágico que narra la historia de la familia Buendía a lo largo de siete generaciones.",
+      "genres": ["Realismo Mágico"]
+    },
+    "2": {
+      "title": "1984",
+      "author": "George Orwell",
+      "description": "Una distopía inquietante que explora temas de totalitarismo, vigilancia y control mental.",
+      "genres": ["Ciencia Ficción", "Distopía"]
+    },
+    "3": {
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "description": "Una épica de ciencia ficción que combina política, religión y ecología en un universo fascinante.",
+      "genres": ["Ciencia Ficción", "Épica"]
+    },
+    "4": {
+      "title": "El Señor de los Anillos",
+      "author": "J.R.R. Tolkien",
+      "description": "La épica aventura de Frodo y la Comunidad del Anillo en su misión para destruir el Anillo Único.",
+      "genres": ["Fantasía", "Aventura"]
+    },
+    "5": {
+      "title": "Sapiens: De animales a dioses",
+      "author": "Yuval Noah Harari",
+      "description": "Una fascinante exploración de la historia de la humanidad desde la prehistoria hasta el presente.",
+      "genres": ["No Ficción", "Historia"]
+    },
+    "6": {
+      "title": "El Jardín Secreto",
+      "author": "Frances Hodgson Burnett",
+      "description": "Un clásico de la literatura infantil sobre la magia de la amistad y la naturaleza.",
+      "genres": ["Clásico", "Infantil"]
+    },
+    "7": {
+      "title": "Tian Guan Ci Fu (Heaven Official's Blessing)",
+      "author": "Mo Xiang Tong Xiu",
+      "description": "Una novela de fantasía china que combina romance, aventura y mitología.",
+      "genres": ["Clásico", "Fantasía", "Romance"]
+    },
+    "8": {
+      "title": "La chica del tren",
+      "author": "Paula Hawkins",
+      "description": "Un thriller psicológico lleno de giros inesperados que mantiene al lector atrapado hasta la última página.",
+      "genres": ["Thriller", "Psicológico", "Ficción"]
+    },
+    "9": {
+      "title": "Harry Potter y la piedra filosofal",
+      "author": "J.K. Rowling",
+      "description": "La primera entrega de la saga de Harry Potter, donde conocemos al joven mago y lo acompañamos en sus inicios en Hogwarts.",
+      "genres": ["Fantasía", "Aventura", "Juvenil"]
+    },
+    "10": {
+      "title": "El retrato de Dorian Gray",
+      "author": "Oscar Wilde",
+      "description": "Una obra maestra sobre la belleza, la decadencia moral y las consecuencias de los excesos.",
+      "genres": ["Clásico", "Ficción"]
+    }
+  },
+  "reviews": {
+    "r1": {
+      "author": "Angie Gutiérrez",
+      "text": "Un libro impactante y provocador, realmente te hace reflexionar sobre la sociedad actual."
+    },
+    "r2": {
+      "author": "Juan Díaz",
+      "text": "Buen libro, muy interesante y bien escrito."
+    },
+    "r3": {
+      "author": "María López",
+      "text": "Una obra divina que se debería leer al menos una vez en la vida."
+    },
+    "r4": {
+      "author": "Carlos Ramírez",
+      "text": "Muy atrapante, aunque algunas partes son un poco lentas."
+    },
+    "r5": {
+      "author": "Sofía Torres",
+      "text": "No pude soltarlo, el final me dejó sin palabras."
+    },
+    "r6": {
+      "author": "Luis Fernández",
+      "text": "El libro es bueno, pero esperaba más acción."
+    },
+    "r7": {
+      "author": "Ana Morales",
+      "text": "Un inicio espectacular para una saga mágica. Me encantó desde la primera página."
+    },
+    "r8": {
+      "author": "Roberto Silva",
+      "text": "Una historia que te transporta a un mundo mágico lleno de aventuras y amistad."
+    },
+    "r9": {
+      "author": "Patricia Ruiz",
+      "text": "Oscuro y perturbador, pero brillantemente escrito. Una reflexión profunda sobre la naturaleza humana."
+    },
+    "r10": {
+      "author": "Diego Martín",
+      "text": "Wilde logra crear una crítica social envuelta en una prosa elegante y cautivadora."
+    }
+  }
+}
