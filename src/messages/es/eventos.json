@@ -107,5 +107,11 @@
   "event1Location": "Biblioteca Central, Sala de Conferencias B",
   "event2Date": "12 de Noviembre, 2025",
   "event2Time": "6:00 PM - 7:30 PM",
-  "event2Location": "Librería El Gran Saber, Piso 2"
+  "event2Location": "Librería El Gran Saber, Piso 2",
+  "eventclublecturavirtualTitle": "Club de lectura virtual",
+  "eventclublecturavirtualDescription": "Acompáñanos en una charla sobre \"La última crónica\" con la autora Emily Carter.",
+  "eventclublecturavirtualFullDescription": "Acompáñanos en una charla sobre \"La última crónica\" con la autora Emily Carter. Descubre el fascinante mundo de su última novela y participa en una enriquecedora discusión sobre literatura y creatividad.",
+  "eventclublecturavirtualDate": "15 de Noviembre, 2025",
+  "eventclublecturavirtualTime": "6:00 PM - 7:30 PM",
+  "eventclublecturavirtualLocation": "Evento Virtual - En línea"
 }

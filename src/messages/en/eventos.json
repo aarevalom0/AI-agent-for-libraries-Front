@@ -125,5 +125,11 @@
   "event1Location": "Central Library, Conference Room B",
   "event2Date": "November 12, 2025",
   "event2Time": "6:00 PM - 7:30 PM",
-  "event2Location": "El Gran Saber Bookstore, 2nd Floor"
+  "event2Location": "El Gran Saber Bookstore, 2nd Floor",
+  "eventclublecturavirtualTitle": "Virtual Book Club",
+  "eventclublecturavirtualDescription": "Join us for a talk on \"The Last Chronicle\" with author Emily Carter.",
+  "eventclublecturavirtualFullDescription": "Join us for a talk on \"The Last Chronicle\" with author Emily Carter. Discover the fascinating world of her latest novel and engage in an enriching discussion about literature and creativity.",
+  "eventclublecturavirtualDate": "November 15, 2025",
+  "eventclublecturavirtualTime": "6:00 PM - 7:30 PM",
+  "eventclublecturavirtualLocation": "Virtual Event - Online"
 }
