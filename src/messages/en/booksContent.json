@@ -1,0 +1,106 @@
+{
+  "books": {
+    "1": {
+      "title": "One Hundred Years of Solitude",
+      "author": "Gabriel García Márquez",
+      "description": "A masterpiece of magical realism that tells the story of the Buendía family across seven generations.",
+      "genres": ["Magical Realism"]
+    },
+    "2": {
+      "title": "1984",
+      "author": "George Orwell",
+      "description": "A disturbing dystopia that explores themes of totalitarianism, surveillance, and mind control.",
+      "genres": ["Science Fiction", "Dystopia"]
+    },
+    "3": {
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "description": "A science fiction epic that combines politics, religion, and ecology in a fascinating universe.",
+      "genres": ["Science Fiction", "Epic"]
+    },
+    "4": {
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien",
+      "description": "The epic adventure of Frodo and the Fellowship of the Ring on their mission to destroy the One Ring.",
+      "genres": ["Fantasy", "Adventure"]
+    },
+    "5": {
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "description": "A fascinating exploration of human history from prehistory to the present.",
+      "genres": ["Non-Fiction", "History"]
+    },
+    "6": {
+      "title": "The Secret Garden",
+      "author": "Frances Hodgson Burnett",
+      "description": "A classic children's literature about the magic of friendship and nature.",
+      "genres": ["Classic", "Children's"]
+    },
+    "7": {
+      "title": "Tian Guan Ci Fu (Heaven Official's Blessing)",
+      "author": "Mo Xiang Tong Xiu",
+      "description": "A Chinese fantasy novel that combines romance, adventure, and mythology.",
+      "genres": ["Classic", "Fantasy", "Romance"]
+    },
+    "8": {
+      "title": "The Girl on the Train",
+      "author": "Paula Hawkins",
+      "description": "A psychological thriller full of unexpected twists that keeps the reader hooked until the last page.",
+      "genres": ["Thriller", "Psychological", "Fiction"]
+    },
+    "9": {
+      "title": "Harry Potter and the Philosopher's Stone",
+      "author": "J.K. Rowling",
+      "description": "The first installment of the Harry Potter saga, where we meet the young wizard and accompany him at the beginning of his journey at Hogwarts.",
+      "genres": ["Fantasy", "Adventure", "Young Adult"]
+    },
+    "10": {
+      "title": "The Picture of Dorian Gray",
+      "author": "Oscar Wilde",
+      "description": "A masterpiece about beauty, moral decay, and the consequences of excess.",
+      "genres": ["Classic", "Fiction"]
+    }
+  },
+  "reviews": {
+    "r1": {
+      "author": "Angie Gutiérrez",
+      "text": "A shocking and thought-provoking book that really makes you reflect on today's society."
+    },
+    "r2": {
+      "author": "Juan Díaz",
+      "text": "Good book, very interesting and well written."
+    },
+    "r3": {
+      "author": "María López",
+      "text": "A divine work that should be read at least once in a lifetime."
+    },
+    "r4": {
+      "author": "Carlos Ramírez",
+      "text": "Very gripping, although some parts are a bit slow."
+    },
+    "r5": {
+      "author": "Sofía Torres",
+      "text": "I couldn't put it down, the ending left me speechless."
+    },
+    "r6": {
+      "author": "Luis Fernández",
+      "text": "The book is good, but I expected more action."
+    },
+    "r7": {
+      "author": "Ana Morales",
+      "text": "A spectacular start to a magical saga. I loved it from the first page."
+    },
+    "r8": {
+      "author": "Roberto Silva",
+      "text": "A story that transports you to a magical world full of adventures and friendship."
+    },
+    "r9": {
+      "author": "Patricia Ruiz",
+      "text": "Dark and disturbing, but brilliantly written. A deep reflection on human nature."
+    },
+    "r10": {
+      "author": "Diego Martín",
+      "text": "Wilde manages to create social criticism wrapped in elegant and captivating prose."
+    }
+  }
+}

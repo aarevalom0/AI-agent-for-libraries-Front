@@ -1,11 +1,15 @@
 import { eventsData } from '@/lib/mock-data';
 import Image from 'next/image';
 import Link from 'next/link';
+import { use } from 'react';
 
 // Esta función de Next.js recibe los parámetros de la URL
-export default function EventDetailPage({ params }: { params: { id: string } }) {
+export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  // Unwrap params usando React.use()
+  const { id } = use(params);
+  
   // Buscamos el evento en nuestros datos usando el ID de la URL
-  const event = eventsData.find((e) => e.id === params.id);
+  const event = eventsData.find((e) => e.id === id);
 
   // Si no se encuentra el evento, mostramos un mensaje amigable
   if (!event) {
