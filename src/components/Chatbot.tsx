@@ -23,11 +23,11 @@ export default function FloatingChat() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className={`p-4 rounded-full shadow-lg transition text-white ${pathname === "/mainPage" ? "bg-[var(--colorClaro)]" : "bg-[var(--colorMenus)]"}`}
+          className={`p-4 rounded-full shadow-lg transition text-white ${pathname === "/es/mainPage" || pathname === "/en/mainPage" ? "bg-[var(--colorClaro)]" : "bg-[var(--colorMenus)]"}`}
           
 
         >
-          <MessageCircle size={24} color={pathname === "/mainPage" ? "var(--colorMenus)" : "var(--background)"} />
+          <MessageCircle size={24} color={pathname === "/es/mainPage" || pathname === "/en/mainPage" ? "var(--colorMenus)" : "var(--background)"} />
         </button>
       )}
 
