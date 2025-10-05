@@ -1,0 +1,24 @@
+{
+  "title_current": "Current reads",
+  "author": "Author",
+  "continue": "Continue Reading",
+  "title_discover": "Find your next read",
+  "subtitle_discover": "Explore your library and dive into your next reading adventure.",
+  "search_placeholder": "Search books by title or author.",
+  "filter_genre": "Genre",
+  "filter_status": "Reading status",
+  "all": "All",
+  "genre": {
+    "fantasy": "Fantasy",
+    "scifi": "Science Fiction",
+    "classic": "Classic",
+    "mystery": "Mystery",
+    "nonfiction": "Non-fiction"
+  },
+  "status": {
+    "reading": "Reading",
+    "pending": "Pending",
+    "completed": "Completed"
+  },
+  "empty": "No books matched your current filters."
+}

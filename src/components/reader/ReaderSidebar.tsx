@@ -1,24 +1,37 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import NoteForm from "./NoteForm";
 import NotesList, { Note } from "./NotesList";
 
 export default function ReaderSidebar({
-  settings, onSet, notes, onAddNote, onDeleteNote, onToggleSidebar,
+  settings,
+  onSet,
+  notes,
+  onAddNote,
+  onDeleteNote,
+  onToggleSidebar,
 }: {
-  settings: { night: boolean; font: "Newsreader"|"serif"|"sans"; fontSize: number; bg: "default"|"cream"|"sepia"; };
+  settings: {
+    night: boolean;
+    font: "Newsreader" | "serif" | "sans";
+    fontSize: number;
+    bg: "default" | "cream" | "sepia";
+  };
   onSet: (s: Partial<typeof settings>) => void;
   notes: Note[];
   onAddNote: (text: string) => void;
   onDeleteNote: (id: string) => void;
   onToggleSidebar: () => void;
 }) {
+  const t = useTranslations("reader");
+
   return (
     <aside className="relative lg:col-span-4 border reader-border rounded-xl p-4 reader-panel">
       <button
         onClick={onToggleSidebar}
-        aria-label="Ocultar herramientas"
-        title="Ocultar herramientas"
+        aria-label={t("hide_tools")}
+        title={t("hide_tools")}
         className="absolute -left-4 top-6 z-10
                    flex h-8 w-8 items-center justify-center rounded-full
                    border border-[var(--colorMenus)] bg-[var(--colorMenus)] text-white shadow"
@@ -26,19 +39,28 @@ export default function ReaderSidebar({
         ‹
       </button>
 
-      <h3 className="font-semibold mb-3 text-[var(--colorMenus)]">Herramientas de Lectura</h3>
+      <h3 className="font-semibold mb-3 text-[var(--colorMenus)]">
+        {t("tools")}
+      </h3>
 
       <div className="space-y-4">
+        {/* Si ya decidiste ocultar el checkbox y usar solo el icono global, quita este bloque */}
         <label className="flex items-center gap-3">
-          <input type="checkbox" checked={settings.night} onChange={(e) => onSet({ night: e.target.checked })} />
-          <span>Modo nocturno</span>
+          <input
+            type="checkbox"
+            checked={settings.night}
+            onChange={(e) => onSet({ night: e.target.checked })}
+          />
+          <span>{t("night")}</span>
         </label>
 
         <div>
-          <label className="block text-sm mb-1">Fuente</label>
-          <select className="w-full border reader-border rounded-lg px-3 py-2 reader-surface"
-                  value={settings.font}
-                  onChange={(e) => onSet({ font: e.target.value as any })}>
+          <label className="block text-sm mb-1">{t("font")}</label>
+          <select
+            className="w-full border reader-border rounded-lg px-3 py-2 reader-surface"
+            value={settings.font}
+            onChange={(e) => onSet({ font: e.target.value as any })}
+          >
             <option value="Newsreader">Newsreader</option>
             <option value="serif">Serif</option>
             <option value="sans">Sans Serif</option>
@@ -46,34 +68,45 @@ export default function ReaderSidebar({
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Tamaño de fuente: {settings.fontSize}px</label>
-          <input type="range" min={14} max={28} step={1} className="w-full"
-                 value={settings.fontSize}
-                 onChange={(e) => onSet({ fontSize: Number(e.target.value) })}/>
+          <label className="block text-sm mb-1">
+            {t("fontSize", { size: settings.fontSize })}
+          </label>
+          <input
+            type="range"
+            min={14}
+            max={28}
+            step={1}
+            className="w-full"
+            value={settings.fontSize}
+            onChange={(e) => onSet({ fontSize: Number(e.target.value) })}
+          />
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Color de fondo</label>
+          <label className="block text-sm mb-1">{t("bgColor")}</label>
           <div className="flex gap-2">
             {[
               { key: "default", className: "border reader-panel" },
-              { key: "cream",   className: "border bg-[#F8F4EA]" },
-              { key: "sepia",   className: "border bg-[#F3E5D0]" },
-            ].map(b => (
+              { key: "cream", className: "border bg-[#F8F4EA]" },
+              { key: "sepia", className: "border bg-[#F3E5D0]" },
+            ].map((b) => (
               <button
                 key={b.key}
-                onClick={() => onSet({ bg: b.key as any, night: false })}  // ← apaga night
+                onClick={() => onSet({ bg: b.key as any, night: false })}
                 className={`w-7 h-7 rounded-full ${b.className} ${
-                  settings.bg === b.key ? "outline outline-2 outline-[var(--colorMenus)]" : ""
+                  settings.bg === b.key
+                    ? "outline outline-2 outline-[var(--colorMenus)]"
+                    : ""
                 }`}
                 aria-label={b.key}
-            />
+              />
             ))}
           </div>
         </div>
 
         <div className="pt-2 border-t reader-border">
-          <h4 className="font-medium mb-2">Notas</h4>
+          <h4 className="font-medium mb-2">{t("notes")}</h4>
+          {/* Si NoteForm/NotesList no aceptan props de i18n, los dejas así. */}
           <NoteForm onAdd={onAddNote} />
           <NotesList notes={notes} onDelete={onDeleteNote} />
         </div>

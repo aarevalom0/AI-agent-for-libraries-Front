@@ -1,0 +1,17 @@
+{
+  "back": "← Volver a Leer Ahora",
+  "chapter": "Capítulo {n}",
+  "tools": "Herramientas de Lectura",
+  "night": "Modo nocturno",
+  "font": "Fuente",
+  "fontSize": "Tamaño de fuente: {size}px",
+  "bgColor": "Color de fondo",
+  "notes": "Notas",
+  "add_note_ph": "Agregar nota",
+  "save": "Guardar",
+  "no_notes": "Sin notas en este capítulo.",
+  "prev": "Capítulo Anterior",
+  "next": "Siguiente Capítulo",
+  "show_tools": "Mostrar herramientas",
+  "hide_tools": "Ocultar herramientas"
+}
