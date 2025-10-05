@@ -45,7 +45,7 @@ const FormularioCrearColeccion = () => {
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='description'>{t("formulario_crear_coleccion.description.label")}</label>
-                    <textarea  placeholder="La descripción es opcional" {...register("description")} className='w-full p-2 border border-gray-300 rounded' />
+                    <textarea  placeholder={t("formulario_crear_coleccion.description.placeholder")} {...register("description")} className='w-full p-2 border border-gray-300 rounded' />
                     {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
                 </div>
 

@@ -32,7 +32,7 @@
     "addFirstBook": "Add your first book to get started",
     "noFavorites": "You don't have favorite books yet",
     "markAsFavorite": "Mark some books as favorites to see them here",
-    "createFirstCollection": "Create your first custom collection!"
+    "createFirstCollection": "Create your custom collection!"
   },
   "collection": {
     "createTitle": "Create New Collection",

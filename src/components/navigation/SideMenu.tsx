@@ -16,7 +16,7 @@ interface SideMenuProps {
   onSelect?: (option: MenuOption) => void;
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ options, selectedF, onSelect}) => {
+const SideMenu = ({ options, selectedF, onSelect}:SideMenuProps) => {
     const [open, setOpen] = useState(true);
     const [selected, setSelected] = useState(selectedF.label);
 
