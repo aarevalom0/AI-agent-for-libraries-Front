@@ -12,7 +12,7 @@ export default function ReaderHeader({
         </Link>
       </div>
       <h1 className="text-3xl font-newsreader text-[var(--colorMenus)]">{title}</h1>
-      <p className="text-sm text-[var(--colorText)] mb-4">Capítulo {chapter + 1}</p>
+      <div className="text-sm text-[var(--colorText)] mb-4">Capítulo {chapter + 1}</div>
     </>
   );
 }
