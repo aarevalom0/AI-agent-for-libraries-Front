@@ -30,5 +30,17 @@
         "href": "#"
       }
     ]
+  },
+   "friendsPage": {
+    "title": "Amigos",
+    "friendsList": [
+      { "name": "Juan Perez", "avatar": "/Images/Perfil1.png", "status": "En línea" },
+      { "name": "Maria Gomez", "avatar": "/Images/Perfil2.jpg", "status": "Fuera de línea" },
+      { "name": "Carlos Ruiz", "avatar": "/Images/Perfil3.jpg", "status": "En línea" },
+      { "name": "Ana Torres", "avatar": "/Images/Perfil4.jpg", "status": "Ocupado" },
+      { "name": "Luis Fernandez", "avatar": "/Images/Perfil5.jpg", "status": "En línea" },
+      { "name": "Sofia Martinez", "avatar": "/Images/Perfil6.jpg", "status": "Fuera de línea" },
+      { "name": "Miguel Sanchez", "avatar": "/Images/Perfil7.jpg", "status": "En línea" }
+    ]
   }
 }

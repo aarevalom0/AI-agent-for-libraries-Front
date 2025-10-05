@@ -30,5 +30,18 @@
         "href": "#"
       }
     ]
+  },
+   "friendsPage": {
+    "title": "Friends",
+    "friendsList": [
+      { "name": "Juan Perez", "avatar": "/Images/Perfil1.png", "status": "online" },
+      { "name": "Maria Gomez", "avatar": "/Images/Perfil2.jpg", "status": "offline" },
+      { "name": "Carlos Ruiz", "avatar": "/Images/Perfil3.jpg", "status": "online" },
+      { "name": "Ana Torres", "avatar": "/Images/Perfil4.jpg", "status": "busy" },
+      { "name": "Luis Fernandez", "avatar": "/Images/Perfil5.jpg", "status": "online" },
+      { "name": "Sofia Martinez", "avatar": "/Images/Perfil6.jpg", "status": "offline" },
+      { "name": "Miguel Sanchez", "avatar": "/Images/Perfil7.jpg", "status": "online" }
+    ]
   }
 }
+

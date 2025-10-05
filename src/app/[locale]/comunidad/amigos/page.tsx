@@ -1,22 +1,24 @@
 
 import Friends from "@/components/community/Friends";
+import { useTranslations } from "next-intl";
+
+interface Friend {
+  name: string;
+  avatar: string;
+  status: "online" | "offline" | "busy";
+}
 
 export default function AmigosPage() {
-  const friendsList = [
-    { name: "Juan Perez", avatar: "/Images/Perfil1.png", status: "En línea" },
-    { name: "Maria Gomez", avatar: "/Images/Perfil2.jpg", status: "Desconectado" },
-    { name: "Carlos Ruiz", avatar: "/Images/Perfil3.jpg", status: "En línea" },
-    { name: "Ana Torres", avatar: "/Images/Perfil4.jpg", status: "Ocupado" },
-    { name: "Luis Fernandez", avatar: "/Images/Perfil5.jpg", status: "En línea" },
-    { name: "Sofia Martinez", avatar: "/Images/Perfil6.jpg", status: "Desconectado" },
-    { name: "Miguel Sanchez", avatar: "/Images/Perfil7.jpg", status: "En línea" }
-  ];
+  const t = useTranslations('communityPage');
+  const friendsList = t.raw('friendsPage.friendsList') as Friend[];
 
   return (
     <>
-      <h1 title="Amigos"  className="text-2xl font-bold gap-4 mb-4">Amigos</h1>
+      <h1 title={t('friendsPage.title')} className="text-2xl font-bold gap-4 mb-4">{t('friendsPage.title')}</h1>
 
-      <Friends friends={friendsList} />
+      {friendsList.map((friend, idx) => (
+        <Friends key={idx} friends={[friend]} />
+      ))}
     </>
   );
 }
