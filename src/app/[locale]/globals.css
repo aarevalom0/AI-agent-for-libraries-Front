@@ -90,7 +90,6 @@ html.dark {
 }
 
 .reader-surface{
-  background: var(--elev);
   color: var(--text);
   border-color: var(--border);
 }

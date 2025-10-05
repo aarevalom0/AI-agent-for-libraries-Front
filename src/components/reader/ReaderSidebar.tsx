@@ -14,7 +14,7 @@ export default function ReaderSidebar({
   onToggleSidebar: () => void;
 }) {
   return (
-    <aside className="relative lg:col-span-4 border reader-border rounded-xl p-4 reader-surface">
+    <aside className="relative lg:col-span-4 border reader-border rounded-xl p-4 reader-panel">
       <button
         onClick={onToggleSidebar}
         aria-label="Ocultar herramientas"
@@ -56,16 +56,18 @@ export default function ReaderSidebar({
           <label className="block text-sm mb-1">Color de fondo</label>
           <div className="flex gap-2">
             {[
-              { key: "default", className: "border reader-border reader-surface" },
+              { key: "default", className: "border reader-panel" },
               { key: "cream",   className: "border bg-[#F8F4EA]" },
               { key: "sepia",   className: "border bg-[#F3E5D0]" },
             ].map(b => (
-              <button key={b.key as string}
-                onClick={() => onSet({ bg: b.key as any })}
-                aria-label={b.key as string}
+              <button
+                key={b.key}
+                onClick={() => onSet({ bg: b.key as any, night: false })}  // ← apaga night
                 className={`w-7 h-7 rounded-full ${b.className} ${
                   settings.bg === b.key ? "outline outline-2 outline-[var(--colorMenus)]" : ""
-                }`} />
+                }`}
+                aria-label={b.key}
+            />
             ))}
           </div>
         </div>

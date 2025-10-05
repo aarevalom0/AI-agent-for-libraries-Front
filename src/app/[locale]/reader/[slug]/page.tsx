@@ -55,13 +55,14 @@ export default function ReaderPage() {
           <ReaderHeader title={book.title} chapter={state.chapter} />
 
           <ReaderViewport
-            ref={containerRef}
-            className={`${applyClasses} reader-surface reader-border`}
-            fontSize={state.settings.fontSize}
-            invertProse={state.settings.night}
-          >
-            {chapterText}
-          </ReaderViewport>
+          ref={containerRef}
+          className={applyClasses}          
+          fontSize={state.settings.fontSize}
+          bg={state.settings.bg}
+          night={state.settings.night}
+        >
+          {chapterText}
+        </ReaderViewport>
 
           <ReaderNavButtons
             onPrev={goPrev}
