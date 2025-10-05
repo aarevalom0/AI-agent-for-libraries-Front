@@ -12,11 +12,13 @@ type Libro = {
   title: string;
   autor: string;
   imageUrl: string;
+  // El catálogo original trae el género/estado en ES (texto). Los mapeamos a códigos.
   genero: "Fantasía" | "Ciencia Ficción" | "Clásico" | "Misterio" | "No Ficción";
   estado: "Leyendo" | "Pendiente" | "Completado";
-  progreso?: number; // 0-100
+  progreso?: number;
 };
 
+/* ------------------------- Datos de ejemplo ------------------------- */
 const LECTURAS_ACTUALES: Libro[] = [
   { slug: "1984", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg", genero: "Ciencia Ficción", estado: "Leyendo", progreso: 60 },
   { slug: "girl-train", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg", genero: "Misterio", estado: "Leyendo", progreso: 30 },
@@ -35,34 +37,60 @@ const CATALOGO: Libro[] = [
   { slug: "cien-anios", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg", genero: "Fantasía", estado: "Pendiente" },
 ];
 
+type GenreCode = "all" | "fantasy" | "scifi" | "classic" | "mystery" | "nonfiction";
+type StatusCode = "all" | "reading" | "pending" | "completed";
+
+const genreCodeOf = (g: Libro["genero"]): GenreCode =>
+  (
+    {
+      "Fantasía": "fantasy",
+      "Ciencia Ficción": "scifi",
+      "Clásico": "classic",
+      "Misterio": "mystery",
+      "No Ficción": "nonfiction",
+    } as const
+  )[g] ?? "all";
+
+const statusCodeOf = (s: Libro["estado"]): StatusCode =>
+  (
+    {
+      "Leyendo": "reading",
+      "Pendiente": "pending",
+      "Completado": "completed",
+    } as const
+  )[s] ?? "all";
+
+/* ------------------------- Componente principal ------------------------- */
 export default function LeerAhoraPage() {
   const t = useTranslations("leerAhora");
 
   const [q, setQ] = useState("");
-  const [fGenero, setFGenero] = useState<string>(t("all"));
-  const [fEstado, setFEstado] = useState<string>(t("all"));
+  const [fGenero, setFGenero] = useState<GenreCode>("all");
+  const [fEstado, setFEstado] = useState<StatusCode>("all");
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 5;
 
+  // Filtro con códigos estables 
   const filtrados = useMemo(() => {
     const s = q.trim().toLowerCase();
     return CATALOGO.filter((b) => {
-      const okQ = !s || b.title.toLowerCase().includes(s) || b.autor.toLowerCase().includes(s);
-      const okG = fGenero === t("all") || b.genero === fGenero;
-      const okE = fEstado === t("all") || b.estado === fEstado;
+      const okQ =
+        !s ||
+        b.title.toLowerCase().includes(s) ||
+        b.autor.toLowerCase().includes(s);
+
+      const gCode = genreCodeOf(b.genero);
+      const eCode = statusCodeOf(b.estado);
+
+      const okG = fGenero === "all" || gCode === fGenero;
+      const okE = fEstado === "all" || eCode === fEstado;
+
       return okQ && okG && okE;
     });
-  }, [q, fGenero, fEstado, t]);
+  }, [q, fGenero, fEstado]);
 
   const totalPages = Math.max(1, Math.ceil(filtrados.length / PAGE_SIZE));
   const pageBooks = filtrados.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  function onChangeFiltro<T extends React.SetStateAction<string>>(setter: (v: T) => void) {
-    return (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setter(e.target.value as any);
-      setPage(1);
-    };
-  }
 
   return (
     <main className="px-6 md:px-12 lg:px-24 py-10">
@@ -77,7 +105,7 @@ export default function LeerAhoraPage() {
             <div key={b.slug} className="flex items-center justify-between">
               <BookReading
                 title={b.title}
-                autor={`${t("author")}: ${b.autor}`}
+                autor= {`${t("author")}: ${b.autor}`}
                 imageUrl={b.imageUrl}
                 progreso={b.progreso}
               />
@@ -96,7 +124,7 @@ export default function LeerAhoraPage() {
         </h2>
         <p className="text-[var(--colorText)] mb-6">{t("subtitle_discover")}</p>
 
-        {/* barra de búsqueda + filtros */}
+        {/* Búsqueda + filtros */}
         <div className="flex flex-col gap-3 mb-6">
           <input
             className="w-full rounded-xl border px-4 py-3"
@@ -107,42 +135,49 @@ export default function LeerAhoraPage() {
               setPage(1);
             }}
           />
+
           <div className="flex flex-wrap gap-3">
-            {/* Género */}
+            {/* Filtro género */}
             <label className="flex items-center gap-2">
               <span className="text-[var(--text)]">{t("filter_genre")}:</span>
               <select
                 className="rounded-xl border px-4 py-2"
                 value={fGenero}
-                onChange={onChangeFiltro(setFGenero)}
+                onChange={(e) => {
+                  setFGenero(e.target.value as GenreCode);
+                  setPage(1);
+                }}
               >
-                <option>{t("all")}</option>
-                <option>Fantasía</option>
-                <option>Ciencia Ficción</option>
-                <option>Clásico</option>
-                <option>Misterio</option>
-                <option>No Ficción</option>
+                <option value="all">{t("all")}</option>
+                <option value="fantasy">{t("genre.fantasy")}</option>
+                <option value="scifi">{t("genre.scifi")}</option>
+                <option value="classic">{t("genre.classic")}</option>
+                <option value="mystery">{t("genre.mystery")}</option>
+                <option value="nonfiction">{t("genre.nonfiction")}</option>
               </select>
             </label>
 
-            {/* Estatus */}
+            {/* Filtro estado */}
             <label className="flex items-center gap-2">
               <span className="text-[var(--text)]">{t("filter_status")}:</span>
               <select
                 className="rounded-xl border px-4 py-2"
                 value={fEstado}
-                onChange={onChangeFiltro(setFEstado)}
+                onChange={(e) => {
+                  setFEstado(e.target.value as StatusCode);
+                  setPage(1);
+                }}
               >
-                <option>{t("all")}</option>
-                <option>{t("status.pending")}</option>
-                <option>{t("status.reading")}</option>
-                <option>{t("status.completed")}</option>
+                <option value="all">{t("all")}</option>
+                <option value="reading">{t("status.reading")}</option>
+                <option value="pending">{t("status.pending")}</option>
+                <option value="completed">{t("status.completed")}</option>
               </select>
             </label>
           </div>
         </div>
 
-        {/* grilla de libros */}
+        {/* grilla */}
         <BookGrid books={pageBooks} />
 
         {/* paginación */}

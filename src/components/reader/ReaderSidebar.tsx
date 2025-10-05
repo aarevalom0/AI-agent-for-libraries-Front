@@ -5,12 +5,7 @@ import NoteForm from "./NoteForm";
 import NotesList, { Note } from "./NotesList";
 
 export default function ReaderSidebar({
-  settings,
-  onSet,
-  notes,
-  onAddNote,
-  onDeleteNote,
-  onToggleSidebar,
+  settings, onSet, notes, onAddNote, onDeleteNote, onToggleSidebar,
 }: {
   settings: {
     night: boolean;
@@ -32,8 +27,7 @@ export default function ReaderSidebar({
         onClick={onToggleSidebar}
         aria-label={t("hide_tools")}
         title={t("hide_tools")}
-        className="absolute -left-4 top-6 z-10
-                   flex h-8 w-8 items-center justify-center rounded-full
+        className="absolute -left-4 top-6 z-10 flex h-8 w-8 items-center justify-center rounded-full
                    border border-[var(--colorMenus)] bg-[var(--colorMenus)] text-white shadow"
       >
         ‹
@@ -44,7 +38,7 @@ export default function ReaderSidebar({
       </h3>
 
       <div className="space-y-4">
-        {/* Si ya decidiste ocultar el checkbox y usar solo el icono global, quita este bloque */}
+        {/* Night mode */}
         <label className="flex items-center gap-3">
           <input
             type="checkbox"
@@ -54,6 +48,7 @@ export default function ReaderSidebar({
           <span>{t("night")}</span>
         </label>
 
+        {/* Font */}
         <div>
           <label className="block text-sm mb-1">{t("font")}</label>
           <select
@@ -67,6 +62,7 @@ export default function ReaderSidebar({
           </select>
         </div>
 
+        {/* Font size */}
         <div>
           <label className="block text-sm mb-1">
             {t("fontSize", { size: settings.fontSize })}
@@ -82,6 +78,7 @@ export default function ReaderSidebar({
           />
         </div>
 
+        {/* Background */}
         <div>
           <label className="block text-sm mb-1">{t("bgColor")}</label>
           <div className="flex gap-2">
@@ -98,17 +95,28 @@ export default function ReaderSidebar({
                     ? "outline outline-2 outline-[var(--colorMenus)]"
                     : ""
                 }`}
-                aria-label={b.key}
+                aria-label={String(b.key)}
               />
             ))}
           </div>
         </div>
 
+        {/* Notes */}
         <div className="pt-2 border-t reader-border">
           <h4 className="font-medium mb-2">{t("notes")}</h4>
-          {/* Si NoteForm/NotesList no aceptan props de i18n, los dejas así. */}
-          <NoteForm onAdd={onAddNote} />
-          <NotesList notes={notes} onDelete={onDeleteNote} />
+
+          {/* Usa el placeholder y botón traducidos */}
+          <NoteForm
+            placeholder={t("add_note_ph")}
+            saveLabel={t("save")}
+            onAdd={onAddNote}
+          />
+
+          <NotesList
+            notes={notes}
+            emptyLabel={t("no_notes")}
+            onDelete={onDeleteNote}
+          />
         </div>
       </div>
     </aside>
