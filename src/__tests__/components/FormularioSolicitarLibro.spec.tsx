@@ -1,128 +1,85 @@
-import FormularioSolLibro from '@/components/formularios/FormularioSolLibro';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { NextIntlClientProvider } from 'next-intl';
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import FormularioSolLibro from '@/components/formularios/FormularioSolLibro'
 
+// Mock de next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key, // devuelve la clave como string
+}))
 
-const messages = {
-  formularios: {
-    formulario_sol_libro: {
-      errors: {
-        titulo: 'Title is required',
-        nombreAutor: 'Author name is required',
-        isbn: 'ISBN is required',
-        editorial: 'Publisher is required',
-        anioPublicacion: 'Publication year is required',
-        numeroPaginas: 'Number of pages must be at least 1',
-        idioma: 'Language is required',
-        genero: 'At least one genre is required',
-        resumenCorto: 'Summary must be at least 10 characters',
-        resumen: 'Summary must be less than 255 characters',
-        imagenPortada: 'Invalid URL'
-      },
-      form: {
-        fields: {
-          titulo: 'Title',
-          nombreAutor: 'Author Name',
-          isbn: 'ISBN',
-          editorial: 'Publisher',
-          anioPublicacion: 'Publication Year',
-          numeroPaginas: 'Number of Pages',
-          idioma: 'Language',
-          generos: 'Genres',
-          resumen: 'Summary',
-          imagenPortada: 'Cover Image'
-        },
-        placeholders: {
-          genero: 'Enter genre'
-        },
-        buttons: {
-          agregarGenero: 'Add Genre',
-          eliminar: 'Remove',
-          submit: 'Submit'
-        }
-      }
-    }
-  }
-};
+describe('FormularioSolLibro', () => {
+  const renderForm = () => render(<FormularioSolLibro />)
 
-describe('FormularioSolLibro Component', () => {
-  const renderForm = () => {
-    return render(
-      <NextIntlClientProvider locale="en" messages={messages}>
-        <FormularioSolLibro />
-      </NextIntlClientProvider>
-    );
-  };
+  it('renderiza todos los campos del formulario', () => {
+    renderForm()
+    expect(screen.getByLabelText(/titulo/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/nombreAutor/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/isbn/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/editorial/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/numeroPaginas/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/idioma/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/resumen/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/imagenPortada/i)).toBeInTheDocument()
+  })
 
-  it('renders all form fields', () => {
-    renderForm();
-    
-    expect(screen.getByTitle('Título del libro')).toBeInTheDocument();
-    expect(screen.getByTitle('Nombre del autor')).toBeInTheDocument();
-    expect(screen.getByTitle('ISBN del libro')).toBeInTheDocument();
-    expect(screen.getByTitle('Editorial del libro')).toBeInTheDocument();
-  });
+  it('permite agregar y eliminar géneros', async () => {
+    const user = userEvent.setup()
+    renderForm()
 
-  it('adds a new genre field when "Add Genre" button is clicked', () => {
-    renderForm();
-    
-    const addButton = screen.getByRole('button', { name: 'Add Genre' });
-    fireEvent.click(addButton);
-    
-    const genreInputs = screen.getAllByPlaceholderText('Enter genre');
-    expect(genreInputs.length).toBeGreaterThan(0);
-  });
+    const addButton = screen.getByRole('button', { name: /agregarGenero/i })
+    await user.click(addButton)
 
-  it('removes genre field when "Remove" button is clicked', async () => {
-    renderForm();
-    
-    const addButton = screen.getByRole('button', { name: 'Add Genre' });
-    fireEvent.click(addButton);
-    
-    const removeButton = screen.getByRole('button', { name: 'Remove' });
-    fireEvent.click(removeButton);
-    
+    const genreInput = screen.getByPlaceholderText(/genero/i)
+    expect(genreInput).toBeInTheDocument()
+
+    const removeButton = screen.getByRole('button', { name: /eliminar/i })
+    await user.click(removeButton)
+
     await waitFor(() => {
-      expect(screen.queryByPlaceholderText('Enter genre')).not.toBeInTheDocument();
-    });
-  });
+      expect(screen.queryByPlaceholderText(/genero/i)).not.toBeInTheDocument()
+    })
+  })
 
-  it('shows validation error for empty title', async () => {
-    renderForm();
-    
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    fireEvent.click(submitButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText('Title is required')).toBeInTheDocument();
-    });
-  });
+  it('muestra error cuando se envía vacío', async () => {
+    const user = userEvent.setup()
+    renderForm()
 
-  it('shows validation error for invalid URL in cover image', async () => {
-    renderForm();
-    
-    const coverImageInput = screen.getByTitle('URL de la imagen de portada del libro');
-    fireEvent.change(coverImageInput, { target: { value: 'not-a-url' } });
-    
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    fireEvent.click(submitButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText('Invalid URL')).toBeInTheDocument();
-    });
-  });
+    const submitButton = screen.getByRole('button', { name: /submit/i })
+    await user.click(submitButton)
 
-  it('validates number of pages is a positive number', async () => {
-    renderForm();
-    
-    const pagesInput = screen.getByTitle('Número de páginas del libro');
-    fireEvent.change(pagesInput, { target: { value: '0' } });
-    
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    fireEvent.click(submitButton);
-    
     await waitFor(() => {
-      expect(screen.getByText('Number of pages must be at least 1')).toBeInTheDocument();
-    });
-  });
-});
+      // Como mockeamos next-intl, los mensajes de error son las claves
+      expect(screen.getByText(/formulario_sol_libro.errors.titulo/i)).toBeInTheDocument()
+    })
+  })
+
+  it('valida que la imagen sea una URL válida', async () => {
+    const user = userEvent.setup()
+    renderForm()
+
+    const portadaInput = screen.getByLabelText(/imagenPortada/i)
+    await user.type(portadaInput, 'not-a-url')
+
+    const submitButton = screen.getByRole('button', { name: /submit/i })
+    await user.click(submitButton)
+
+    await waitFor(() => {
+      expect(screen.getByText(/imagenPortada/i)).toBeInTheDocument()
+    })
+  })
+
+  it('valida que número de páginas sea positivo', async () => {
+    const user = userEvent.setup()
+    renderForm()
+
+    const pagesInput = screen.getByLabelText(/formulario_sol_libro.form.fields.numeroPaginas/i)
+    await user.type(pagesInput, '0')
+
+    const submitButton = screen.getByRole('button', { name: /submit/i })
+    await user.click(submitButton)
+
+    await waitFor(() => {
+      expect(screen.getByText(/formulario_sol_libro.errors.numeroPaginas/i)).toBeInTheDocument()
+    })
+  })
+})

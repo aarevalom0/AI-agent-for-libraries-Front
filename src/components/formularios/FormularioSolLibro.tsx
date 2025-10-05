@@ -63,44 +63,44 @@ const FormularioSolLibro = () => {
         <div title='Formulario Sol Libro' className=" p-5 w-[70%]">
             <form onSubmit={handleSubmit(onSubmit)} className=" p-8 w-full mx-auto border border-[var(--colorPrincipal)] rounded">
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='titulo'>{t("formulario_sol_libro.form.fields.titulo")}:</label>
-                    <input title="Título del libro" type='text' {...register("titulo")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <label  className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='titulo'>{t("formulario_sol_libro.form.fields.titulo")}:</label>
+                    <input id="titulo" title="Título del libro" type='text' {...register("titulo")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.titulo && <p className="text-red-500 text-sm mt-1">{errors.titulo.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='nombreAutor'>{t("formulario_sol_libro.form.fields.nombreAutor")}:</label>
-                    <input title="Nombre del autor" type='text' {...register("nombreAutor")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input  id='nombreAutor' title="Nombre del autor" type='text' {...register("nombreAutor")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.nombreAutor && <p className="text-red-500 text-sm mt-1">{errors.nombreAutor.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='isbn'>{t("formulario_sol_libro.form.fields.isbn")}:</label>
-                    <input title="ISBN del libro" type='text' {...register("isbn")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id='isbn' title="ISBN del libro" type='text' {...register("isbn")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.isbn && <p className="text-red-500 text-sm mt-1">{errors.isbn.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='editorial'>{t("formulario_sol_libro.form.fields.editorial")}:</label>
-                    <input title="Editorial del libro" type='text' {...register("editorial")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id="editorial" title="Editorial del libro" type='text' {...register("editorial")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.editorial && <p className="text-red-500 text-sm mt-1">{errors.editorial.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='anioPublicacion'>{t("formulario_sol_libro.form.fields.anioPublicacion")}:</label>
-                    <input title="Año de publicación del libro" type='date' {...register("anioPublicacion")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id="anioPublicacion" title="Año de publicación del libro" type='date' {...register("anioPublicacion")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.anioPublicacion && <p className="text-red-500 text-sm mt-1">{errors.anioPublicacion.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='numeroPaginas'>{t("formulario_sol_libro.form.fields.numeroPaginas")}:</label>
-                    <input title="Número de páginas del libro" type='number'{...register("numeroPaginas", { valueAsNumber: true })} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id="numeroPaginas" title="Número de páginas del libro" type='number'{...register("numeroPaginas", { valueAsNumber: true })} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.numeroPaginas && <p className="text-red-500 text-sm mt-1">{errors.numeroPaginas.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='idioma'>{t("formulario_sol_libro.form.fields.idioma")}:</label>
-                    <input title="Idioma del libro" type='text' {...register("idioma")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id="idioma" title="Idioma del libro" type='text' {...register("idioma")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.idioma && <p className="text-red-500 text-sm mt-1">{errors.idioma.message}</p>}
                 </div>
 
@@ -119,13 +119,13 @@ const FormularioSolLibro = () => {
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='resumen'>{t("formulario_sol_libro.form.fields.resumen")}:</label>
-                    <textarea title="Resumen del libro" {...register("resumen")} className='w-full p-2 border border-gray-300 rounded' />
+                    <textarea id="resumen" title="Resumen del libro" {...register("resumen")} className='w-full p-2 border border-gray-300 rounded' />
                     {errors.resumen && <p className="text-red-500 text-sm mt-1">{errors.resumen.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='imagenPortada'>{t("formulario_sol_libro.form.fields.imagenPortada")}:</label>
-                    <input title="URL de la imagen de portada del libro" type='url' {...register("imagenPortada")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id="imagenPortada" title="URL de la imagen de portada del libro" type='url' {...register("imagenPortada")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.imagenPortada && <p className="text-red-500 text-sm mt-1">{errors.imagenPortada.message}</p>}
                 </div>
 

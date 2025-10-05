@@ -1,100 +1,76 @@
 import FormularioCrearColeccion from '@/components/formularios/FormularioCrearColeecion';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { NextIntlClientProvider } from 'next-intl';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
+// Mock de next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key, // devuelve la clave como string
+}));
 
-const messages = {
-  formularios: {
-    formulario_crear_coleccion: {
-      title: 'Create Collection',
-      nameCollection: {
-        label: 'Collection Name',
-        errors: {
-          required: 'Name is required'
-        }
-      },
-      description: {
-        label: 'Description',
-        placeholder: 'Enter description',
-        errors: {
-          maxLength: 'Description must be less than 255 characters'
-        }
-      },
-      button: {
-        submit: 'Create Collection'
-      }
-    }
-  }
-};
+describe('FormularioCrearColeccion', () => {
+  const renderForm = () => render(<FormularioCrearColeccion />);
 
-describe('FormularioCrearColeccion Component', () => {
-  const renderForm = () => {
-    return render(
-      <NextIntlClientProvider locale="en" messages={messages}>
-        <FormularioCrearColeccion />
-      </NextIntlClientProvider>
-    );
-  };
-
-  it('renders form with all fields', () => {
+  it('renderiza todos los campos del formulario', () => {
     renderForm();
-    
-    expect(screen.getByLabelText('Collection Name')).toBeInTheDocument();
-    expect(screen.getByLabelText('Description')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Create Collection' })).toBeInTheDocument();
+
+    expect(screen.getByLabelText(/nameCollection.label/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/description.label/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /button.submit/i })).toBeInTheDocument();
   });
 
-  it('shows validation error when name is empty', async () => {
+  it('muestra error cuando se envía vacío', async () => {
+    const user = userEvent.setup();
     renderForm();
-    
-    const submitButton = screen.getByRole('button', { name: 'Create Collection' });
-    fireEvent.click(submitButton);
-    
+
+    const submitButton = screen.getByRole('button', { name: /button.submit/i });
+    await user.click(submitButton);
+
     await waitFor(() => {
-      expect(screen.getByText('Name is required')).toBeInTheDocument();
+      expect(screen.getByText(/nameCollection.errors.required/i)).toBeInTheDocument();
     });
   });
 
-  it('shows validation error when description exceeds max length', async () => {
+  it('valida que la descripción no exceda el máximo de caracteres', async () => {
+    const user = userEvent.setup();
     renderForm();
-    
-    const descriptionInput = screen.getByLabelText('Description');
+
+    const descriptionInput = screen.getByLabelText(/description.label/i);
     const longText = 'a'.repeat(256);
-    
-    fireEvent.change(descriptionInput, { target: { value: longText } });
-    
-    const submitButton = screen.getByRole('button', { name: 'Create Collection' });
-    fireEvent.click(submitButton);
-    
+    await user.type(descriptionInput, longText);
+
+    const submitButton = screen.getByRole('button', { name: /button.submit/i });
+    await user.click(submitButton);
+
     await waitFor(() => {
-      expect(screen.getByText('Description must be less than 255 characters')).toBeInTheDocument();
+      expect(screen.getByText(/description.errors.maxLength/i)).toBeInTheDocument();
     });
   });
 
-  it('submits form with valid data', async () => {
+  it('permite enviar formulario con datos válidos', async () => {
+    const user = userEvent.setup();
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
     renderForm();
-    
-    const nameInput = screen.getByLabelText('Collection Name');
-    const descriptionInput = screen.getByLabelText('Description');
-    
-    fireEvent.change(nameInput, { target: { value: 'My Collection' } });
-    fireEvent.change(descriptionInput, { target: { value: 'Test description' } });
-    
-    const submitButton = screen.getByRole('button', { name: 'Create Collection' });
-    fireEvent.click(submitButton);
-    
+
+    const nameInput = screen.getByLabelText(/nameCollection.label/i);
+    const descriptionInput = screen.getByLabelText(/description.label/i);
+
+    await user.type(nameInput, 'Mi Colección');
+    await user.type(descriptionInput, 'Descripción de prueba');
+
+    const submitButton = screen.getByRole('button', { name: /button.submit/i });
+    await user.click(submitButton);
+
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalled();
     });
-    
+
     consoleSpy.mockRestore();
   });
 
-  it('renders placeholder text in description field', () => {
+  it('renderiza placeholder en el campo descripción', () => {
     renderForm();
-    
-    const descriptionInput = screen.getByPlaceholderText('Enter description');
+
+    const descriptionInput = screen.getByPlaceholderText(/description.placeholder/i);
     expect(descriptionInput).toBeInTheDocument();
   });
 });
