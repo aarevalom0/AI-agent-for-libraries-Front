@@ -2,8 +2,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import {AutorCard} from "@/components/community/CommunityCard";
 import { useTranslations } from 'next-intl';
 
+interface Community {
+  name: string;
+  description: string;
+  imageUrl: string;
+  href: string;
+}
 export default function ComunidadPage() {
   const t = useTranslations('communityPage');
+  const authors = t.raw('communityPage.authors') as Community[];
 
 
   return (
@@ -13,13 +20,13 @@ export default function ComunidadPage() {
           title="Comunidad de Autores"
           className="text-2xl font-bold font-newsreader"
         >
-          Comunidad de Autores
+          {t('communityPage.title')}
         </h1>
 
         <button
           className="px-4 py-2 bg-[var(--colorMenus)] text-white rounded hover:bg-[var(--colorPrincipal)] transition"
         >
-          Crear Comunidad
+          {t('communityPage.createCommunity')}
         </button>
       </div>
 
@@ -27,39 +34,23 @@ export default function ComunidadPage() {
         <SearchIcon className="text-gray-500 " />
         <input
           type="text"
-          placeholder="Buscar comunidades por nombre de autor"
+          placeholder={t('communityPage.searchPlaceholder')}
           className="flex-1 p-2 text-sm bg-transparent focus:outline-none"
         />
       </div>
 
-      <AutorCard
-        autor="Haruki Murakami"
-        descripcion="Sumérgete en universos oníricos y existenciales con el autor de Tokio Blues (Norwegian Wood)."
-        imageUrl="/Images/Haruki.png"
-        href="#"
-      />
+      {authors.map((author, idx) => (
+        <AutorCard
+          key={idx}
+          autor={author.name}
+          descripcion={author.description}
+          imageUrl={author.imageUrl}
+          href={author.href}
+          buttonText={t('communityPage.joinButton')}
+        />
+      ))}
 
-      <AutorCard
-        autor="Isabel Allende"
-        descripcion="Descubre las historias apasionantes de la autora de 'La casa de los espíritus'."
-        imageUrl="/Images/Isabel.png"
-        href="#"
-      />
-
-      <AutorCard
-        autor="Margaret Atwood"
-        descripcion="Explora futuros distópicos y realidades inquietantes con la autora de El cuento de la criada."
-        imageUrl="/Images/Margaret.png"
-        href="#"
-      />
-
-      <AutorCard
-        autor="Stephen King"
-        descripcion="Adéntrate en mundos de terror y suspenso con el autor de It y El resplandor."
-        imageUrl="/Images/Stephen.png"
-        href="#"
-      />
-
+      
     </div>
   );
 }

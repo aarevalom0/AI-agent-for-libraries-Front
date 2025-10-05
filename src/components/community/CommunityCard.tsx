@@ -7,9 +7,10 @@ interface ComunidadCardProp {
   descripcion: string;
   imageUrl: string;
   href: string;
+  buttonText: string;
 }
 
-const AutorCard = ({ autor, descripcion, imageUrl, href }: ComunidadCardProp) => {
+const AutorCard = ({ autor, descripcion, imageUrl, href, buttonText }: ComunidadCardProp) => {
   return (
     <div className="flex py-8 max-w-full gap-6 overflow-hidden">
       <div className="flex flex-col gap-3 flex-1 min-w-0">
@@ -23,7 +24,7 @@ const AutorCard = ({ autor, descripcion, imageUrl, href }: ComunidadCardProp) =>
           </p>
         </div>
         <div className="mt-auto pb-5">
-          <BotonPersonalizado texto="Unirse" href={href} />
+          <BotonPersonalizado texto={buttonText} href={href} />
         </div>
       </div>
 
@@ -42,12 +43,7 @@ const AutorCard = ({ autor, descripcion, imageUrl, href }: ComunidadCardProp) =>
   );
 };
 
-const ClubCard = ({
-  categoria,
-  descripcion,
-  imageUrl,
-  href,
-}: ComunidadCardProp) => {
+const ClubCard = ({categoria,descripcion,imageUrl, href, buttonText}: ComunidadCardProp) => {
   return (
     <div className="flex py-8 max-w-full gap-6 overflow-hidden">
       <div className="flex flex-col gap-3 flex-1 min-w-0">
@@ -58,7 +54,7 @@ const ClubCard = ({
           </p>
         </div>
         <div className="mt-auto pb-5">
-          <BotonPersonalizado texto="Unirme al club" href={href} />
+          <BotonPersonalizado texto={buttonText} href={href} />
         </div>
       </div>
 

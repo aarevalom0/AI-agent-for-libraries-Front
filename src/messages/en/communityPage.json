@@ -3,6 +3,7 @@
     "title": "Authors Community",
     "createCommunity": "Create Community",
     "searchPlaceholder": "Search communities by author name",
+    "joinButton": "Join",
     "authors": [
       {
         "name": "Haruki Murakami",

@@ -1,30 +1,31 @@
 {
   "communityPage": {
-    "title": "Authors Community",
-    "createCommunity": "Create Community",
-    "searchPlaceholder": "Search communities by author name",
+    "title": "Comunidad de Autores",
+    "createCommunity": "Crear Comunidad",
+    "searchPlaceholder": "Buscar comunidades por nombre de autor",
+    "joinButton": "Unirse",
     "authors": [
       {
         "name": "Haruki Murakami",
-        "description": "Dive into dreamlike and existential worlds with the author of Norwegian Wood.",
+        "description": "Sumérgete en universos oníricos y existenciales con el autor de Tokio Blues (Norwegian Wood).",
         "imageUrl": "/Images/Haruki.png",
         "href": "#"
       },
       {
         "name": "Isabel Allende",
-        "description": "Discover the passionate stories of the author of 'The House of the Spirits'.",
+        "description": "Descubre las historias apasionantes de la autora de 'La casa de los espíritus'.",
         "imageUrl": "/Images/Isabel.png",
         "href": "#"
       },
       {
         "name": "Margaret Atwood",
-        "description": "Explore dystopian futures and unsettling realities with the author of The Handmaid’s Tale.",
+        "description": "Explora futuros distópicos y realidades inquietantes con la autora de El cuento de la criada.",
         "imageUrl": "/Images/Margaret.png",
         "href": "#"
       },
       {
         "name": "Stephen King",
-        "description": "Step into worlds of horror and suspense with the author of It and The Shining.",
+        "description": "Adéntrate en mundos de terror y suspenso con el autor de It y El resplandor.",
         "imageUrl": "/Images/Stephen.png",
         "href": "#"
       }
