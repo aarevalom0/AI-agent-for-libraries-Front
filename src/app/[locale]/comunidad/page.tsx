@@ -1,7 +1,11 @@
 import SearchIcon from "@mui/icons-material/Search";
 import {AutorCard} from "@/components/community/CommunityCard";
+import { useTranslations } from 'next-intl';
 
 export default function ComunidadPage() {
+  const t = useTranslations('communityPage');
+
+
   return (
     <div className="flex gap-5 flex-col p-5">
       <div className="flex justify-between items-center gap-4 mb-4">
