@@ -11,10 +11,27 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useTranslations } from 'next-intl';
 
+interface Book {
+  title: string;
+  author: string;
+  imageUrl: string;
+  href: string;
+}
+
+interface BookActual {
+  title: string;
+  author: string;
+  imageUrl: string;
+  href: string;
+  porcentaje:number;
+}
+
 
 
 export default function MainPage() {
   const t = useTranslations('mainPage');
+  const books = t.raw('mainPage.books') as Book[];
+  const books_actuales = t.raw('mainPage.books_actuales') as BookActual[];
 
   const router = useRouter();
   const [usuario, setUsuario] = useState<string>("");
@@ -42,73 +59,40 @@ export default function MainPage() {
         </div>
 
         <div title="Libros Recomendados" className='container flex gap-2 overflow-x-auto pb-6' >
-          <BookCard
-            title="Cien años de soledad"
-            autor="Gabriel García Márquez"
-            imageUrl="/Images/CienAniosSoledad.jpg"
-            href='/libros/detalles/cienaniosdesoledad'
-          />
-          <BookCard
-            title="Dune"
-            autor="Frank Herbert"
-            imageUrl="/Images/dune.jpg"
-            href='/libros/detalles/dune'
-          />
-          <BookCard
-            title="El señor de los anillos"
-            autor="J.R.R. Tolkien"
-            imageUrl="/Images/lotr.jpg"
-            href='/libros/detalles/lotr'
-          />
-
-          <BookCard
-            title="Sapiens: De animales a dioses"
-            autor="Yuval Noah Harari"
-            imageUrl="/Images/sapiens.jpg"
-            href='/libros/detalles/sapiens'
-          />
-          <BookCard
-            title="La chica del tren"
-            autor="Paula Hawkins"
-            imageUrl="/Images/girl-train.jpg"
-            href='/libros/detalles/girl-train'
-          />
+          {books.map((book: Book, idx: number) => (
+            <BookCard
+              key={idx}
+              title={book.title}
+              autor={book.author}
+              imageUrl={book.imageUrl}
+              href={book.href}
+            />
+          ))}
         </div>
 
         <div title='Lecturas Actuales' className='py-4'>
           <h3 className='text-bold font-newsreader pb-4 '>{t('mainPage.currentReads')} </h3>
           <div title="Lecturas actuales" className='flex flex-col gap-3 pl-2'>
-            <BookCardProgress
-              title="La chica del tren"
-              autor="Paula Hawkins"
-              imageUrl="/Images/girl-train.jpg"
-              href='/leerahora/girl-train'
-              porcentaje={42}
-            />
-            <BookCardProgress
-              title="1984"
-              autor="George Orwell"
-              imageUrl="/Images/1984.jpg"
-              href="/libros/detalles/1984"
-              porcentaje={20}
-            />
-            <BookCardProgress
-              title="Harry Potter y la piedra filosofal"
-              autor="J.K. Rowling"
-              imageUrl="/Images/harry-potter.jpg"
-              href="/libros/detalles/harry-potter"
-              porcentaje={37}
-            />
-
+             {books_actuales.map((book: BookActual) => (
+                <BookCardProgress
+                  key={book.title}
+                  title={book.title}
+                  autor={book.author}
+                  imageUrl={book.imageUrl}
+                  href={book.href}
+                  porcentaje={book.porcentaje}
+                />
+             ))}
+  
           </div>
 
           <div title="Evento Destacado">
             <EventCard
-              pretitulo='Evento destacado'
-              title='Club de lectura virtual'
-              descripcion='Acompáñanos en una charla sobre “La última crónica” con la autora Emily Carter.'
-              imageUrl='/Images/clublecturavirtual.jpg'
-              href='/eventos/clublecturavirtual'
+              pretitulo={t('mainPage.featuredEvent.pretitle')}
+              title={t('mainPage.featuredEvent.title')}
+              descripcion={t('mainPage.featuredEvent.description')}
+              imageUrl={t('mainPage.featuredEvent.imageUrl')}
+              href={t('mainPage.featuredEvent.href')}
             />
           </div>
         </div>

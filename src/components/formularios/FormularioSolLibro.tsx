@@ -3,19 +3,8 @@ import React from "react";
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl";
 
-const schema = z.object({
-    titulo: z.string().min(1,"El titulo del libro es obligatorio"),
-    nombreAutor: z.string().min(1,"El nombre del autor es obligatorio"),
-    isbn: z.string().min(1,"El ISBN es obligatorio"),
-    editorial: z.string().min(1,"La editorial es obligatoria"),
-    anioPublicacion: z.string().min(1,"El año de publicación es obligatorio"),
-    numeroPaginas: z.number().min(1,"El número de páginas es obligatorio"),
-    idioma: z.string().min(1,"El idioma es obligatorio"),
-    genero: z.array(z.object({ genero: z.string().min(1, "El género no puede estar vacío") })).min(1, "El género no puede estar vacío").nonempty("Debe haber al menos un género"),
-    resumen: z.string().max(255, "El resumen no puede tener más de 255 caracteres"),
-    imagenPortada: z.url("La imagen debe ser una URL válida"),
-})
 
 type Inputs = {
   titulo: string;
@@ -31,9 +20,21 @@ type Inputs = {
 };
 
 
-
-
 const FormularioSolLibro = () => {
+    const t = useTranslations("formularios");
+
+    const schema = z.object({
+        titulo: z.string().min(1,{message: t("formulario_sol_libro.errors.titulo")}),
+        nombreAutor: z.string().min(1,{message: t("formulario_sol_libro.errors.nombreAutor")}),
+        isbn: z.string().min(1,{message: t("formulario_sol_libro.errors.isbn")}),
+        editorial: z.string().min(1,{message: t("formulario_sol_libro.errors.editorial")}),
+        anioPublicacion: z.string().min(1,{message: t("formulario_sol_libro.errors.anioPublicacion")}),
+        numeroPaginas: z.number().min(1,{message: t("formulario_sol_libro.errors.numeroPaginas")}),
+        idioma: z.string().min(1,{message: t("formulario_sol_libro.errors.idioma")}),
+        genero: z.array(z.object({ genero: z.string().min(1, {message: t("formulario_sol_libro.errors.genero")}) })).min(1, {message: t("formulario_sol_libro.errors.genero")}).nonempty({message: t("formulario_sol_libro.errors.genero")}),
+        resumen: z.string().min(10,{message: t("formulario_sol_libro.errors.resumenCorto")}).max(255, {message: t("formulario_sol_libro.errors.resumen")}),
+        imagenPortada: z.url({message: t("formulario_sol_libro.errors.imagenPortada")}),
+    })
 
     const {
         register,
@@ -54,79 +55,80 @@ const FormularioSolLibro = () => {
         console.log(data);
         //Hacer conexion con el backend para crear la solicitud del libro
     }
+    
 
     return ( 
         <div title='Formulario Crear Coleccion' className=" p-5 w-[70%]">
             <form onSubmit={handleSubmit(onSubmit)} className=" p-8 w-full mx-auto border border-[var(--colorPrincipal)] rounded">
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='titulo'>Título:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='titulo'>{t("formulario_sol_libro.form.fields.titulo")}:</label>
                     <input title="Título del libro" type='text' {...register("titulo")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.titulo && <p className="text-red-500 text-sm mt-1">{errors.titulo.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='nombreAutor'>Nombre del Autor:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='nombreAutor'>{t("formulario_sol_libro.form.fields.nombreAutor")}:</label>
                     <input title="Nombre del autor" type='text' {...register("nombreAutor")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.nombreAutor && <p className="text-red-500 text-sm mt-1">{errors.nombreAutor.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='isbn'>ISBN:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='isbn'>{t("formulario_sol_libro.form.fields.isbn")}:</label>
                     <input title="ISBN del libro" type='text' {...register("isbn")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.isbn && <p className="text-red-500 text-sm mt-1">{errors.isbn.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='editorial'>Editorial:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='editorial'>{t("formulario_sol_libro.form.fields.editorial")}:</label>
                     <input title="Editorial del libro" type='text' {...register("editorial")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.editorial && <p className="text-red-500 text-sm mt-1">{errors.editorial.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='anioPublicacion'>Año de Publicación:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='anioPublicacion'>{t("formulario_sol_libro.form.fields.anioPublicacion")}:</label>
                     <input title="Año de publicación del libro" type='date' {...register("anioPublicacion")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.anioPublicacion && <p className="text-red-500 text-sm mt-1">{errors.anioPublicacion.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='numeroPaginas'>Número de Páginas:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='numeroPaginas'>{t("formulario_sol_libro.form.fields.numeroPaginas")}:</label>
                     <input title="Número de páginas del libro" type='number' {...register("numeroPaginas")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.numeroPaginas && <p className="text-red-500 text-sm mt-1">{errors.numeroPaginas.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='idioma'>Idioma:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='idioma'>{t("formulario_sol_libro.form.fields.idioma")}:</label>
                     <input title="Idioma del libro" type='text' {...register("idioma")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.idioma && <p className="text-red-500 text-sm mt-1">{errors.idioma.message}</p>}
                 </div>
 
                 {/* Géneros dinámicos */}
                 <div className="mb-4 flex flex-col">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2 pb-2'>Géneros: </label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2 pb-2'>{t("formulario_sol_libro.form.fields.generos")}: </label>
                     {fields.map((field, index) => (
                     <div key={field.id} className="flex gap-3 mb-2">
-                        <input placeholder=" Género" className=" p-2 border border-gray-300 rounded" {...register(`genero.${index}.genero` as const)} />
-                        <button type="button" className='items-start bg-red-800 w-1/4 hover:bg-red-900 text-white font-bold py-2 px-2 rounded' onClick={() => remove(index)}>Eliminar</button>
+                        <input placeholder={t("formulario_sol_libro.form.placeholders.genero")} className=" p-2 border border-gray-300 rounded" {...register(`genero.${index}.genero` as const)} />
+                        <button type="button" className='items-start bg-red-800 w-1/4 hover:bg-red-900 text-white font-bold py-2 px-2 rounded' onClick={() => remove(index)}>{t("formulario_sol_libro.form.buttons.eliminar")}</button>
                     </div>
                     ))}
-                    <button type="button" className='items-start bg-[var(--colorPrincipal)] w-1/4 hover:bg-[var(--colorPrincipalHover)] text-white font-bold py-2 px-2 rounded' onClick={() => append({ genero: "" })}>Agregar género</button>
+                    <button type="button" className='items-start bg-[var(--colorPrincipal)] w-1/4 hover:bg-[var(--colorPrincipalHover)] text-white font-bold py-2 px-2 rounded' onClick={() => append({ genero: "" })}>{t("formulario_sol_libro.form.buttons.agregarGenero")}</button>
                     {errors.genero && <p className="text-red-500 text-sm mt-1">{errors.genero.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='resumen'>Resumen:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='resumen'>{t("formulario_sol_libro.form.fields.resumen")}:</label>
                     <textarea title="Resumen del libro" {...register("resumen")} className='w-full p-2 border border-gray-300 rounded' />
                     {errors.resumen && <p className="text-red-500 text-sm mt-1">{errors.resumen.message}</p>}
                 </div>
 
                 <div className="mb-4">
-                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='imagenPortada'>Imagen de Portada:</label>
+                    <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='imagenPortada'>{t("formulario_sol_libro.form.fields.imagenPortada")}:</label>
                     <input title="URL de la imagen de portada del libro" type='url' {...register("imagenPortada")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.imagenPortada && <p className="text-red-500 text-sm mt-1">{errors.imagenPortada.message}</p>}
                 </div>
 
                 <button type='submit' className='bg-[var(--colorPrincipal)] hover:bg-[var(--colorPrincipalHover)] text-white font-bold py-2 px-4 rounded'>
-                    Crear Solicitud
+                    {t("formulario_sol_libro.form.buttons.submit")}
                 </button>
             </form>
         </div>

@@ -1,0 +1,25 @@
+{
+  "navbar": {
+    "home": "Inicio",
+    "events": "Eventos",
+    "stats": "Estadísticas",
+    "library": "Mi biblioteca",
+    "readNow": "Leer ahora",
+    "community": "Comunidad",
+    "searchPlaceholder": "Buscar",
+    "notifications": "Notificaciones",
+    "profile": "Perfil",
+    "language": "Idioma"
+  },
+  "footer":{
+    "links": {
+        "home": "Inicio",
+        "events": "Eventos",
+        "stats": "Estadísticas",
+        "library": "Mi biblioteca",
+        "readNow": "Leer ahora",
+        "community": "Comunidad"
+    },
+    "rights": "Todos los derechos reservados"
+  }
+}

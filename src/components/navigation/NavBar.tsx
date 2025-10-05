@@ -8,13 +8,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { usePathname, useRouter } from "@/i18n/routing";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const NavBar = () => {
   const AVAILABLE_LOCALES = ["es", "en"];
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations("navegacion");
 
   const switchLocale = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale });
@@ -38,50 +39,37 @@ const NavBar = () => {
 
           {/* Links desktop */}
           <ul className="hidden md:flex gap-2 ml-4">
-            <li><Link href="/mainPage" className={linkCls("Home")} onClick={() => setSelected("Home")}>Home</Link></li>
-            <li><Link href="/eventos" className={linkCls("Eventos")} onClick={() => setSelected("Eventos")}>Eventos</Link></li>
-            <li><Link href="/estadisticas" className={linkCls("Estadísticas")} onClick={() => setSelected("Estadísticas")}>Estadísticas</Link></li>
-            <li><Link href="/miBiblioteca" className={linkCls("Mi Biblioteca")} onClick={() => setSelected("Mi Biblioteca")}>Mi biblioteca</Link></li>
-            <li><Link href="/leerAhora" className={linkCls("Leer Ahora")} onClick={() => setSelected("Leer Ahora")}>Leer Ahora</Link></li>
-            <li><Link href="/comunidad" className={linkCls("Comunidad")} onClick={() => setSelected("Comunidad")}>Comunidad</Link></li>
+            <li title={t('navbar.home')}><Link href="/mainPage" className={linkCls("Home")} onClick={() => setSelected("Home")}> {t('navbar.home')} </Link></li>
+            <li title={t('navbar.events')}><Link href="/eventos" className={linkCls("Eventos")} onClick={() => setSelected("Eventos")}>{t('navbar.events')} </Link></li>
+            <li title={t('navbar.stats')} ><Link href="/estadisticas" className={linkCls("Estadísticas")} onClick={() => setSelected("Estadísticas")}>{t('navbar.stats')} </Link></li>
+            <li title={t('navbar.library')} ><Link href="/miBiblioteca" className={linkCls("Mi Biblioteca")} onClick={() => setSelected("Mi Biblioteca")}>{t('navbar.library')} </Link></li>
+            <li title={t('navbar.readNow')} ><Link href="/leerAhora" className={linkCls("Leer Ahora")} onClick={() => setSelected("Leer Ahora")}>{t('navbar.readNow')} </Link></li>
+            <li title={t('navbar.community')} ><Link href="/comunidad" className={linkCls("Comunidad")} onClick={() => setSelected("Comunidad")}>{t('navbar.community')} </Link></li>
           </ul>
         </div>
 
         {/* Acciones derecha (desktop) */}
         <div className="hidden md:flex items-center gap-3">
-          {/* buscador */}
-          <div className="pl-2 flex items-center w-44 h-10 rounded-lg border border-elev bg-[var(--input-bg)]">
-            <SearchIcon className="text-[var(--text)]/60" />
-            <input
-              type="text"
-              placeholder="Buscar"
-              className="flex-1 px-2 text-sm bg-transparent outline-none text-[var(--text)] placeholder:text-[var(--text)]/50"
-            />
-          </div>
 
           {/* notificaciones */}
-          <button className="p-2 rounded-lg border border-elev bg-[var(--input-bg)] hover:opacity-80">
+          <button title={t('navbar.notifications')}  className="cursor-pointer p-2 rounded-lg border border-elev bg-[var(--input-bg)] hover:opacity-80">
             <NotificationsIcon className="text-[var(--text)]/70" />
           </button>
 
           {/* perfil */}
           <Link href="/perfil" className="flex items-center">
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-elev">
+            <div title={t('navbar.profile')}  className="w-10 h-10 rounded-full overflow-hidden border border-elev">
               <Image src="/Images/Perfil1.png" alt="Perfil" width={40} height={40} />
             </div>
           </Link>
 
-          {/* Idioma (placeholder) */}
-          <button className="px-3 py-2 rounded-lg border border-elev bg-[var(--input-bg)] text-[var(--text)]/80">
-            EN/ES
-          </button>
-          <div className="flex gap-2">
+          <div title={t('navbar.language')}  className="flex gap-2">
             {AVAILABLE_LOCALES.map((l) => (
               <button
                 key={l}
                 onClick={() => switchLocale(l)}
-                className={`px-3 py-1 rounded ${
-                  locale === l ? "bg-blue-500 text-white" : "bg-gray-200"
+                className= {`cursor-pointer px-3 py-1 rounded ${
+                  locale === l ? "bg-[var(--colorMenus)] text-white" : "bg-gray-200"
                 }`}
               >
                 {l.toUpperCase()}
