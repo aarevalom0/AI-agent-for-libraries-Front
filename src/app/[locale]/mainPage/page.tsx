@@ -66,6 +66,7 @@ export default function MainPage() {
               autor={book.author}
               imageUrl={book.imageUrl}
               href={book.href}
+              data-testid="book-card"
             />
           ))}
         </div>
@@ -81,6 +82,7 @@ export default function MainPage() {
                   imageUrl={book.imageUrl}
                   href={book.href}
                   porcentaje={book.porcentaje}
+                  data-testid="book-card-progress"
                 />
              ))}
   
@@ -110,38 +112,46 @@ export default function MainPage() {
           <h2 title="Titulo sección" className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]">
             {t('mainPage.badgesTitle')}
           </h2>
-          <div className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]"> 
+          <div title="Insignias" className=" grid gap-3 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]"> 
             <Insignias
               nombre="Insignia Muchos Libros"
               imageUrl= "/Images/Insignia1.jpg"
+              data-testid="Insignias"
             />
             <Insignias
               nombre="Insignia Gato lector"
               imageUrl= "/Images/Insignia2.jpeg"
+              data-testid="Insignias"
             />
             <Insignias
               nombre="Insignia Gato cafetero"
               imageUrl= "/Images/Insignia3.jpeg"
+              data-testid="Insignias"
             />
             <Insignias
               nombre="Insignia Libros muy altos"
               imageUrl= "/Images/Insignia4.jpeg"
+              data-testid="Insignias"
             />
             <Insignias
               nombre="Insignia Libros cafeteros"
               imageUrl= "/Images/Insignia5.jpeg"
+              data-testid="Insignias"
             />
             <Insignias
               nombre="Espacio nuevas Insignias"
               imageUrl= ""
+              data-testid="Insignias"
             />
              <Insignias
               nombre="Espacio nuevas Insignias"
               imageUrl= ""
+              data-testid="Insignias"
             />
              <Insignias
               nombre="Espacio nuevas Insignias"
               imageUrl= ""
+              data-testid="Insignias"
             />
             
 

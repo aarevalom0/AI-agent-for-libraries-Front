@@ -40,6 +40,7 @@ const FormularioSolLibro = () => {
         register,
         handleSubmit,
         control,
+        reset,
         formState: { errors },
     } = useForm<Inputs>({
         resolver: zodResolver(schema), 
@@ -53,12 +54,13 @@ const FormularioSolLibro = () => {
 
     const onSubmit = async (data: Inputs) => {
         console.log(data);
+        reset();
         //Hacer conexion con el backend para crear la solicitud del libro
     }
     
 
     return ( 
-        <div title='Formulario Crear Coleccion' className=" p-5 w-[70%]">
+        <div title='Formulario Sol Libro' className=" p-5 w-[70%]">
             <form onSubmit={handleSubmit(onSubmit)} className=" p-8 w-full mx-auto border border-[var(--colorPrincipal)] rounded">
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='titulo'>{t("formulario_sol_libro.form.fields.titulo")}:</label>
@@ -92,7 +94,7 @@ const FormularioSolLibro = () => {
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='numeroPaginas'>{t("formulario_sol_libro.form.fields.numeroPaginas")}:</label>
-                    <input title="Número de páginas del libro" type='number' {...register("numeroPaginas")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input title="Número de páginas del libro" type='number'{...register("numeroPaginas", { valueAsNumber: true })} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.numeroPaginas && <p className="text-red-500 text-sm mt-1">{errors.numeroPaginas.message}</p>}
                 </div>
 
