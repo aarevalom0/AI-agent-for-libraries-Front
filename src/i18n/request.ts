@@ -17,6 +17,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
         navegacion: (await import('../messages/es/navegacion.json')).default,
         biblioteca: (await import('../messages/es/biblioteca.json')).default,
         formularios: (await import('../messages/es/formularios.json')).default,
+        miBiblioteca: (await import('../messages/es/miBiblioteca.json')).default,
+        bookDetail: (await import('../messages/es/bookDetail.json')).default,
+        booksContent: (await import('../messages/es/booksContent.json')).default
 
       }
     : {
@@ -25,12 +28,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
         navegacion: (await import('../messages/en/navegacion.json')).default,
         biblioteca: (await import('../messages/en/biblioteca.json')).default,
         formularios: (await import('../messages/en/formularios.json')).default,
-        miBiblioteca: (await import('../messages/es/miBiblioteca.json')).default,
-        bookDetail: (await import('../messages/es/bookDetail.json')).default,
-        booksContent: (await import('../messages/es/booksContent.json')).default,
-      }
-    : {
-        mainPage: (await import('../messages/en/mainPage.json')).default,
         miBiblioteca: (await import('../messages/en/miBiblioteca.json')).default,
         bookDetail: (await import('../messages/en/bookDetail.json')).default,
         booksContent: (await import('../messages/en/booksContent.json')).default,

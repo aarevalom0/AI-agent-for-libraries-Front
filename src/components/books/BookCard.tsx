@@ -13,10 +13,10 @@ const BookCard = ({ title, autor, imageUrl, href}: BookCardProps) => {
         <article className="flex mx-auto flex-col items-center gap-1 group">
             <Link 
                 href={href} 
-                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg transition-transform hover:scale-105"
+                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg "
                 aria-label={`Ver detalles del libro "${title}" por ${autor}`}
             >
-                <div className="relative w-[150px] h-[220px] rounded-md overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
+                <div className="relative w-[150px] h-[220px] rounded-md overflow-hidden shadow-md group-hover:shadow-lg ">
                     <Image 
                         src={imageUrl}
                         alt={`Portada del libro "${title}" por ${autor}`}
