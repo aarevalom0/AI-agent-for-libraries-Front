@@ -1,0 +1,18 @@
+{
+  "bot": {
+    "welcome": "Bienvenido a Lecturium. ¿En qué puedo ayudarte?"
+  },
+  "titles": {
+    "chatbot": "Chatbot de Lecturium",
+    "close": "Cerrar chatbot",
+    "messagesArea": "Área de mensajes",
+    "inputArea": "Área de entrada de mensaje",
+    "send": "Enviar mensaje"
+  },
+  "labels": {
+    "placeholder": "Escribe un mensaje..."
+  },
+  "header": {
+    "title": "Lecturium"
+  }
+}
