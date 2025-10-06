@@ -1,6 +1,8 @@
 import SearchIcon from "@mui/icons-material/Search";
 import {AutorCard} from "@/components/community/CommunityCard";
+import CrearComunidad from "./crearComunidad/page";
 import { useTranslations } from 'next-intl';
+import BotonPersonalizado from "@/components/elementos/BotonPersonalizado";
 
 interface Community {
   name: string;
@@ -23,11 +25,12 @@ export default function ComunidadPage() {
           {t('communityPage.title')}
         </h1>
 
-        <button
-          className="px-4 py-2 bg-[var(--colorMenus)] text-white rounded hover:bg-[var(--colorPrincipal)] transition"
-        >
-          {t('communityPage.createCommunity')}
-        </button>
+
+        <BotonPersonalizado
+          texto={t('communityPage.createCommunity')}
+          href="/comunidad/crearComunidad"
+          ariaLabel={t('communityPage.createCommunity')}
+        />
       </div>
 
       <div className="pl-2 flex items-center h-10 rounded-lg border border-gray-300 bg-gray-50 focus-within:ring-1 focus-within:ring-[var(--color-principal)]">
