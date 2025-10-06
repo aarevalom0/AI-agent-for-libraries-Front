@@ -67,6 +67,7 @@ const FormularioCrearComunidad = () => {
             {...register("nombre")}
             placeholder={t("formulario_crear_comunidad.nameCommunity.placeholder")}
             className="w-full p-2 border border-gray-300 rounded"
+            name ="nameCommunity"
           />
           {errors.nombre && (
             <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
@@ -85,6 +86,7 @@ const FormularioCrearComunidad = () => {
             {...register("descripcion")}
             placeholder={t("formulario_crear_comunidad.description.placeholder")}
             className="w-full p-2 border border-gray-300 rounded"
+            name="description"
           />
           {errors.descripcion && (
             <p className="text-red-500 text-sm mt-1">
@@ -107,6 +109,7 @@ const FormularioCrearComunidad = () => {
             {...register("imagen")}
             onChange={handleImagePreview}
             className="w-full p-2 border border-gray-300 rounded"
+            name="image"
           />
           {errors.imagen && (
             <p className="text-red-500 text-sm mt-1">
@@ -118,6 +121,7 @@ const FormularioCrearComunidad = () => {
               src={imagePreview}
               alt="Preview"
               className="mt-2 w-32 h-32 object-cover rounded"
+
             />
           )}
         </div>

@@ -15,11 +15,7 @@ const Sidebar = ({ items }: SidebarProps) => {
   const [selected, setSelected] = useState<string>(items[0]?.name || "");
 
   return (
-    <aside
-      title="Menú lateral"
-      className={`${
-        isOpen ? "w-52" : "w-16"
-      }  bg-[var(--colorMenus)] p-4 flex flex-col space-y-4 rounded-md shadow-md transition-all duration-300`}
+    <aside title="Menu lateral" className={`${isOpen ? "w-52" : "w-16"}  bg-[var(--colorMenus)] p-4 flex flex-col space-y-4 rounded-md shadow-md transition-all duration-300`}
     >
 
       <button
