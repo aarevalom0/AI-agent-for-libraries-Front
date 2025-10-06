@@ -42,6 +42,37 @@
       { "name": "Sofia Martinez", "avatar": "/Images/Perfil6.jpg", "status": "offline" },
       { "name": "Miguel Sanchez", "avatar": "/Images/Perfil7.jpg", "status": "online" }
     ]
+  },
+  "clubsPage": {
+    "title": "Reading Clubs",
+    "searchPlaceholder": "Search clubs by name or category",
+    "joinButton": "Join Club",
+    "clubs": [
+      {
+        "categoria": "Science Fiction",
+        "descripcion": "Current book: 'Pride and Prejudice' by Jane Austen. 125 members",
+        "imageUrl": "/images/comunidad/club-ciencia-ficcion.jpg",
+        "href": "/community/club/science-fiction"
+      },
+      {
+        "categoria": "Mystery and Thriller",
+        "descripcion": "Current book: 'The Girl on the Train' by Paula Hawkins. 88 members",
+        "imageUrl": "/images/comunidad/club-misterio.jpg",
+        "href": "/community/club/mystery"
+      },
+      {
+        "categoria": "Science Fiction and Fantasy",
+        "descripcion": "Current book: 'Dune' by Frank Herbert. 150 members",
+        "imageUrl": "/images/comunidad/club-fantasia.jpg",
+        "href": "/community/club/fantasy"
+      },
+      {
+        "categoria": "Contemporary Romance",
+        "descripcion": "Current book: 'The Love Hypothesis' by Ali Hazelwood. 95 members",
+        "imageUrl": "/images/comunidad/club-romance.jpg",
+        "href": "/community/club/romance"
+      }
+    ]
   }
 }
 

@@ -42,5 +42,36 @@
       { "name": "Sofia Martinez", "avatar": "/Images/Perfil6.jpg", "status": "Fuera de línea" },
       { "name": "Miguel Sanchez", "avatar": "/Images/Perfil7.jpg", "status": "En línea" }
     ]
+  },
+  "clubsPage": {
+    "title": "Clubes de Lectura",
+    "searchPlaceholder": "Buscar clubes por nombre o categoría",
+    "joinButton": "Unirse al Club",
+    "clubs": [
+      {
+        "categoria": "Ciencia Ficción",
+        "descripcion": "Libro actual: 'Orgullo y Prejuicio' de Jane Austen. 125 miembros",
+        "imageUrl": "/images/comunidad/club-ciencia-ficcion.jpg",
+        "href": "/comunidad/club/ciencia-ficcion"
+      },
+      {
+        "categoria": "Misterio y Suspenso",
+        "descripcion": "Libro actual: 'La Chica del Tren' de Paula Hawkins. 88 miembros",
+        "imageUrl": "/images/comunidad/club-misterio.jpg",
+        "href": "/comunidad/club/misterio"
+      },
+      {
+        "categoria": "Ciencia Ficción y Fantasía",
+        "descripcion": "Libro actual: 'Dune' de Frank Herbert. 150 miembros",
+        "imageUrl": "/images/comunidad/club-fantasia.jpg",
+        "href": "/comunidad/club/fantasia"
+      },
+      {
+        "categoria": "Romance Contemporáneo",
+        "descripcion": "Libro actual: 'La Hipótesis del Amor' de Ali Hazelwood. 95 miembros",
+        "imageUrl": "/images/comunidad/club-romance.jpg",
+        "href": "/comunidad/club/romance"
+      }
+    ]
   }
 }
