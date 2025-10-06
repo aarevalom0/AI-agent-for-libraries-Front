@@ -6,10 +6,10 @@ interface InsigniaProp{
     imageUrl?:string;
 }
 
-const Insignia = ({nombre, imageUrl}:InsigniaProp) => {
+const Insignia = ({nombre, imageUrl, ...props}:InsigniaProp) => {
 
     return (
-        <div title={`${nombre}`} className="relative w-40 h-40 flex items-center justify-center rounded-full overflow-hidden bg-[var(--colorClaroTrans)]">
+        <div title={`${nombre}`} {...props} className="relative w-40 h-40 flex items-center justify-center rounded-full overflow-hidden bg-[var(--colorClaroTrans)]">
             {imageUrl? (
                 <Image
                     src={imageUrl}

@@ -20,10 +20,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
         miBiblioteca: (await import('../messages/es/miBiblioteca.json')).default,
         bookDetail: (await import('../messages/es/bookDetail.json')).default,
         booksContent: (await import('../messages/es/booksContent.json')).default,
-        communityPage: (await import('../messages/es/communityPage.json')).default,
-        communityLayout: (await import('../messages/es/communityLayout.json')).default
-
-
+        eventos: (await import('../messages/es/eventos.json')).default,
+        estadisticas: (await import('../messages/es/estadisticas.json')).default,
+        leerAhora: (await import('../messages/es/leerAhora.json')).default,
+        reader: (await import('../messages/es/reader.json')).default,
       }
     : {
         mainPage: (await import('../messages/en/mainPage.json')).default,
@@ -34,6 +34,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
         miBiblioteca: (await import('../messages/en/miBiblioteca.json')).default,
         bookDetail: (await import('../messages/en/bookDetail.json')).default,
         booksContent: (await import('../messages/en/booksContent.json')).default,
+        eventos: (await import('../messages/en/eventos.json')).default,
+        estadisticas: (await import('../messages/en/estadisticas.json')).default,
+        leerAhora: (await import('../messages/en/leerAhora.json')).default,
+        reader: (await import('../messages/en/reader.json')).default,
         communityPage: (await import('../messages/en/communityPage.json')).default,
         communityLayout: (await import('../messages/en/communityLayout.json')).default
     };

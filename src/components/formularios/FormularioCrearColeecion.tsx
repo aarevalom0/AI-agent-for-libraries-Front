@@ -39,13 +39,13 @@ const FormularioCrearColeccion = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 mx-auto p-4 border border-gray-300 rounded">
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='nameCollection'>{t("formulario_crear_coleccion.nameCollection.label")}</label>
-                    <input type='text' {...register("nameCollection")} className='w-full p-2 border border-gray-300 rounded'/>
+                    <input id="nameCollection" type='text' {...register("nameCollection")} className='w-full p-2 border border-gray-300 rounded'/>
                     {errors.nameCollection && <p className="text-red-500 text-sm mt-1">{errors.nameCollection.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className='block text-[var(--colorSecundario)] font-bold mb-2' htmlFor='description'>{t("formulario_crear_coleccion.description.label")}</label>
-                    <textarea  placeholder={t("formulario_crear_coleccion.description.placeholder")} {...register("description")} className='w-full p-2 border border-gray-300 rounded' />
+                    <textarea id="description"  placeholder={t("formulario_crear_coleccion.description.placeholder")} {...register("description")} className='w-full p-2 border border-gray-300 rounded' />
                     {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
                 </div>
 

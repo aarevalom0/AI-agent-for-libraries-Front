@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import styles from '@/components/estadisticas/Estadisticas.module.css';
 import { rankingData } from '@/lib/mock-data';
 
@@ -12,6 +13,7 @@ const formatTime = (totalMinutes: number) => {
 };
 
 const RankingLectores = () => {
+  const t = useTranslations('estadisticas');
   const [timeFilter, setTimeFilter] = useState('Total');
 
   // En una app real, aquí harías una llamada a la API con el filtro seleccionado.
@@ -20,16 +22,21 @@ const RankingLectores = () => {
 
   return (
     <div className={styles.rankingContainer}>
-      <h2 className={styles.rankingTitle}>Ranking de Lectores</h2>
+      <h2 className={styles.rankingTitle}>{t('readersRanking')}</h2>
 
       <div className={styles.filterButtons}>
-        {['Hoy', 'Semana', 'Mes', 'Total'].map((filter) => (
+        {[
+          { key: 'Hoy', label: t('today') }, 
+          { key: 'Semana', label: t('week') }, 
+          { key: 'Mes', label: t('month') }, 
+          { key: 'Total', label: t('total') }
+        ].map((filter) => (
           <button
-            key={filter}
-            className={`${styles.filterButton} ${timeFilter === filter ? styles.active : ''}`}
-            onClick={() => setTimeFilter(filter)}
+            key={filter.key}
+            className={`${styles.filterButton} ${timeFilter === filter.key ? styles.active : ''}`}
+            onClick={() => setTimeFilter(filter.key)}
           >
-            {filter}
+            {filter.label}
           </button>
         ))}
       </div>
@@ -37,9 +44,9 @@ const RankingLectores = () => {
       <table className={styles.rankingTable}>
         <thead>
           <tr>
-            <th>Posición</th>
-            <th>Lector</th>
-            <th>Tiempo de Lectura</th>
+            <th>{t('position')}</th>
+            <th>{t('reader')}</th>
+            <th>{t('readingTime')}</th>
           </tr>
         </thead>
         <tbody>

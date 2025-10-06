@@ -14,7 +14,7 @@ interface EventCardProp {
 const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardProp) => {
     const t = useTranslations('componentes');
     return(
-        <div className='flex py-8'>
+        <div className='flex py-8 EventCard'>
             <div className='flex flex-col gap-3'>
                 <div title='texto evento' className='font-newsreader pt-5'>
                     {pretitulo && (

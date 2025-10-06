@@ -30,31 +30,31 @@
         "title": "Cien años de soledad",
         "author": "Gabriel García Márquez",
         "imageUrl": "/Images/CienAniosSoledad.jpg",
-        "href": "/libros/detalles/cienaniosdesoledad"
+        "href": "/miBiblioteca/libros/1"
       },
       {
         "title": "Dune",
         "author": "Frank Herbert",
         "imageUrl": "/Images/dune.jpg",
-        "href": "/libros/detalles/dune"
+        "href": "/miBiblioteca/libros/100"
       },
       {
         "title": "El señor de los anillos",
         "author": "J.R.R. Tolkien",
         "imageUrl": "/Images/lotr.jpg",
-        "href": "/libros/detalles/lotr"
+        "href": "/miBiblioteca/libros/4"
       },
       {
         "title": "Sapiens: De animales a dioses",
         "author": "Yuval Noah Harari",
         "imageUrl": "/Images/sapiens.jpg",
-        "href": "/libros/detalles/sapiens"
+        "href": "/miBiblioteca/libros/110"
       },
       {
         "title": "La chica del tren",
         "author": "Paula Hawkins",
         "imageUrl": "/Images/girl-train.jpg",
-        "href": "/libros/detalles/girl-train"
+        "href": "/miBiblioteca/libros/8"
       }
     ],
     "books_actuales": [
@@ -62,21 +62,21 @@
         "title": "La chica del tren",
         "author": "Paula Hawkins",
         "imageUrl": "/Images/girl-train.jpg",
-        "href": "/leerahora/girl-train",
+        "href": "reader/girl-train",
         "porcentaje": 42
       },
       {
         "title": "1984",
         "author": "George Orwell",
         "imageUrl": "/Images/1984.jpg",
-        "href": "/libros/detalles/1984",
+        "href": "/reader/1984",
         "porcentaje": 20
       },
       {
         "title": "Harry Potter y la piedra filosofal",
         "author": "J.K. Rowling",
         "imageUrl": "/Images/harry-potter.jpg",
-        "href": "/libros/detalles/harry-potter",
+        "href": "/reader/harry-potter",
         "porcentaje": 37
       }
     ]

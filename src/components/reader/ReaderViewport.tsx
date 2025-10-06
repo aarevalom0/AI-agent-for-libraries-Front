@@ -1,22 +1,42 @@
+// components/reader/ReaderViewport.tsx
 "use client";
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import React, {forwardRef} from "react";
 import clsx from "clsx";
 
-function Inner(
-  { className, fontSize, children, invertProse=false }:
-  { className?: string; fontSize: number; children: ReactNode; invertProse?: boolean },
-  ref: ForwardedRef<HTMLDivElement>
-){
+type Props = {
+  children: React.ReactNode;
+  className?: string;      // clases tipográficas / color de texto
+  fontSize: number;
+  // añadimos estos dos para fondo
+  bg: "default" | "cream" | "sepia";
+  night: boolean;
+};
+
+const ReaderViewport = forwardRef<HTMLDivElement, Props>(function ReaderViewport(
+  {children, className, fontSize, bg, night}, ref
+) {
+  const bgColor = night
+    ? "#1c1b1a"
+    : bg === "cream"
+      ? "#F8F4EA"
+      : bg === "sepia"
+        ? "#F3E5D0"
+        : "var(--elev)";
+
   return (
     <div
       ref={ref}
-      className={clsx("h-[65vh] overflow-y-auto rounded-lg px-4 py-3 border reader-border reader-surface", className)}
-      style={{ fontSize }}
+      className={clsx(
+        "h-[65vh] overflow-y-auto rounded-lg px-4 py-3 border reader-surface",
+        className
+      )}
+      style={{ fontSize, backgroundColor: bgColor }}
     >
-      <article className={clsx("prose max-w-none whitespace-pre-wrap leading-7", invertProse && "prose-invert")}>
+      <article className="prose max-w-none whitespace-pre-wrap leading-7">
         {children}
       </article>
     </div>
   );
-}
-export default forwardRef(Inner);
+});
+
+export default ReaderViewport;

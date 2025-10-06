@@ -28,7 +28,7 @@ const NavBar = () => {
     `px-3 font-newsreader hover:text-brand ${selected === name ? "font-bold text-brand" : "text-[var(--text)]"}`;
 
   return (
-    <header className="bg-elev border-b border-elev">
+    <header data-testid="main-navbar" className="bg-elev border-b border-elev">
       <nav className="mx-auto max-w-7xl w-full px-4 py-3 flex items-center justify-between">
         {/* Logo + links */}
         <div className="flex items-center gap-3">

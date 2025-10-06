@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { CHAPTERS } from "./chapters";
+import { useLocale } from "next-intl";
+import { getChapters } from "./chapters";
 import { useReaderState } from "@/components/reader/useReaderState";
 import ReaderHeader from "@/components/reader/ReaderHeader";
 import ReaderViewport from "@/components/reader/ReaderViewport";
@@ -11,6 +12,8 @@ import ReaderNavButtons from "@/components/reader/ReaderNavButtons";
 import ReaderSidebar from "@/components/reader/ReaderSidebar";
 
 export default function ReaderPage() {
+  const locale = useLocale();
+  const CHAPTERS = getChapters(locale);
   const { slug } = useParams<{ slug: string }>();
   const book = CHAPTERS[slug];
 
@@ -55,13 +58,14 @@ export default function ReaderPage() {
           <ReaderHeader title={book.title} chapter={state.chapter} />
 
           <ReaderViewport
-            ref={containerRef}
-            className={`${applyClasses} reader-surface reader-border`}
-            fontSize={state.settings.fontSize}
-            invertProse={state.settings.night}
-          >
-            {chapterText}
-          </ReaderViewport>
+          ref={containerRef}
+          className={applyClasses}          
+          fontSize={state.settings.fontSize}
+          bg={state.settings.bg}
+          night={state.settings.night}
+        >
+          {chapterText}
+        </ReaderViewport>
 
           <ReaderNavButtons
             onPrev={goPrev}

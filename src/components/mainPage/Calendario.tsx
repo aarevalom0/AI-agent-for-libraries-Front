@@ -31,7 +31,7 @@ const CalendarioRachas = ({numStreaks}: CalendarioProp) => {
                 <h2 className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]">
                     {t("mainPage.calendar.title")}
                 </h2>
-                 <p className="font-semibold !font-newsreader !text-[var(--colorClaro)]">
+                 <p className="font-semibold !font-newsreader !text-[var(--colorClaro)]" data-testid="streak-counter">
                     {numStreaks} {t("mainPage.calendar.tiempo")}
                 </p>
 

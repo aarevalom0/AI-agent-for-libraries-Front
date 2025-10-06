@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import styles from './Estadisticas.module.css'; 
 import { Line, Bar } from 'react-chartjs-2';
 import {
@@ -77,12 +78,13 @@ const mostRecentBook = allBooksRead.reduce((latest, current) => {
 }, null as Book | null);
 
 const EstadisticasPersonales = () => {
+  const t = useTranslations('estadisticas');
   const [activeTab, setActiveTab] = React.useState<'Estadísticas' | 'Ranking'>('Estadísticas');
   const lineChartData = {
     labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     datasets: [
       {
-        label: 'Páginas leídas',
+        label: t('pagesPerMonth'),
         data: pagesPerMonth,
         borderColor: '#8D6E63',
         tension: 0.4,
@@ -94,7 +96,7 @@ const EstadisticasPersonales = () => {
     labels: sortedGenres.map(g => g[0]),
     datasets: [
       {
-        label: 'Libros leídos',
+        label: t('booksRead'),
         data: sortedGenres.map(g => g[1]),
         backgroundColor: '#EFEBE9',
         borderColor: '#D7CCC8',
@@ -117,52 +119,54 @@ const EstadisticasPersonales = () => {
     <div className={styles.container}>
       <main className={styles.mainContent}>
         <h1 className={styles.title}>
-          {activeTab === 'Estadísticas' ? 'Estadísticas Personales' : 'Ranking'}
+          {activeTab === 'Estadísticas' ? t('personalStats') : t('ranking')}
         </h1>
         <div className={styles.tabs}>
           <button
             className={`${styles.tabButton} ${activeTab === 'Estadísticas' ? styles.active : ''}`}
             onClick={() => setActiveTab('Estadísticas')}
+            title={t('personalStatsTooltip')}
           >
-            Estadísticas Personales
+            {t('personalStats')}
           </button>
           <button
             className={`${styles.tabButton} ${activeTab === 'Ranking' ? styles.active : ''}`}
             onClick={() => setActiveTab('Ranking')}
+            title={t('rankingTooltip')}
           >
-            Ranking
+            {t('ranking')}
           </button>
         </div>
 
         {activeTab === 'Estadísticas' ? (
           <>
             <section className={styles.statsCards}>
-              <div className={styles.card}>
-                <p>Horas de lectura acumuladas</p>
+              <div className={styles.card} title={t('readingHoursTooltip')}>
+                <p>{t('readingHours')}</p>
                 <span className={styles.statNumber}>{totalHoursRead}</span>
               </div>
-              <div className={styles.card}>
-                <p>Libro más leído (reciente)</p>
+              <div className={styles.card} title={t('mostReadTooltip')}>
+                <p>{t('mostRead')}</p>
                 <span className={styles.statTitle}>{mostRecentBook ? mostRecentBook.title : 'Ninguno'}</span>
               </div>
-              <div className={styles.card}>
-                <p>Promedio de páginas/día</p>
+              <div className={styles.card} title={t('avgPagesTooltip')}>
+                <p>{t('avgPages')}</p>
                 <span className={styles.statNumber}>{avgPagesPerDay}</span>
               </div>
             </section>
 
-            <h2 className={styles.subtitle}>Resumen de Lectura</h2>
+            <h2 className={styles.subtitle} title={t('readingSummaryTooltip')}>{t('readingSummary')}</h2>
             <section className={styles.summaryCard}>
-              <p>Cantidad de libros leídos</p>
-              <span>{booksReadThisYear.length} libros este año</span>
+              <p title={t('booksReadTooltip')}>{t('booksRead')}</p>
+              <span>{booksReadThisYear.length} {t('booksRead')} {t('thisYear')}</span>
             </section>
 
             <section className={styles.chartsSection}>
               <div className={styles.chartCard}>
                 <div className={styles.chartHeader}>
-                  <p>Páginas leídas por mes</p>
+                  <p title={t('pagesPerMonthTooltip')}>{t('pagesPerMonth')}</p>
                   <span className={styles.statNumber}>{totalPagesReadThisYear}</span>
-                  <span className={`${styles.statPercentage} ${styles.positive}`}>Este año</span>
+                  <span className={`${styles.statPercentage} ${styles.positive}`} title={t('thisYearTooltip')}>{t('thisYear')}</span>
                 </div>
                 <div className={styles.chartWrapper}>
                   <Line data={lineChartData} options={chartOptions} />
@@ -170,9 +174,9 @@ const EstadisticasPersonales = () => {
               </div>
               <div className={styles.chartCard}>
                 <div className={styles.chartHeader}>
-                  <p>Géneros más frecuentes</p>
+                  <p title={t('genresTooltip')}>{t('genres')}</p>
                   <span className={styles.statNumber}>{sortedGenres.length}</span>
-                  <span className={`${styles.statPercentage} ${styles.positive}`}>Este año</span>
+                  <span className={`${styles.statPercentage} ${styles.positive}`} title={t('thisYearTooltip')}>{t('thisYear')}</span>
                 </div>
                 <div className={styles.chartWrapper}>
                   <Bar data={barChartData} options={chartOptions} />

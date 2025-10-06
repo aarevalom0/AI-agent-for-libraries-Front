@@ -1,0 +1,24 @@
+{
+  "title_current": "Lecturas actuales",
+  "author": "Autor",
+  "continue": "Seguir Leyendo",
+  "title_discover": "Encuentra tu próxima lectura",
+  "subtitle_discover": "Explora tu colección de libros y sumérgete en tu próxima aventura de lectura.",
+  "search_placeholder": "Busca libros por título o autor.",
+  "filter_genre": "Género",
+  "filter_status": "Estatus de lectura",
+  "all": "Todos",
+  "genre": {
+    "fantasy": "Fantasía",
+    "scifi": "Ciencia Ficción",
+    "classic": "Clásico",
+    "mystery": "Misterio",
+    "nonfiction": "No Ficción"
+  },
+  "status": {
+    "reading": "Leyendo",
+    "pending": "Pendiente",
+    "completed": "Completado"
+  },
+  "empty": "No se encontraron libros con los filtros actuales."
+}
