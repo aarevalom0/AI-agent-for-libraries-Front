@@ -23,11 +23,11 @@ export default function FloatingChat() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className={`p-4 rounded-full shadow-lg transition text-white ${pathname === "/es/mainPage" || pathname === "/en/mainPage" ? "bg-[var(--colorClaro)]" : "bg-[var(--colorMenus)]"}`}
+          className={`p-4 rounded-full shadow-lg transition text-white ${pathname === "/es/mainPage" || pathname === "/en/mainPage" ? "bg-[var(--colorClaro)]" : "bg-[var(--colorPrincipal)]"}`}
           
 
         >
-          <MessageCircle size={24} color={pathname === "/es/mainPage" || pathname === "/en/mainPage" ? "var(--colorMenus)" : "var(--background)"} />
+          <MessageCircle size={24} color={pathname === "/es/mainPage" || pathname === "/en/mainPage" ? "var(--colorPrincipal)" : "var(--background)"} />
         </button>
       )}
 
@@ -40,7 +40,7 @@ export default function FloatingChat() {
 
           <div
             className="flex justify-between items-center p-3 text-white"
-            style={{ backgroundColor: "var(--colorMenus)" }}
+            style={{ backgroundColor: "var(--colorPrincipal)" }}
             title ="Cerrar chatbot"
           >
             <span className="font-semibold">Lecturium</span>

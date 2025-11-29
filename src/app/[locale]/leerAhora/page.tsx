@@ -21,20 +21,20 @@ type Libro = {
 /* ------------------------- Datos de ejemplo ------------------------- */
 const LECTURAS_ACTUALES: Libro[] = [
   { slug: "1984", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg", genero: "Ciencia Ficción", estado: "Leyendo", progreso: 60 },
-  { slug: "girl-train", title: "The girl on the train", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg", genero: "Misterio", estado: "Leyendo", progreso: 30 },
-  { slug: "harry-potter", title: "Harry Potter and the Philosopher's Stone", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg", genero: "Fantasía", estado: "Leyendo", progreso: 85 },
+  { slug: "girl-train", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg", genero: "Misterio", estado: "Leyendo", progreso: 30 },
+  { slug: "harry-potter", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg", genero: "Fantasía", estado: "Leyendo", progreso: 85 },
 ];
 
 const CATALOGO: Libro[] = [
-  { slug: "secret-garden", title: "The Secret Garden", autor: "Frances H. Burnett", imageUrl: "/Images/secret-garden.jpg", genero: "Clásico", estado: "Pendiente" },
-  { slug: "pride-prejudice", title: "Pride and Prejudice", autor: "Jane Austen", imageUrl: "/Images/pride.jpg", genero: "Clásico", estado: "Pendiente" },
-  { slug: "to-kill-mockingbird", title: "To Kill a Mockingbird", autor: "Harper Lee", imageUrl: "/Images/mockingbird.jpg", genero: "Clásico", estado: "Pendiente" },
+  { slug: "secret-garden", title: "El jardín secreto", autor: "Frances H. Burnett", imageUrl: "/Images/secret-garden.jpg", genero: "Clásico", estado: "Pendiente" },
+  { slug: "pride-prejudice", title: "Orgullo y prejuicio", autor: "Jane Austen", imageUrl: "/Images/pride.jpg", genero: "Clásico", estado: "Pendiente" },
+  { slug: "to-kill-mockingbird", title: "Matar un ruiseñor", autor: "Harper Lee", imageUrl: "/Images/mockingbird.jpg", genero: "Clásico", estado: "Pendiente" },
   { slug: "1984", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg", genero: "Ciencia Ficción", estado: "Pendiente" },
-  { slug: "great-gatsby", title: "The Great Gatsby", autor: "F. Scott Fitzgerald", imageUrl: "/Images/gatsby.jpg", genero: "Clásico", estado: "Pendiente" },
+  { slug: "great-gatsby", title: "El gran Gatsby", autor: "F. Scott Fitzgerald", imageUrl: "/Images/gatsby.jpg", genero: "Clásico", estado: "Pendiente" },
   { slug: "dune", title: "Dune", autor: "Frank Herbert", imageUrl: "/Images/dune.jpg", genero: "Ciencia Ficción", estado: "Pendiente" },
-  { slug: "lotr", title: "The lord of the rings", autor: "J.R.R. Tolkien", imageUrl: "/Images/lotr.jpg", genero: "Fantasía", estado: "Pendiente" },
-  { slug: "sapiens", title: "Sapiens A Brief History Of Humankind", autor: "Yuval Noah Harari", imageUrl: "/Images/sapiens.jpg", genero: "No Ficción", estado: "Pendiente" },
-  { slug: "cien-anios", title: "One Hundred Years of Solitude", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg", genero: "Fantasía", estado: "Pendiente" },
+  { slug: "lotr", title: "El señor de los anillos", autor: "J.R.R. Tolkien", imageUrl: "/Images/lotr.jpg", genero: "Fantasía", estado: "Pendiente" },
+  { slug: "sapiens", title: "Sapiens: De animales a dioses", autor: "Yuval Noah Harari", imageUrl: "/Images/sapiens.jpg", genero: "No Ficción", estado: "Pendiente" },
+  { slug: "cien-anios", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg", genero: "Fantasía", estado: "Pendiente" },
 ];
 
 type GenreCode = "all" | "fantasy" | "scifi" | "classic" | "mystery" | "nonfiction";

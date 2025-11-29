@@ -33,14 +33,7 @@ export default function ComunidadPage() {
         />
       </div>
 
-      <div className="pl-2 flex items-center h-10 rounded-lg border border-gray-300 bg-gray-50 focus-within:ring-1 focus-within:ring-[var(--color-principal)]">
-        <SearchIcon className="text-gray-500 " />
-        <input
-          type="text"
-          placeholder={t('communityPage.searchPlaceholder')}
-          className="flex-1 p-2 text-sm bg-transparent focus:outline-none"
-        />
-      </div>
+
 
       {authors.map((author, idx) => (
         <AutorCard
@@ -48,7 +41,7 @@ export default function ComunidadPage() {
           autor={author.name}
           descripcion={author.description}
           imageUrl={author.imageUrl}
-          href={author.href}
+          href={"#"}
           buttonText={t('communityPage.joinButton')}
         />
       ))}

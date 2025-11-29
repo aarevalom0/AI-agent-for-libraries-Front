@@ -26,15 +26,6 @@ export default function ClubesPage() {
         </h1>
       </div>
 
-      <div className="pl-2 flex items-center h-10 rounded-lg border border-gray-300 bg-gray-50 focus-within:ring-1 focus-within:ring-[var(--colorPrincipal)]">
-        <SearchIcon className="text-gray-500 " />
-        <input
-          type="text"
-          placeholder={t("clubsPage.searchPlaceholder")}
-          className="flex-1 p-2 text-sm bg-transparent focus:outline-none"
-          title={t("clubsPage.searchPlaceholder")}
-        />
-      </div>
 
       {clubs.map((club, idx) => (
         <ClubCard
@@ -42,7 +33,7 @@ export default function ClubesPage() {
           categoria={club.categoria}
           descripcion={club.descripcion}
           imageUrl={club.imageUrl}
-          href={club.href}
+          href={"#"}
           buttonText={t("clubsPage.joinButton")}
         />
       ))}

@@ -62,21 +62,21 @@
         "author": "Paula Hawkins",
         "imageUrl": "/Images/girl-train.jpg",
         "href": "/reader/girl-train",
-        "porcentaje": 42
+        "porcentaje": 30
       },
       {
         "title": "1984",
         "author": "George Orwell",
         "imageUrl": "/Images/1984.jpg",
         "href": "/reader/1984",
-        "porcentaje": 20
+        "porcentaje": 60
       },
       {
         "title": "Harry Potter and the Philosopher's Stone",
         "author": "J.K. Rowling",
         "imageUrl": "/Images/harry-potter.jpg",
         "href": "/reader/harry-potter",
-        "porcentaje": 37
+        "porcentaje": 85
       }
     ]
 
