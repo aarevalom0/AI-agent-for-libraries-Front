@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { MessageCircle, Send, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { sendMessageToChat } from "../services/chat.api";
 
 
 export default function FloatingChat() {
@@ -12,11 +13,28 @@ export default function FloatingChat() {
   const [input, setInput] = useState("");
    const pathname = usePathname();
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { role: "user", text: input }]);
-    setInput("");
-  };
+const handleSend = async () => {
+  if (!input.trim()) return;
+
+  const userMessage = input;
+  setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
+  setInput("");
+
+  try {
+    const data = await sendMessageToChat(userMessage);
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "bot", text: data.response || "Lo siento, no pude procesar tu mensaje." },
+    ]);
+  } catch (error) {
+    console.error("ERROR CHAT:", error);
+    setMessages((prev) => [
+      ...prev,
+      { role: "bot", text: "Error: No se pudo conectar con el servidor." + error },
+    ]);
+  }
+};
 
   return (
     <div className="fixed bottom-5 right-5" title="Chatbot de Lecturium">
