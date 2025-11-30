@@ -6,17 +6,14 @@ import CalendarioRachas from "@/components/mainPage/Calendario";
 import EventCard from "@/components/eventos/EventCard";
 import Insignias from "@/components/mainPage/Insignias";
 import { getCurrentUser, isLoggedIn } from "@/lib/authClient";
+import { getAllBooks, getRandomBooks } from "@/services/bookService";
+import { getFeaturedEvent, transformEventFromAPI } from "@/services/eventService";
 import { useRouter } from "next/navigation";   
 import { useEffect, useState } from "react";
 import React from "react";
 import { useTranslations } from 'next-intl';
+import { BookRecomendations } from "@/types/book";
 
-interface Book {
-  title: string;
-  author: string;
-  imageUrl: string;
-  href: string;
-}
 
 interface BookActual {
   title: string;
@@ -30,7 +27,16 @@ interface BookActual {
 
 export default function MainPage() {
   const t = useTranslations('mainPage');
-  const books = t.raw('mainPage.books') as Book[];
+
+  const [books, setBooks] = useState<BookRecomendations[]>([]);
+  const [loadingBooks, setLoadingBooks] = useState(true);
+  const [errorBooks, setErrorBooks] = useState<string | null>(null);
+
+  const [evento, setEvento] = useState<any>(null);
+  const [loadingEvento, setLoadingEvento] = useState(true);
+  const [errorEvento, setErrorEvento] = useState<string | null>(null);
+
+
   const books_actuales = t.raw('mainPage.books_actuales') as BookActual[];
 
   const router = useRouter();
@@ -48,6 +54,52 @@ export default function MainPage() {
     setReady(true);
   }, [router]);
 
+  //Libros Recomendados
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        setLoadingBooks(true);
+        setErrorBooks(null);
+        const allBooks = await getAllBooks();
+        const randomSelection = getRandomBooks(allBooks, 5);
+        setBooks(randomSelection);
+      } catch (error) {
+        console.error('Error cargando libros:', error);
+        setErrorBooks('No se pudieron cargar los libros recomendados');
+      } finally {
+        setLoadingBooks(false);
+      }
+    };
+    if (ready) {
+      fetchBooks();
+    }
+  }, [ready]);
+
+  //Evento recomendado
+
+   useEffect(() => {
+    const fetchEvento = async () => {
+      try {
+        setLoadingEvento(true);
+        setErrorEvento(null);
+        const eventoFromAPI = await getFeaturedEvent();
+        
+        if (eventoFromAPI) {
+          const eventoTransformado = transformEventFromAPI(eventoFromAPI);
+          setEvento(eventoTransformado);
+        }
+      } catch (error) {
+        console.error('Error cargando evento:', error);
+        setErrorEvento('No se pudo cargar el evento destacado');
+      } finally {
+        setLoadingEvento(false);
+      }
+    };
+    if (ready) {
+      fetchEvento();
+    }
+  }, [ready]);
+
   if (!ready) return null;
   
   return (
@@ -59,16 +111,22 @@ export default function MainPage() {
         </div>
 
         <div title="Libros Recomendados" className='container flex gap-2 overflow-x-auto pb-6' >
-          {books.map((book: Book, idx: number) => (
-            <BookCard
-              key={idx}
-              title={book.title}
-              autor={book.author}
-              imageUrl={book.imageUrl}
-              href={book.href}
-              data-testid="book-card"
-            />
-          ))}
+          {loadingBooks ? (
+              <p className="text-[var(--colorText)]">Cargando libros...</p>
+            ) : errorBooks ? (
+              <p className="text-red-500">{errorBooks}</p>
+            ) : (
+              books.map((book) => (
+                <BookCard
+                  key={book._id}
+                  title={book.titulo}
+                  autor={book.autoresData[0]?.nombre}
+                  imageUrl={book.portada || '/Images/default-book.jpg'}
+                  href={`/reader/${book._id}`}
+                  data-testid="book-card"
+                />
+              ))
+          )}
         </div>
 
         <div title='Lecturas Actuales' className='py-4'>
@@ -89,13 +147,19 @@ export default function MainPage() {
           </div>
 
           <div title="Evento Destacado">
-            <EventCard
-              pretitulo={t('mainPage.featuredEvent.pretitle')}
-              title={t('mainPage.featuredEvent.title')}
-              descripcion={t('mainPage.featuredEvent.description')}
-              imageUrl={t('mainPage.featuredEvent.imageUrl')}
-              href={t('mainPage.featuredEvent.href')}
-            />
+            {loadingEvento ? (
+              <p className="text-[var(--colorText)]">Cargando evento...</p>
+            ) : errorEvento || !evento ? (
+              <p className="text-red-500">{errorEvento || 'No hay eventos disponibles'}</p>
+            ) : (
+              <EventCard
+                pretitulo={evento.pretitulo}
+                title={evento.title}
+                descripcion={evento.descripcion}
+                imageUrl={evento.imageUrl}
+                href={evento.href}
+              />
+            )}
           </div>
         </div>
         
