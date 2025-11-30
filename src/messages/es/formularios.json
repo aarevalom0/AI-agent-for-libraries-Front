@@ -63,6 +63,35 @@
         "button": {
         "submit": "Crear Colección"
         }
+    },
+    "formulario_crear_comunidad": {
+      "title": "Formulario para crear comunidad",
+      "nameCommunity": {
+        "label": "Nombre de la comunidad:",
+        "placeholder": "Escribe el nombre de la comunidad",
+        "errors": {
+          "required": "El nombre de la comunidad es obligatorio"
+        }
+      },
+      "imagen": {
+        "label": "Imagen de la comunidad:",
+        "placeholder": "Ingresa la URL de la imagen o súbela",
+        "errors": {
+          "required": "La imagen de la comunidad es obligatoria",
+          "invalid": "Por favor ingresa una URL válida"
+        }
+      },
+      "description": {
+        "label": "Descripción:",
+        "placeholder": "Escribe una breve descripción de la comunidad",
+        "errors": {
+          "required": "La descripción es obligatoria",
+          "short": "La descripción debe tener al menos 10 caracteres",
+          "maxLength": "La descripción no puede superar los 255 caracteres"
+        }
+      },
+      "button": {
+        "submit": "Crear comunidad"
+      }
     }
-
-}
+  }

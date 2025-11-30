@@ -1,0 +1,77 @@
+{
+  "communityPage": {
+    "title": "Comunidad de Autores",
+    "createCommunity": "Crear Comunidad",
+    "searchPlaceholder": "Buscar comunidades por nombre de autor",
+    "joinButton": "Unirse",
+    "authors": [
+      {
+        "name": "Haruki Murakami",
+        "description": "Sumérgete en universos oníricos y existenciales con el autor de Tokio Blues (Norwegian Wood).",
+        "imageUrl": "/Images/Haruki.png",
+        "href": "#"
+      },
+      {
+        "name": "Isabel Allende",
+        "description": "Descubre las historias apasionantes de la autora de 'La casa de los espíritus'.",
+        "imageUrl": "/Images/Isabel.png",
+        "href": "#"
+      },
+      {
+        "name": "Margaret Atwood",
+        "description": "Explora futuros distópicos y realidades inquietantes con la autora de El cuento de la criada.",
+        "imageUrl": "/Images/Margaret.png",
+        "href": "#"
+      },
+      {
+        "name": "Stephen King",
+        "description": "Adéntrate en mundos de terror y suspenso con el autor de It y El resplandor.",
+        "imageUrl": "/Images/Stephen.png",
+        "href": "#"
+      }
+    ]
+  },
+   "friendsPage": {
+    "title": "Amigos",
+    "friendsList": [
+      { "name": "Juan Perez", "avatar": "/Images/Perfil1.png", "status": "En línea" },
+      { "name": "Maria Gomez", "avatar": "/Images/Perfil2.jpg", "status": "Fuera de línea" },
+      { "name": "Carlos Ruiz", "avatar": "/Images/Perfil3.jpg", "status": "En línea" },
+      { "name": "Ana Torres", "avatar": "/Images/Perfil4.jpg", "status": "Ocupado" },
+      { "name": "Luis Fernandez", "avatar": "/Images/Perfil5.jpg", "status": "En línea" },
+      { "name": "Sofia Martinez", "avatar": "/Images/Perfil6.jpg", "status": "Fuera de línea" },
+      { "name": "Miguel Sanchez", "avatar": "/Images/Perfil7.jpg", "status": "En línea" }
+    ]
+  },
+  "clubsPage": {
+    "title": "Clubes de Lectura",
+    "searchPlaceholder": "Buscar clubes por nombre o categoría",
+    "joinButton": "Unirse al Club",
+    "clubs": [
+      {
+        "categoria": "Ciencia Ficción",
+        "descripcion": "Libro actual: 'Orgullo y Prejuicio' de Jane Austen. 125 miembros",
+        "imageUrl": "/images/comunidad/club-ciencia-ficcion.jpg",
+        "href": "/comunidad/club/ciencia-ficcion"
+      },
+      {
+        "categoria": "Misterio y Suspenso",
+        "descripcion": "Libro actual: 'La Chica del Tren' de Paula Hawkins. 88 miembros",
+        "imageUrl": "/images/comunidad/ChicaTren.jpg",
+        "href": "/comunidad/club/misterio"
+      },
+      {
+        "categoria": "Ciencia Ficción y Fantasía",
+        "descripcion": "Libro actual: 'Dune' de Frank Herbert. 150 miembros",
+        "imageUrl": "/images/comunidad/dune.jpg",
+        "href": "/comunidad/club/fantasia"
+      },
+      {
+        "categoria": "Romance Contemporáneo",
+        "descripcion": "Libro actual: 'La Hipótesis del Amor' de Ali Hazelwood. 95 miembros",
+        "imageUrl": "/images/comunidad/hipotesis.jpg",
+        "href": "/comunidad/club/romance"
+      }
+    ]
+  }
+}

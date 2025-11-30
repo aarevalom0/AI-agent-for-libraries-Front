@@ -64,5 +64,36 @@
         "button": {
         "submit": "Create Collection"
         }
+    },
+    "formulario_crear_comunidad": {
+      "title": "Create Community Form",
+      "nameCommunity": {
+        "label": "Community Name:",
+        "placeholder": "Enter the community name",
+        "errors": {
+          "required": "The community name is required"
+        }
+      },
+      "imagen": {
+        "label": "Community Image:",
+        "placeholder": "Enter or upload the image URL",
+        "errors": {
+          "required": "The community image is required",
+          "invalid": "Please enter a valid Image"
+        }
+      },
+      "description": {
+        "label": "Description:",
+        "placeholder": "Write a brief description of the community",
+        "errors": {
+          "required": "The description is required",
+          "short": "The description must be at least 10 characters long",
+          "maxLength": "The description cannot exceed 255 characters"
+        }
+      },
+      "button": {
+        "submit": "Create Community"
+      }
     }
-}
+  }
+

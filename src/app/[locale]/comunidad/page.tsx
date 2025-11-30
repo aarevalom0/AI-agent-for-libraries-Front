@@ -1,7 +1,20 @@
 import SearchIcon from "@mui/icons-material/Search";
 import {AutorCard} from "@/components/community/CommunityCard";
+import CrearComunidad from "./crearComunidad/page";
+import { useTranslations } from 'next-intl';
+import BotonPersonalizado from "@/components/elementos/BotonPersonalizado";
 
+interface Community {
+  name: string;
+  description: string;
+  imageUrl: string;
+  href: string;
+}
 export default function ComunidadPage() {
+  const t = useTranslations('communityPage');
+  const authors = t.raw('communityPage.authors') as Community[];
+
+
   return (
     <div className="flex gap-5 flex-col p-5">
       <div className="flex justify-between items-center gap-4 mb-4">
@@ -9,53 +22,31 @@ export default function ComunidadPage() {
           title="Comunidad de Autores"
           className="text-2xl font-bold font-newsreader"
         >
-          Comunidad de Autores
+          {t('communityPage.title')}
         </h1>
 
-        <button
-          className="px-4 py-2 bg-[var(--colorMenus)] text-white rounded hover:bg-[var(--colorPrincipal)] transition"
-        >
-          Crear Comunidad
-        </button>
-      </div>
 
-      <div className="pl-2 flex items-center h-10 rounded-lg border border-gray-300 bg-gray-50 focus-within:ring-1 focus-within:ring-[var(--color-principal)]">
-        <SearchIcon className="text-gray-500 " />
-        <input
-          type="text"
-          placeholder="Buscar comunidades por nombre de autor"
-          className="flex-1 p-2 text-sm bg-transparent focus:outline-none"
+        <BotonPersonalizado
+          texto={t('communityPage.createCommunity')}
+          href="/comunidad/crearComunidad"
+          ariaLabel={t('communityPage.createCommunity')}
         />
       </div>
 
-      <AutorCard
-        autor="Haruki Murakami"
-        descripcion="Sumérgete en universos oníricos y existenciales con el autor de Tokio Blues (Norwegian Wood)."
-        imageUrl="/Images/Haruki.png"
-        href="#"
-      />
 
-      <AutorCard
-        autor="Isabel Allende"
-        descripcion="Descubre las historias apasionantes de la autora de 'La casa de los espíritus'."
-        imageUrl="/Images/Isabel.png"
-        href="#"
-      />
 
-      <AutorCard
-        autor="Margaret Atwood"
-        descripcion="Explora futuros distópicos y realidades inquietantes con la autora de El cuento de la criada."
-        imageUrl="/Images/Margaret.png"
-        href="#"
-      />
+      {authors.map((author, idx) => (
+        <AutorCard
+          key={idx}
+          autor={author.name}
+          descripcion={author.description}
+          imageUrl={author.imageUrl}
+          href={"#"}
+          buttonText={t('communityPage.joinButton')}
+        />
+      ))}
 
-      <AutorCard
-        autor="Stephen King"
-        descripcion="Adéntrate en mundos de terror y suspenso con el autor de It y El resplandor."
-        imageUrl="/Images/Stephen.png"
-        href="#"
-      />
-
+      
     </div>
   );
 }

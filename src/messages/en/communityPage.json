@@ -1,0 +1,78 @@
+{
+  "communityPage": {
+    "title": "Authors Community",
+    "createCommunity": "Create Community",
+    "searchPlaceholder": "Search communities by author name",
+    "joinButton": "Join",
+    "authors": [
+      {
+        "name": "Haruki Murakami",
+        "description": "Dive into dreamlike and existential worlds with the author of Norwegian Wood.",
+        "imageUrl": "/Images/Haruki.png",
+        "href": "#"
+      },
+      {
+        "name": "Isabel Allende",
+        "description": "Discover the passionate stories of the author of 'The House of the Spirits'.",
+        "imageUrl": "/Images/Isabel.png",
+        "href": "#"
+      },
+      {
+        "name": "Margaret Atwood",
+        "description": "Explore dystopian futures and unsettling realities with the author of The Handmaid’s Tale.",
+        "imageUrl": "/Images/Margaret.png",
+        "href": "#"
+      },
+      {
+        "name": "Stephen King",
+        "description": "Step into worlds of horror and suspense with the author of It and The Shining.",
+        "imageUrl": "/Images/Stephen.png",
+        "href": "#"
+      }
+    ]
+  },
+   "friendsPage": {
+    "title": "Friends",
+    "friendsList": [
+      { "name": "Juan Perez", "avatar": "/Images/Perfil1.png", "status": "online" },
+      { "name": "Maria Gomez", "avatar": "/Images/Perfil2.jpg", "status": "offline" },
+      { "name": "Carlos Ruiz", "avatar": "/Images/Perfil3.jpg", "status": "online" },
+      { "name": "Ana Torres", "avatar": "/Images/Perfil4.jpg", "status": "busy" },
+      { "name": "Luis Fernandez", "avatar": "/Images/Perfil5.jpg", "status": "online" },
+      { "name": "Sofia Martinez", "avatar": "/Images/Perfil6.jpg", "status": "offline" },
+      { "name": "Miguel Sanchez", "avatar": "/Images/Perfil7.jpg", "status": "online" }
+    ]
+  },
+  "clubsPage": {
+    "title": "Reading Clubs",
+    "searchPlaceholder": "Search clubs by name or category",
+    "joinButton": "Join Club",
+    "clubs": [
+      {
+        "categoria": "Science Fiction",
+        "descripcion": "Current book: 'Pride and Prejudice' by Jane Austen. 125 members",
+        "imageUrl": "/images/comunidad/club-ciencia-ficcion.jpg",
+        "href": "/community/club/science-fiction"
+      },
+      {
+        "categoria": "Mystery and Thriller",
+        "descripcion": "Current book: 'The Girl on the Train' by Paula Hawkins. 88 members",
+        "imageUrl": "/images/comunidad/ChicaTren.jpg",
+        "href": "/community/club/mystery"
+      },
+      {
+        "categoria": "Science Fiction and Fantasy",
+        "descripcion": "Current book: 'Dune' by Frank Herbert. 150 members",
+        "imageUrl": "/images/comunidad/dune.jpg",
+        "href": "/community/club/fantasy"
+      },
+      {
+        "categoria": "Contemporary Romance",
+        "descripcion": "Current book: 'The Love Hypothesis' by Ali Hazelwood. 95 members",
+        "imageUrl": "/images/comunidad/hipotesis.jpg",
+        "href": "/community/club/romance"
+      }
+    ]
+  }
+}
+
