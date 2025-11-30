@@ -57,19 +57,19 @@
       {
         "categoria": "Misterio y Suspenso",
         "descripcion": "Libro actual: 'La Chica del Tren' de Paula Hawkins. 88 miembros",
-        "imageUrl": "/images/comunidad/club-misterio.jpg",
+        "imageUrl": "/images/comunidad/ChicaTren.jpg",
         "href": "/comunidad/club/misterio"
       },
       {
         "categoria": "Ciencia Ficción y Fantasía",
         "descripcion": "Libro actual: 'Dune' de Frank Herbert. 150 miembros",
-        "imageUrl": "/images/comunidad/club-fantasia.jpg",
+        "imageUrl": "/images/comunidad/dune.jpg",
         "href": "/comunidad/club/fantasia"
       },
       {
         "categoria": "Romance Contemporáneo",
         "descripcion": "Libro actual: 'La Hipótesis del Amor' de Ali Hazelwood. 95 miembros",
-        "imageUrl": "/images/comunidad/club-romance.jpg",
+        "imageUrl": "/images/comunidad/hipotesis.jpg",
         "href": "/comunidad/club/romance"
       }
     ]

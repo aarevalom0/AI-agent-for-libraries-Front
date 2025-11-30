@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 type Inputs = {
   nombre: string;
   descripcion: string;
-  imagen: string;
+  imagen: FileList;
 };
 
 const FormularioCrearComunidad = () => {
@@ -17,19 +17,23 @@ const FormularioCrearComunidad = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
 
-  const schema = z.object({
-    nombre: z
-      .string()
-      .min(1, { message: t("formulario_crear_comunidad.nameCommunity.errors.required") }),
-    descripcion: z
-      .string()
-      .min(10, { message: t("formulario_crear_comunidad.description.errors.short") })
-      .max(255, { message: t("formulario_crear_comunidad.description.errors.maxLength") }),
-    imagen: z
-      .string()
-      .min(1, { message: t("formulario_crear_comunidad.imagen.errors.required") })
-      .url({ message: t("formulario_crear_comunidad.imagen.errors.invalid") }),
-  });
+const schema = z.object({
+  nombre: z.string().min(1, { message: t("formulario_crear_comunidad.nameCommunity.errors.required") }),
+  descripcion: z
+    .string()
+    .min(10, { message: t("formulario_crear_comunidad.description.errors.short") })
+    .max(255, { message: t("formulario_crear_comunidad.description.errors.maxLength") }),
+  imagen: z
+    .any()
+    .refine((fileList) => fileList && fileList.length > 0, {
+      message: t("formulario_crear_comunidad.imagen.errors.required"),
+    })
+    .refine(
+      (fileList) => fileList?.[0]?.type.startsWith("image/"),
+      { message: t("formulario_crear_comunidad.imagen.errors.invalid") }
+    ),
+});
+
 
   const {
     register,
@@ -67,7 +71,6 @@ const FormularioCrearComunidad = () => {
             {...register("nombre")}
             placeholder={t("formulario_crear_comunidad.nameCommunity.placeholder")}
             className="w-full p-2 border border-gray-300 rounded"
-            name ="nameCommunity"
           />
           {errors.nombre && (
             <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
@@ -86,7 +89,7 @@ const FormularioCrearComunidad = () => {
             {...register("descripcion")}
             placeholder={t("formulario_crear_comunidad.description.placeholder")}
             className="w-full p-2 border border-gray-300 rounded"
-            name="description"
+
           />
           {errors.descripcion && (
             <p className="text-red-500 text-sm mt-1">
@@ -107,10 +110,13 @@ const FormularioCrearComunidad = () => {
             type="file"
             accept="image/*"
             {...register("imagen")}
-            onChange={handleImagePreview}
+            onChange={(e) => {
+              handleImagePreview(e);
+              register("imagen").onChange(e);
+            }}
             className="w-full p-2 border border-gray-300 rounded"
-            name="image"
           />
+
           {errors.imagen && (
             <p className="text-red-500 text-sm mt-1">
               {errors.imagen.message as string}
@@ -126,7 +132,7 @@ const FormularioCrearComunidad = () => {
           )}
         </div>
 
-        {/* Botón */}
+
         <button
           type="submit"
           className="bg-[var(--colorPrincipal)] hover:bg-[var(--colorPrincipalHover)] text-white font-bold py-2 px-4 rounded"

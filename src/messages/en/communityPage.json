@@ -57,19 +57,19 @@
       {
         "categoria": "Mystery and Thriller",
         "descripcion": "Current book: 'The Girl on the Train' by Paula Hawkins. 88 members",
-        "imageUrl": "/images/comunidad/club-misterio.jpg",
+        "imageUrl": "/images/comunidad/ChicaTren.jpg",
         "href": "/community/club/mystery"
       },
       {
         "categoria": "Science Fiction and Fantasy",
         "descripcion": "Current book: 'Dune' by Frank Herbert. 150 members",
-        "imageUrl": "/images/comunidad/club-fantasia.jpg",
+        "imageUrl": "/images/comunidad/dune.jpg",
         "href": "/community/club/fantasy"
       },
       {
         "categoria": "Contemporary Romance",
         "descripcion": "Current book: 'The Love Hypothesis' by Ali Hazelwood. 95 members",
-        "imageUrl": "/images/comunidad/club-romance.jpg",
+        "imageUrl": "/images/comunidad/hipotesis.jpg",
         "href": "/community/club/romance"
       }
     ]
