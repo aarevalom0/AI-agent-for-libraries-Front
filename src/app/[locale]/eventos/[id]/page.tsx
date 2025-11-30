@@ -1,17 +1,32 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Metadata } from 'next';
 import { use } from 'react';
-
-export const metadata: Metadata = {
-  title: 'Detalle del Evento - BookClub',
-  description: 'Información completa del evento literario',
-};
 
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const t = useTranslations('eventos');
+  
+  const handleShare = async () => {
+    const shareData = {
+      title: t(`event${id}Title`),
+      text: t(`event${id}Description`),
+      url: window.location.href
+    };
+    
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert(t('linkCopied') || '¡Enlace copiado al portapapeles!');
+      }
+    } catch (err) {
+      console.error('Error al compartir:', err);
+    }
+  };
   
   return (
     <>
@@ -107,6 +122,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 {t('registerEvent')}
               </Link>
               <button 
+                onClick={handleShare}
                 className="border-2 border-[var(--colorPrincipal)] text-[var(--colorPrincipal)] px-8 py-3 rounded-lg font-medium hover:bg-[var(--colorPrincipal)] hover:text-white transition-colors focus:ring-2 focus:ring-[var(--colorPrincipal)] focus:ring-opacity-50"
                 title={t('shareTooltip')}
               >

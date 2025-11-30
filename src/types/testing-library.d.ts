@@ -14,5 +14,7 @@ declare namespace jest {
     toHaveValue(value: any): R;
     toBeChecked(): R;
     toHaveFocus(): R;
+    toBeGreaterThan(expected: number): R;
+    toHaveDisplayValue(value: string | RegExp | (string | RegExp)[]): R;
   }
 }

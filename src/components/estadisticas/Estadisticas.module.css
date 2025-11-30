@@ -59,13 +59,31 @@
 .card, .summaryCard, .chartCard {
   background-color: #F9F6F2;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 2rem;
   border: 1px solid #EFEBE9;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 140px;
+  justify-content: flex-start;
+}
+
+.cardLabel {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #757575;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
 }
 
 .card p, .summaryCard p, .chartHeader p {
   margin: 0 0 0.5rem 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #757575;
 }
 
@@ -73,12 +91,18 @@
   font-size: 2.5rem;
   font-weight: bold;
   line-height: 1.1;
+  margin: 0;
 }
 
 .statTitle {
-  font-size: 1.8rem;
-  font-weight: bold;
-  line-height: 1.2;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #5D4037;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: block;
 }
 
 .summaryCard {

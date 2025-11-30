@@ -11,9 +11,42 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [nameError, setNameError] = useState('');
+  
+  const validateEmail = (email: string): boolean => {
+    if (/\s/.test(email)) {
+      setEmailError(t('emailNoSpaces') || 'El correo no puede contener espacios');
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setEmailError(t('emailInvalid') || 'Ingrese un correo válido (debe contener @ y un dominio válido)');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+  
+  const validateNames = (firstName: string, lastName: string): boolean => {
+    if (firstName.trim() !== firstName || lastName.trim() !== lastName) {
+      setNameError(t('nameNoSpaces') || 'Los nombres no pueden tener espacios al inicio o final');
+      return false;
+    }
+    setNameError('');
+    return true;
+  };
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const firstName = formData.get('firstName') as string;
+    const lastName = formData.get('lastName') as string;
+    
+    if (!validateEmail(email) || !validateNames(firstName, lastName)) {
+      return;
+    }
     setIsSubmitting(true);
     
     // Simular envío del formulario
@@ -137,10 +170,17 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
                   id="email"
                   name="email"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--colorPrincipal)] focus:border-transparent"
+                  pattern="[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}"
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--colorPrincipal)] focus:border-transparent ${
+                    emailError ? 'border-red-500' : 'border-gray-300'
+                  }`}
                   placeholder={t('emailPlaceholder')}
                   title={t('emailTooltip')}
+                  onChange={(e) => validateEmail(e.target.value)}
                 />
+                {emailError && (
+                  <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                )}
               </div>
               
               <div>

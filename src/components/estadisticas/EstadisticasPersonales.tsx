@@ -142,15 +142,15 @@ const EstadisticasPersonales = () => {
           <>
             <section className={styles.statsCards}>
               <div className={styles.card} title={t('readingHoursTooltip')}>
-                <p>{t('readingHours')}</p>
+                <p className={styles.cardLabel}>{t('readingHours')}</p>
                 <span className={styles.statNumber}>{totalHoursRead}</span>
               </div>
               <div className={styles.card} title={t('mostReadTooltip')}>
-                <p>{t('mostRead')}</p>
+                <p className={styles.cardLabel}>{t('mostRead')}</p>
                 <span className={styles.statTitle}>{mostRecentBook ? mostRecentBook.title : 'Ninguno'}</span>
               </div>
               <div className={styles.card} title={t('avgPagesTooltip')}>
-                <p>{t('avgPages')}</p>
+                <p className={styles.cardLabel}>{t('avgPages')}</p>
                 <span className={styles.statNumber}>{avgPagesPerDay}</span>
               </div>
             </section>

@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import EstadisticasPersonales from '@/components/estadisticas/EstadisticasPersonales';
 import { render, screen, fireEvent } from '@testing-library/react';
 
