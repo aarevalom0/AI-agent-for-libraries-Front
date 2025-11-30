@@ -28,7 +28,7 @@ const EventCard = ({ pretitulo, title, descripcion, imageUrl, href}: EventCardPr
                 </div>
             </div>
 
-            <div className="relative w-[350px] h-[220px] ml-auto">
+            <div className="relative w-[500px] h-[220px] ml-auto">
                 <Image 
                     src={imageUrl}
                     alt={`Imagen para el libro ${title}`}
