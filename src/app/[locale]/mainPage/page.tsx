@@ -39,6 +39,8 @@ export default function MainPage() {
   const [usuario, setUsuario] = useState<string>("Usuario");
   const [ready, setReady] = useState(false);
 
+  const [racha, setRacha] = useState(0);
+
   // --------- Cargar usuario logueado ----------
   useEffect(() => {
     const u = getCurrentUser();
@@ -51,6 +53,8 @@ export default function MainPage() {
 
     // nombre viene del backend como `nombre`
     setUsuario(u.nombre || "Usuario");
+    console.log(u);
+    setRacha(u.racha_lectura.dias_consecutivos);
     setReady(true);
   }, [router]);
 
@@ -179,7 +183,7 @@ export default function MainPage() {
         className="md:col-span-2 bg-[var(--colorMenus)] rounded-sm"
       >
         <div title="Calendario">
-          <CalendarioRachas numStreaks={9} />
+          <CalendarioRachas numStreaks={racha} />
         </div>
 
         <div

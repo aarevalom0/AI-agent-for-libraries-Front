@@ -2,13 +2,38 @@
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
 
+export enum RolUsuario {
+  LECTOR = 'lector',
+  AUTOR = 'autor'
+}
 export type BackendUser = {
   id: string;
   nombre: string;
   email: string;
-  rol: string;
+  rol: RolUsuario;
   foto_perfil: string | null;
   biografia: string | null;
+
+  generos_preferidos: string[];
+
+  estadisticas: {
+    total_libros_leidos: number;
+    total_paginas_leidas: number;
+    tiempo_total_lectura: number;
+    generos_leidos: string[];
+  };
+
+  racha_lectura: {
+    dias_consecutivos: number;
+    fecha_inicio_racha: Date | null;
+    ultima_fecha_lectura: Date | null;
+  };
+
+  librerias: string[];
+  insignias: string[];
+
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 type Session = {
