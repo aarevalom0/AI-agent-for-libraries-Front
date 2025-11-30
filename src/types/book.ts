@@ -1,3 +1,4 @@
+import { AutorData } from "./author";
 import { Review } from "./review";
 
 export interface Book {
@@ -12,4 +13,14 @@ export interface Book {
   progress?: number; 
   completionDate?: string; 
   reviews: Review[];
+}
+
+
+export interface BookRecomendations {
+  _id: string;
+  titulo: string;
+  autoresData: AutorData[];
+  portada: string;
+  descripcion?: string;
+  genero?: string;
 }
