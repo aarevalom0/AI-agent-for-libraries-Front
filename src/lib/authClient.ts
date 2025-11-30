@@ -1,71 +1,147 @@
 // src/lib/authClient.ts
-export type User = {
-  name: string;
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
+
+export type BackendUser = {
+  id: string;
+  nombre: string;
   email: string;
-  password: string;
-  sq?: string; // security question
-  sa?: string; // security answer (plaintext para demo)
+  rol: string;
+  foto_perfil: string | null;
+  biografia: string | null;
 };
 
-const keyUsers = "lecturium_users";
-const keySession = "lecturium_current_user";
+type Session = {
+  token: string;
+  user: BackendUser;
+};
 
+const keySession = "lecturium_session";
+
+// Helpers seguros para localStorage
 function safeGet<T>(k: string, fb: T): T {
   if (typeof window === "undefined") return fb;
-  try { return JSON.parse(localStorage.getItem(k) || "") as T; } catch { return fb; }
+  try {
+    const raw = localStorage.getItem(k);
+    if (!raw) return fb;
+    return JSON.parse(raw) as T;
+  } catch {
+    return fb;
+  }
 }
+
 function safeSet<T>(k: string, v: T) {
   if (typeof window === "undefined") return;
   localStorage.setItem(k, JSON.stringify(v));
 }
 
-export function getUsers(): Record<string, User> { return safeGet(keyUsers, {} as any); }
-export function saveUser(u: User) {
-  const users = getUsers();
-  users[u.email.toLowerCase()] = u;
-  safeSet(keyUsers, users);
-}
-export function userExists(email: string) {
-  return !!getUsers()[email.toLowerCase()];
+function safeRemove(k: string) {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(k);
 }
 
-export function login(email: string, password: string) {
-  const u = getUsers()[email.toLowerCase()];
-  if (!u || u.password !== password) return false;
-  safeSet(keySession, { email: u.email, name: u.name });
-  return true;
-}
-export function logout() { if (typeof window !== "undefined") localStorage.removeItem(keySession); }
-export function getCurrentUser() { return safeGet<{email:string;name:string} | null>(keySession, null); }
-export function isLoggedIn() { return !!getCurrentUser(); }
+// ---------- Sesión ----------
 
-// ----- Reset por pregunta de seguridad -----
-export function setSecurity(email: string, sq: string, sa: string) {
-  const users = getUsers();
-  const key = email.toLowerCase();
-  if (!users[key]) return false;
-  users[key].sq = sq;
-  users[key].sa = (sa || "").trim();
-  safeSet(keyUsers, users);
-  return true;
+function getSession(): Session | null {
+  return safeGet<Session | null>(keySession, null);
 }
 
-export function getSecurityQuestion(email: string) {
-  const u = getUsers()[email.toLowerCase()];
-  return u?.sq || null;
+export function getCurrentUser(): BackendUser | null {
+  return getSession()?.user ?? null;
 }
 
-export function canResetWithAnswer(email: string, answer: string) {
-  const u = getUsers()[email.toLowerCase()];
-  if (!u || !u.sa) return false;
-  return u.sa === (answer || "").trim();
+export function isLoggedIn(): boolean {
+  return !!getSession();
 }
 
-export function resetPassword(email: string, newPassword: string) {
-  const users = getUsers();
-  const key = email.toLowerCase();
-  if (!users[key]) return false;
-  users[key].password = newPassword;
-  safeSet(keyUsers, users);
-  return true;
+export function logout() {
+  safeRemove(keySession);
+}
+
+// ---------- Auth contra el backend ----------
+
+export async function login(
+  email: string,
+  password: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        contrasena: password, // 👈 campo que espera tu backend
+      }),
+    });
+
+    if (!res.ok) {
+      return false;
+    }
+
+    const data: { access_token: string; user: BackendUser } = await res.json();
+
+    safeSet<Session>(keySession, {
+      token: data.access_token,
+      user: data.user,
+    });
+
+    return true;
+  } catch (e) {
+    console.error("Error en login:", e);
+    return false;
+  }
+}
+
+export async function register(
+  nombre: string,
+  email: string,
+  password: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre,
+        email,
+        contrasena: password, // 👈 mismo nombre que en el backend
+      }),
+    });
+
+    if (!res.ok) {
+      return false;
+    }
+
+    const data: { access_token: string; user: BackendUser } = await res.json();
+
+    // Opcional: al registrarse también lo dejas logueado
+    safeSet<Session>(keySession, {
+      token: data.access_token,
+      user: data.user,
+    });
+
+    return true;
+  } catch (e) {
+    console.error("Error en register:", e);
+    return false;
+  }
+}
+
+// ---------- Helper para peticiones autenticadas ----------
+
+export async function apiFetch(
+  path: string,
+  options: RequestInit = {},
+): Promise<Response> {
+  const session = getSession();
+  const headers = new Headers(options.headers || {});
+  headers.set("Content-Type", "application/json");
+  if (session?.token) {
+    headers.set("Authorization", `Bearer ${session.token}`);
+  }
+
+  return fetch(`${API_BASE_URL}${path}`, {
+    ...options,
+    headers,
+  });
 }

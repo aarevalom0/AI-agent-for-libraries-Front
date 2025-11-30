@@ -2,27 +2,39 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { saveUser, userExists } from "@/lib/authClient";
+import { register as registerUser } from "@/lib/authClient";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [err, setErr] = useState<string | null>(null);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErr(null);
+
     const form = new FormData(e.currentTarget);
     const name = String(form.get("name") || "").trim();
     const email = String(form.get("email") || "").trim().toLowerCase();
     const password = String(form.get("password") || "");
-    const sq = String(form.get("sq") || "");
-    const sa = String(form.get("sa") || "");
-    saveUser({ name, email, password, sq, sa: sa.trim() });
+    const sq = String(form.get("sq") || ""); // de momento no se envían al back
+    const sa = String(form.get("sa") || "").trim();
 
-    if (!name || !email || !password) return setErr("Completa todos los campos.");
-    if (password.length < 6) return setErr("La contraseña debe tener al menos 6 caracteres.");
-    if (userExists(email)) return setErr("Este correo ya está registrado.");
+    if (!name || !email || !password) {
+      return setErr("Completa todos los campos.");
+    }
+    if (password.length < 6) {
+      return setErr("La contraseña debe tener al menos 6 caracteres.");
+    }
 
-    saveUser({ name, email, password });
+    // Llamar al backend: POST /auth/register
+    const ok = await registerUser(name, email, password);
+
+    if (!ok) {
+      // El back devuelve false (por ejemplo, email repetido -> 400)
+      return setErr("No se pudo crear la cuenta. ¿El correo ya está registrado?");
+    }
+
+    // Opcional: registerUser ya deja la sesión iniciada (token + user en localStorage)
     alert("Registro exitoso. Ahora inicia sesión.");
     router.push("/login");
   }
@@ -52,21 +64,23 @@ export default function RegisterPage() {
             placeholder="Email"
             type="email"
           />
-
           <input
             className="border rounded-lg p-3 text-[var(--colorText)]"
             name="password"
             placeholder="Contraseña"
             type="password"
           />
-          <input className="border rounded-lg p-3 text-[var(--colorText)]" 
-          name="sq" 
-          placeholder="Pregunta de seguridad (ej. Nombre de tu primera mascota)" />
-          <input 
 
-          className="border rounded-lg p-3 text-[var(--colorText)]" 
-          name="sa" 
-          placeholder="Respuesta de seguridad" />
+          <input
+            className="border rounded-lg p-3 text-[var(--colorText)]"
+            name="sq"
+            placeholder="Pregunta de seguridad (ej. Nombre de tu primera mascota)"
+          />
+          <input
+            className="border rounded-lg p-3 text-[var(--colorText)]"
+            name="sa"
+            placeholder="Respuesta de seguridad"
+          />
 
           <button className="rounded-lg bg-[var(--colorMenus)] text-white py-3">
             Registrarme

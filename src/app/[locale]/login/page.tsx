@@ -5,20 +5,29 @@ import { useState } from "react";
 import { login } from "@/lib/authClient";
 import Link from "next/link";
 
-
 export default function LoginPage() {
   const router = useRouter();
   const [err, setErr] = useState<string | null>(null);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErr(null);
+
     const form = new FormData(e.currentTarget);
     const email = String(form.get("email") || "").trim().toLowerCase();
     const password = String(form.get("password") || "");
 
-    if (!email || !password) return setErr("Ingresa email y contraseña.");
-    if (!login(email, password)) return setErr("Credenciales inválidas o usuario no registrado.");
+    if (!email || !password) {
+      return setErr("Ingresa email y contraseña.");
+    }
 
+    const ok = await login(email, password); // 👈 llama al back
+
+    if (!ok) {
+      return setErr("Credenciales inválidas o usuario no registrado.");
+    }
+
+    // Si todo bien, token + userId ya están en localStorage
     router.push("/mainPage");
   }
 
@@ -53,10 +62,11 @@ export default function LoginPage() {
           </button>
 
           <p className="text-sm mt-3 text-center text-[var(--colorText)]">
-          ¿Olvidaste tu contraseña?{" "}
-          <a href="/forgot" className="text-[var(--colorMenus)] hover:underline">Recupérala aquí</a>
+            ¿Olvidaste tu contraseña?{" "}
+            <a href="/forgot" className="text-[var(--colorMenus)] hover:underline">
+              Recupérala aquí
+            </a>
           </p>
-
         </form>
 
         <p className="text-sm mt-4 text-center text-[var(--colorText)]">
