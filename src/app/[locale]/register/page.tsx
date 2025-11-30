@@ -8,31 +8,38 @@ export default function RegisterPage() {
   const router = useRouter();
   const [err, setErr] = useState<string | null>(null);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setErr(null);
+async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  setErr(null);
 
-    const form = new FormData(e.currentTarget);
-    const name = String(form.get("name") || "").trim();
-    const email = String(form.get("email") || "").trim().toLowerCase();
-    const password = String(form.get("password") || "");
+  const form = new FormData(e.currentTarget);
+  const name = String(form.get("name") || "").trim();
+  const email = String(form.get("email") || "").trim().toLowerCase();
+  const password = String(form.get("password") || "");
 
-    if (!name || !email || !password) {
-      return setErr("Completa todos los campos.");
-    }
-    if (password.length < 6) {
-      return setErr("La contraseña debe tener al menos 6 caracteres.");
-    }
-
-    const ok = await registerUser(name, email, password);
-
-    if (!ok) {
-      return setErr("No se pudo crear la cuenta. ¿El correo ya está registrado?");
-    }
-
-    alert("Registro exitoso. Ahora inicia sesión.");
-    router.push("/login");
+  if (!name || !email || !password) {
+    return setErr("Completa todos los campos.");
   }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return setErr("Ingresa un correo electrónico válido.");
+  }
+
+  if (password.length < 6) {
+    return setErr("La contraseña debe tener al menos 6 caracteres.");
+  }
+
+  const ok = await registerUser(name, email, password);
+
+  if (!ok) {
+    return setErr("No se pudo crear la cuenta. ¿El correo ya está registrado?");
+  }
+
+  alert("Registro exitoso. Ahora inicia sesión.");
+  router.push("/login");
+}
+
 
   return (
     <main className="min-h-screen flex items-center justify-center">
