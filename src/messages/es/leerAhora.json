@@ -20,5 +20,51 @@
     "pending": "Pendiente",
     "completed": "Completado"
   },
-  "empty": "No se encontraron libros con los filtros actuales."
+  "empty": "No se encontraron libros con los filtros actuales.",
+  "books": {
+    "1984": {
+      "title": "1984",
+      "author": "George Orwell"
+    },
+    "girl-train": {
+      "title": "La chica del tren",
+      "author": "Paula Hawkins"
+    },
+    "harry-potter": {
+      "title": "Harry Potter y la piedra filosofal",
+      "author": "J.K. Rowling"
+    },
+    "secret-garden": {
+      "title": "El jardín secreto",
+      "author": "Frances H. Burnett"
+    },
+    "pride-prejudice": {
+      "title": "Orgullo y prejuicio",
+      "author": "Jane Austen"
+    },
+    "to-kill-mockingbird": {
+      "title": "Matar un ruiseñor",
+      "author": "Harper Lee"
+    },
+    "great-gatsby": {
+      "title": "El gran Gatsby",
+      "author": "F. Scott Fitzgerald"
+    },
+    "dune": {
+      "title": "Dune",
+      "author": "Frank Herbert"
+    },
+    "lotr": {
+      "title": "El señor de los anillos",
+      "author": "J.R.R. Tolkien"
+    },
+    "sapiens": {
+      "title": "Sapiens: De animales a dioses",
+      "author": "Yuval Noah Harari"
+    },
+    "cien-anios": {
+      "title": "Cien años de soledad",
+      "author": "Gabriel García Márquez"
+    }
+  }
 }

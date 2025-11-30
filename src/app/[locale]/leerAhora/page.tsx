@@ -7,40 +7,124 @@ import BookReading from "@/components/books/BookReading";
 import Pagination from "@/components/navigation/Pagination";
 import BookGrid from "@/components/books/BookGrid";
 
+/* -------------------- Tipos -------------------- */
+
+type GeneroTexto =
+  | "Fantasía"
+  | "Ciencia Ficción"
+  | "Clásico"
+  | "Misterio"
+  | "No Ficción";
+
+type EstadoTexto = "Leyendo" | "Pendiente" | "Completado";
+
 type Libro = {
   slug: string;
   title: string;
   autor: string;
   imageUrl: string;
-  // El catálogo original trae el género/estado en ES (texto). Los mapeamos a códigos.
-  genero: "Fantasía" | "Ciencia Ficción" | "Clásico" | "Misterio" | "No Ficción";
-  estado: "Leyendo" | "Pendiente" | "Completado";
+  genero: GeneroTexto;
+  estado: EstadoTexto;
   progreso?: number;
 };
 
-/* ------------------------- Datos de ejemplo ------------------------- */
-const LECTURAS_ACTUALES: Libro[] = [
-  { slug: "1984", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg", genero: "Ciencia Ficción", estado: "Leyendo", progreso: 60 },
-  { slug: "girl-train", title: "La chica del tren", autor: "Paula Hawkins", imageUrl: "/Images/girl-train.jpg", genero: "Misterio", estado: "Leyendo", progreso: 30 },
-  { slug: "harry-potter", title: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", imageUrl: "/Images/harry-potter.jpg", genero: "Fantasía", estado: "Leyendo", progreso: 85 },
-];
-
-const CATALOGO: Libro[] = [
-  { slug: "secret-garden", title: "El jardín secreto", autor: "Frances H. Burnett", imageUrl: "/Images/secret-garden.jpg", genero: "Clásico", estado: "Pendiente" },
-  { slug: "pride-prejudice", title: "Orgullo y prejuicio", autor: "Jane Austen", imageUrl: "/Images/pride.jpg", genero: "Clásico", estado: "Pendiente" },
-  { slug: "to-kill-mockingbird", title: "Matar un ruiseñor", autor: "Harper Lee", imageUrl: "/Images/mockingbird.jpg", genero: "Clásico", estado: "Pendiente" },
-  { slug: "1984", title: "1984", autor: "George Orwell", imageUrl: "/Images/1984.jpg", genero: "Ciencia Ficción", estado: "Pendiente" },
-  { slug: "great-gatsby", title: "El gran Gatsby", autor: "F. Scott Fitzgerald", imageUrl: "/Images/gatsby.jpg", genero: "Clásico", estado: "Pendiente" },
-  { slug: "dune", title: "Dune", autor: "Frank Herbert", imageUrl: "/Images/dune.jpg", genero: "Ciencia Ficción", estado: "Pendiente" },
-  { slug: "lotr", title: "El señor de los anillos", autor: "J.R.R. Tolkien", imageUrl: "/Images/lotr.jpg", genero: "Fantasía", estado: "Pendiente" },
-  { slug: "sapiens", title: "Sapiens: De animales a dioses", autor: "Yuval Noah Harari", imageUrl: "/Images/sapiens.jpg", genero: "No Ficción", estado: "Pendiente" },
-  { slug: "cien-anios", title: "Cien años de soledad", autor: "Gabriel García Márquez", imageUrl: "/Images/CienAniosSoledad.jpg", genero: "Fantasía", estado: "Pendiente" },
-];
+type LibroBase = {
+  slug: string;
+  imageUrl: string;
+  genero: GeneroTexto;
+  estado: EstadoTexto;
+  progreso?: number;
+};
 
 type GenreCode = "all" | "fantasy" | "scifi" | "classic" | "mystery" | "nonfiction";
 type StatusCode = "all" | "reading" | "pending" | "completed";
 
-const genreCodeOf = (g: Libro["genero"]): GenreCode =>
+/* -------------------- Datos base (sin textos) -------------------- */
+
+const LECTURAS_ACTUALES_BASE: LibroBase[] = [
+  {
+    slug: "1984",
+    imageUrl: "/Images/1984.jpg",
+    genero: "Ciencia Ficción",
+    estado: "Leyendo",
+    progreso: 60,
+  },
+  {
+    slug: "girl-train",
+    imageUrl: "/Images/girl-train.jpg",
+    genero: "Misterio",
+    estado: "Leyendo",
+    progreso: 30,
+  },
+  {
+    slug: "harry-potter",
+    imageUrl: "/Images/harry-potter.jpg",
+    genero: "Fantasía",
+    estado: "Leyendo",
+    progreso: 85,
+  },
+];
+
+const CATALOGO_BASE: LibroBase[] = [
+  {
+    slug: "secret-garden",
+    imageUrl: "/Images/secret-garden.jpg",
+    genero: "Clásico",
+    estado: "Pendiente",
+  },
+  {
+    slug: "pride-prejudice",
+    imageUrl: "/Images/pride.jpg",
+    genero: "Clásico",
+    estado: "Pendiente",
+  },
+  {
+    slug: "to-kill-mockingbird",
+    imageUrl: "/Images/mockingbird.jpg",
+    genero: "Clásico",
+    estado: "Pendiente",
+  },
+  {
+    slug: "1984",
+    imageUrl: "/Images/1984.jpg",
+    genero: "Ciencia Ficción",
+    estado: "Pendiente",
+  },
+  {
+    slug: "great-gatsby",
+    imageUrl: "/Images/gatsby.jpg",
+    genero: "Clásico",
+    estado: "Pendiente",
+  },
+  {
+    slug: "dune",
+    imageUrl: "/Images/dune.jpg",
+    genero: "Ciencia Ficción",
+    estado: "Pendiente",
+  },
+  {
+    slug: "lotr",
+    imageUrl: "/Images/lotr.jpg",
+    genero: "Fantasía",
+    estado: "Pendiente",
+  },
+  {
+    slug: "sapiens",
+    imageUrl: "/Images/sapiens.jpg",
+    genero: "No Ficción",
+    estado: "Pendiente",
+  },
+  {
+    slug: "cien-anios",
+    imageUrl: "/Images/CienAniosSoledad.jpg",
+    genero: "Fantasía",
+    estado: "Pendiente",
+  },
+];
+
+/* -------------------- Helpers para filtros -------------------- */
+
+const genreCodeOf = (g: GeneroTexto): GenreCode =>
   (
     {
       "Fantasía": "fantasy",
@@ -51,7 +135,7 @@ const genreCodeOf = (g: Libro["genero"]): GenreCode =>
     } as const
   )[g] ?? "all";
 
-const statusCodeOf = (s: Libro["estado"]): StatusCode =>
+const statusCodeOf = (s: EstadoTexto): StatusCode =>
   (
     {
       "Leyendo": "reading",
@@ -60,7 +144,8 @@ const statusCodeOf = (s: Libro["estado"]): StatusCode =>
     } as const
   )[s] ?? "all";
 
-/* ------------------------- Componente principal ------------------------- */
+/* -------------------- Componente principal -------------------- */
+
 export default function LeerAhoraPage() {
   const t = useTranslations("leerAhora");
 
@@ -70,10 +155,32 @@ export default function LeerAhoraPage() {
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 5;
 
-  // Filtro con códigos estables 
+  // Libros con título y autor traducidos según el idioma
+  const lecturasActuales: Libro[] = useMemo(
+    () =>
+      LECTURAS_ACTUALES_BASE.map((b) => ({
+        ...b,
+        title: t(`books.${b.slug}.title`),
+        autor: t(`books.${b.slug}.author`),
+      })),
+    [t]
+  );
+
+  const catalogo: Libro[] = useMemo(
+    () =>
+      CATALOGO_BASE.map((b) => ({
+        ...b,
+        title: t(`books.${b.slug}.title`),
+        autor: t(`books.${b.slug}.author`),
+      })),
+    [t]
+  );
+
+  // Filtro + búsqueda
   const filtrados = useMemo(() => {
     const s = q.trim().toLowerCase();
-    return CATALOGO.filter((b) => {
+
+    return catalogo.filter((b) => {
       const okQ =
         !s ||
         b.title.toLowerCase().includes(s) ||
@@ -87,7 +194,7 @@ export default function LeerAhoraPage() {
 
       return okQ && okG && okE;
     });
-  }, [q, fGenero, fEstado]);
+  }, [q, fGenero, fEstado, catalogo]);
 
   const totalPages = Math.max(1, Math.ceil(filtrados.length / PAGE_SIZE));
   const pageBooks = filtrados.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -101,11 +208,11 @@ export default function LeerAhoraPage() {
         </h2>
 
         <div className="flex flex-col gap-8">
-          {LECTURAS_ACTUALES.map((b) => (
+          {lecturasActuales.map((b) => (
             <div key={b.slug} className="flex items-center justify-between">
               <BookReading
                 title={b.title}
-                autor= {`${t("author")}: ${b.autor}`}
+                autor={`${t("author")}: ${b.autor}`}
                 imageUrl={b.imageUrl}
                 progreso={b.progreso}
               />
@@ -122,7 +229,9 @@ export default function LeerAhoraPage() {
         <h2 className="text-4xl font-newsreader text-[var(--colorMenus)] mb-2">
           {t("title_discover")}
         </h2>
-        <p className="text-[var(--colorText)] mb-6">{t("subtitle_discover")}</p>
+        <p className="text-[var(--colorText)] mb-6">
+          {t("subtitle_discover")}
+        </p>
 
         {/* Búsqueda + filtros */}
         <div className="flex flex-col gap-3 mb-6">
@@ -139,7 +248,9 @@ export default function LeerAhoraPage() {
           <div className="flex flex-wrap gap-3">
             {/* Filtro género */}
             <label className="flex items-center gap-2">
-              <span className="text-[var(--text)]">{t("filter_genre")}:</span>
+              <span className="text-[var(--text)]">
+                {t("filter_genre")}:
+              </span>
               <select
                 className="rounded-xl border px-4 py-2"
                 value={fGenero}
@@ -159,7 +270,9 @@ export default function LeerAhoraPage() {
 
             {/* Filtro estado */}
             <label className="flex items-center gap-2">
-              <span className="text-[var(--text)]">{t("filter_status")}:</span>
+              <span className="text-[var(--text)]">
+                {t("filter_status")}:
+              </span>
               <select
                 className="rounded-xl border px-4 py-2"
                 value={fEstado}
@@ -177,13 +290,17 @@ export default function LeerAhoraPage() {
           </div>
         </div>
 
-        {/* grilla */}
+        {/* Grilla de libros */}
         <BookGrid books={pageBooks} />
 
-        {/* paginación */}
-        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+        {/* Paginación */}
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
 
-        {/* vacío */}
+        {/* Mensaje vacío */}
         {pageBooks.length === 0 && (
           <p className="text-[var(--colorText)] mt-4">{t("empty")}</p>
         )}
