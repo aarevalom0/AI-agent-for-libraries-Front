@@ -61,6 +61,9 @@
             "maxLength": "The description cannot exceed 255 characters"
             }
         },
+        "icon":{
+          "label": "Select an Icon"
+        },
         "button": {
         "submit": "Create Collection"
         }

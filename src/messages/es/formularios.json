@@ -60,6 +60,9 @@
             "maxLength": "La descripción no puede tener más de 255 caracteres"
             }
         },
+        "icon":{
+          "label": "Selecciona un Icono"
+        },
         "button": {
         "submit": "Crear Colección"
         }
