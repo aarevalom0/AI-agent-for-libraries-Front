@@ -8,7 +8,19 @@ import Footer from "@/components/navigation/Footer";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const hideOn = ["/es", "/es/login", "/es/register","/en", "/en/login", "/en/register"];
+
+  const hideOn = [
+    "/es",
+    "/es/login",
+    "/es/register",
+    "/es/forgot",
+    "/en",
+    "/en/login",
+    "/en/register",
+    "/en/forgot",
+    "/forgot",
+  ];
+
   const hideLayout = hideOn.includes(pathname);
 
   return (
