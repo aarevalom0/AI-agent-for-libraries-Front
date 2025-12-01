@@ -48,13 +48,16 @@ export async function getBookById(id) {
     const b = await response.json();
 
     console.log('Datos crudos del backend:', b);
-    console.log('Campo autores del backend:', b.autores);
+    console.log('Campo autores del backend:', b.autoresData);
 
     // Normalización para el front
     return {
       id: b._id || b.id,
       title: b.titulo || b.title || 'Sin título',
-      author: b.author?.buffer ? String.fromCharCode(...Object.values(b.author.buffer)) : Array.isArray(b.autores) ? b.autores[0] : 'Autor desconocido',
+      // Si hay autoresData, tomamos el primero y su nombre; si no, 'Autor desconocido'
+      author: Array.isArray(b.autoresData) && b.autoresData.length > 0
+        ? b.autoresData[0].nombre
+        : 'Autor desconocido',
       cover: b.portada || '/placeholder-book.jpg',
       genres: b.genero ? [b.genero] : [],
       description: b.descripcion || '',
