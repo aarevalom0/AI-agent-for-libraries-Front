@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import EventCard from '@/components/eventos/EventCard';
 import { render, screen } from '@testing-library/react';
 
@@ -93,7 +94,7 @@ describe('EventCard Component', () => {
   it('image container has correct dimensions', () => {
     const { container } = render(<EventCard {...defaultProps} />);
     
-    const imageContainer = container.querySelector('.relative.w-\\[350px\\].h-\\[220px\\]');
+    const imageContainer = container.querySelector('.w-\\[500px\\].h-\\[220px\\]');
     expect(imageContainer).toBeInTheDocument();
   });
 

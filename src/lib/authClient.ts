@@ -3,9 +3,10 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
 
 export enum RolUsuario {
-  LECTOR = 'lector',
-  AUTOR = 'autor'
+  LECTOR = "lector",
+  AUTOR = "autor",
 }
+
 export type BackendUser = {
   id: string;
   nombre: string;
@@ -43,11 +44,12 @@ type Session = {
 
 const keySession = "lecturium_session";
 
-// Helpers seguros para localStorage
+// ---------- Helpers seguros para localStorage ----------
+
 function safeGet<T>(k: string, fb: T): T {
   if (typeof window === "undefined") return fb;
   try {
-    const raw = localStorage.getItem(k);
+    const raw = window.localStorage.getItem(k);
     if (!raw) return fb;
     return JSON.parse(raw) as T;
   } catch {
@@ -57,18 +59,48 @@ function safeGet<T>(k: string, fb: T): T {
 
 function safeSet<T>(k: string, v: T) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(k, JSON.stringify(v));
+  try {
+    window.localStorage.setItem(k, JSON.stringify(v));
+  } catch {
+    // ignore
+  }
 }
 
 function safeRemove(k: string) {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(k);
+  try {
+    window.localStorage.removeItem(k);
+  } catch {
+    // ignore
+  }
+}
+
+// ---------- Normalización de token ----------
+
+function normalizeToken(raw: unknown): string | null {
+  if (!raw || typeof raw !== "string") return null;
+  if (raw.startsWith("Bearer ")) {
+    return raw.slice("Bearer ".length);
+  }
+  return raw;
 }
 
 // ---------- Sesión ----------
 
 function getSession(): Session | null {
-  return safeGet<Session | null>(keySession, null);
+  const raw = safeGet<any>(keySession, null);
+  if (!raw) return null;
+
+  const token = normalizeToken(raw.token);
+  if (!token) {
+    safeRemove(keySession);
+    return null;
+  }
+
+  return {
+    token,
+    user: raw.user as BackendUser,
+  };
 }
 
 export function getCurrentUser(): BackendUser | null {
@@ -76,7 +108,7 @@ export function getCurrentUser(): BackendUser | null {
 }
 
 export function isLoggedIn(): boolean {
-  return !!getSession();
+  return !!getSession()?.token;
 }
 
 export function logout() {
@@ -95,7 +127,7 @@ export async function login(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email,
-        contrasena: password, // 👈 campo que espera tu backend
+        contrasena: password,
       }),
     });
 
@@ -103,12 +135,19 @@ export async function login(
       return false;
     }
 
-    const data: { access_token: string; user: BackendUser } = await res.json();
+    const data: any = await res.json();
 
-    safeSet<Session>(keySession, {
-      token: data.access_token,
-      user: data.user,
-    });
+    const token = normalizeToken(
+      data.access_token ?? data.accessToken ?? data.token,
+    );
+    const user: BackendUser | undefined = data.user ?? data.usuario;
+
+    if (!token || !user) {
+      console.error("Respuesta de login sin token o user:", data);
+      return false;
+    }
+
+    safeSet<Session>(keySession, { token, user });
 
     return true;
   } catch (e) {
@@ -129,7 +168,7 @@ export async function register(
       body: JSON.stringify({
         nombre,
         email,
-        contrasena: password, // 👈 mismo nombre que en el backend
+        contrasena: password,
       }),
     });
 
@@ -137,13 +176,19 @@ export async function register(
       return false;
     }
 
-    const data: { access_token: string; user: BackendUser } = await res.json();
+    const data: any = await res.json();
 
-    // Opcional: al registrarse también lo dejas logueado
-    safeSet<Session>(keySession, {
-      token: data.access_token,
-      user: data.user,
-    });
+    const token = normalizeToken(
+      data.access_token ?? data.accessToken ?? data.token,
+    );
+    const user: BackendUser | undefined = data.user ?? data.usuario;
+
+    if (!token || !user) {
+      console.error("Respuesta de register sin token o user:", data);
+      return false;
+    }
+
+    safeSet<Session>(keySession, { token, user });
 
     return true;
   } catch (e) {
@@ -159,13 +204,18 @@ export async function apiFetch(
   options: RequestInit = {},
 ): Promise<Response> {
   const session = getSession();
+
   const headers = new Headers(options.headers || {});
-  headers.set("Content-Type", "application/json");
+  if (!headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
   if (session?.token) {
     headers.set("Authorization", `Bearer ${session.token}`);
   }
 
-  return fetch(`${API_BASE_URL}${path}`, {
+  const url = `${API_BASE_URL}${path}`;
+  return fetch(url, {
     ...options,
     headers,
   });

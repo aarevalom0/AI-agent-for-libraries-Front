@@ -30,6 +30,7 @@ eliminas los pensamientos que la gente puede tener.`,
   },
 
   "girl-train": {
+      libroId: "692cf04149a83d2851f4edef",
     title: "La chica del tren",
     chapters: [
       `La rutina del vagón
@@ -47,6 +48,7 @@ y su propia credibilidad es el primer obstáculo que debe superar.`,
   },
 
   "harry-potter": {
+      libroId: "692cf01749a83d2851f4eded",
     title: "Harry Potter y la piedra filosofal",
     chapters: [
       `Cartas sin respuesta
@@ -80,6 +82,7 @@ El jardín florece y, con él, quienes lo cuidan. Mary entiende que la vida tamb
   },
 
   "pride-prejudice": {
+      libroId: "692cf04149a83d2851f4edef",
     title: "Pride and Prejudice",
     chapters: [
       `Primeras impresiones
@@ -163,6 +166,7 @@ and her own credibility is the first obstacle to overcome.`,
   },
 
   "harry-potter": {
+      libroId: "692cf01749a83d2851f4eded",
     title: "Harry Potter and the Philosopher’s Stone",
     chapters: [
       `Letters without reply
