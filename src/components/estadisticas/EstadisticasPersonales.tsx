@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './Estadisticas.module.css'; 
 import { Line, Bar } from 'react-chartjs-2';
@@ -15,8 +15,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { userBooks } from '@/lib/mock-data'; // Importar datos simulados
-import { Book } from '@/types/book';
+import { getCurrentUser } from '@/lib/authClient';
+import { getEstadisticasUsuario } from '@/services/estadisticasService';
 import RankingLectores from '@/components/estadisticas/RankingLectores';
 
 ChartJS.register(
@@ -30,56 +30,114 @@ ChartJS.register(
   Legend
 );
 
-// --- Funciones de Cálculo ---
-const currentYear = new Date().getFullYear();
-const booksReadThisYear = userBooks.filter(
-  (book) =>
-    book.status === 'leido' &&
-    book.completionDate &&
-    new Date(book.completionDate).getFullYear() === currentYear
-);
-
-const totalPagesReadThisYear = booksReadThisYear.reduce((sum, book) => sum + (book.progress ?? 0), 0);
-
-// Estimación: 40 páginas por hora
-const totalHoursRead = Math.round(totalPagesReadThisYear / 40);
-
-const daysIntoYear = Math.floor(
-  (Date.now() - new Date(currentYear, 0, 0).getTime()) / (1000 * 60 * 60 * 24)
-);
-const avgPagesPerDay = daysIntoYear > 0 ? Math.round(totalPagesReadThisYear / daysIntoYear) : 0;
-
-// Para el gráfico de páginas por mes
-const pagesPerMonth = Array(12).fill(0);
-booksReadThisYear.forEach((book) => {
-  if (book.completionDate) {
-    const month = new Date(book.completionDate).getMonth(); // 0 = Enero, 11 = Diciembre
-    pagesPerMonth[month] += book.progress;
-  }
-});
-
-// Para el gráfico de géneros
-const genreCounts: { [key: string]: number } = {};
-booksReadThisYear.forEach((book) => {
-  // Itera sobre el array de géneros de cada libro
-  if (book.genres) {
-    book.genres.forEach((genre) => {
-      genreCounts[genre] = (genreCounts[genre] || 0) + 1;
-    });
-  }
-});
-const sortedGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]);
-const allBooksRead = userBooks.filter((book) => book.status === 'leido');
-const mostRecentBook = allBooksRead.reduce((latest, current) => {
-    if (!latest) return current;
-    const latestDate = new Date(latest.completionDate!);
-    const currentDate = new Date(current.completionDate!);
-    return currentDate > latestDate ? current : latest;
-}, null as Book | null);
-
 const EstadisticasPersonales = () => {
   const t = useTranslations('estadisticas');
-  const [activeTab, setActiveTab] = React.useState<'Estadísticas' | 'Ranking'>('Estadísticas');
+  const [activeTab, setActiveTab] = useState<'Estadísticas' | 'Ranking'>('Estadísticas');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Estados para los datos del backend
+  const [totalHoursRead, setTotalHoursRead] = useState(0);
+  const [totalPagesReadThisYear, setTotalPagesReadThisYear] = useState(0);
+  const [avgPagesPerDay, setAvgPagesPerDay] = useState(0);
+  const [booksReadCount, setBooksReadCount] = useState(0);
+  const [pagesPerMonth, setPagesPerMonth] = useState<number[]>(Array(12).fill(0));
+  const [genresData, setGenresData] = useState<[string, number][]>([]);
+  
+  // CORRECCIÓN 1: Estado inicial para mostrar que no hay libro aún
+  const [mostRecentBook, setMostRecentBook] = useState<string>('Ninguno');
+  
+  const [rachaLectura, setRachaLectura] = useState(0);
+
+  useEffect(() => {
+    const fetchEstadisticas = async () => {
+      try {
+        const user = getCurrentUser();
+        
+        if (!user || !user.id) {
+          setError('Usuario no autenticado');
+          setLoading(false);
+          return;
+        }
+
+        const data = await getEstadisticasUsuario(user.id);
+
+        if (!data) {
+          throw new Error('No se recibieron datos del servidor');
+        }
+
+        const stats = (data as any).estadisticas || {};
+        const racha = (data as any).racha_lectura || {};
+
+        // Calcular horas de lectura (40 páginas por hora aprox)
+        const totalPaginas = stats.total_paginas_leidas || 0;
+        const totalLibros = stats.total_libros_leidos || 0;
+        
+        setTotalHoursRead(Math.round(totalPaginas / 40));
+        setTotalPagesReadThisYear(totalPaginas);
+        setBooksReadCount(totalLibros);
+        setRachaLectura(racha.dias_consecutivos || 0);
+
+        // CORRECCIÓN 2: Asignar el último libro leído desde el backend
+        // Si viene null o vacío, mostramos "Ninguno"
+        if (stats.ultimo_libro_leido) {
+            setMostRecentBook(stats.ultimo_libro_leido);
+        } else {
+            setMostRecentBook('Ninguno');
+        }
+
+        const daysIntoYear = Math.floor(
+          (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24)
+        );
+        setAvgPagesPerDay(daysIntoYear > 0 ? Math.round(stats.total_paginas_leidas / daysIntoYear) : 0);
+
+        const generosArray = stats.generos_leidos || [];
+        
+        const genreCounts: { [key: string]: number } = {};
+        
+        if (Array.isArray(generosArray)) {
+          generosArray.forEach((genre: string) => {
+            genreCounts[genre] = (genreCounts[genre] || 0) + 1;
+          });
+        }
+        
+        const sortedGenres = Object.entries(genreCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5); 
+        
+        setGenresData(sortedGenres as [string, number][]);
+
+        setLoading(false);
+      } catch (err) {
+        console.error('❌ Error cargando estadísticas:', err);
+        setError('Error al cargar las estadísticas');
+        setLoading(false);
+      }
+    };
+
+    fetchEstadisticas();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>
+          <p>Cargando estadísticas...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
+          <p>❌ {error}</p>
+        </div>
+      </div>
+    );
+  }
+
   const lineChartData = {
     labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     datasets: [
@@ -93,11 +151,11 @@ const EstadisticasPersonales = () => {
   };
 
   const barChartData = {
-    labels: sortedGenres.map(g => g[0]),
+    labels: genresData.map(g => g[0]),
     datasets: [
       {
         label: t('booksRead'),
-        data: sortedGenres.map(g => g[1]),
+        data: genresData.map(g => g[1]),
         backgroundColor: '#EFEBE9',
         borderColor: '#D7CCC8',
         borderWidth: 1,
@@ -146,8 +204,8 @@ const EstadisticasPersonales = () => {
                 <span className={styles.statNumber}>{totalHoursRead}</span>
               </div>
               <div className={styles.card} title={t('mostReadTooltip')}>
-                <p className={styles.cardLabel}>{t('mostRead')}</p>
-                <span className={styles.statTitle}>{mostRecentBook ? mostRecentBook.title : 'Ninguno'}</span>
+                <p className={styles.cardLabel}>Último libro leído</p>
+                <span className={styles.statTitle}>{mostRecentBook}</span>
               </div>
               <div className={styles.card} title={t('avgPagesTooltip')}>
                 <p className={styles.cardLabel}>{t('avgPages')}</p>
@@ -158,7 +216,7 @@ const EstadisticasPersonales = () => {
             <h2 className={styles.subtitle} title={t('readingSummaryTooltip')}>{t('readingSummary')}</h2>
             <section className={styles.summaryCard}>
               <p title={t('booksReadTooltip')}>{t('booksRead')}</p>
-              <span>{booksReadThisYear.length} {t('booksRead')} {t('thisYear')}</span>
+              <span>{booksReadCount} {t('booksRead')} {t('thisYear')}</span>
             </section>
 
             <section className={styles.chartsSection}>
@@ -175,7 +233,7 @@ const EstadisticasPersonales = () => {
               <div className={styles.chartCard}>
                 <div className={styles.chartHeader}>
                   <p title={t('genresTooltip')}>{t('genres')}</p>
-                  <span className={styles.statNumber}>{sortedGenres.length}</span>
+                  <span className={styles.statNumber}>{genresData.length}</span>
                   <span className={`${styles.statPercentage} ${styles.positive}`} title={t('thisYearTooltip')}>{t('thisYear')}</span>
                 </div>
                 <div className={styles.chartWrapper}>
