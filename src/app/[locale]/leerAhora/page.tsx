@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import BookReading from "@/components/books/BookReading";
 import Pagination from "@/components/navigation/Pagination";
 import BookGrid from "@/components/books/BookGrid";
+import { getLecturas, Lectura } from "@/services/lecturasServices";
 
 /* -------------------- Tipos -------------------- */
 
@@ -34,6 +35,7 @@ type LibroBase = {
   genero: GeneroTexto;
   estado: EstadoTexto;
   progreso?: number;
+  libroId?: string; // 👈 id real del libro en Mongo (si lo tienes)
 };
 
 type GenreCode = "all" | "fantasy" | "scifi" | "classic" | "mystery" | "nonfiction";
@@ -48,6 +50,7 @@ const LECTURAS_ACTUALES_BASE: LibroBase[] = [
     genero: "Ciencia Ficción",
     estado: "Leyendo",
     progreso: 60,
+    libroId: "691f49fa3faa28be5ca3b4ca", // 👈 ID real del libro 1984
   },
   {
     slug: "girl-train",
@@ -89,6 +92,7 @@ const CATALOGO_BASE: LibroBase[] = [
     imageUrl: "/Images/1984.jpg",
     genero: "Ciencia Ficción",
     estado: "Pendiente",
+    libroId: "691f49fa3faa28be5ca3b4ca",
   },
   {
     slug: "great-gatsby",
@@ -155,17 +159,50 @@ export default function LeerAhoraPage() {
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 5;
 
-  // Libros con título y autor traducidos según el idioma
+  const [lecturas, setLecturas] = useState<Lectura[]>([]);
+  const [loadingLecturas, setLoadingLecturas] = useState(true);
+  const [errorLecturas, setErrorLecturas] = useState<string | null>(null);
+
+  // Cargar lecturas desde el backend
+  useEffect(() => {
+    const loadLecturas = async () => {
+      try {
+        setLoadingLecturas(true);
+        setErrorLecturas(null);
+        const data = await getLecturas();
+        setLecturas(data);
+      } catch (e) {
+        console.error("Error cargando lecturas:", e);
+        setErrorLecturas("No se pudieron cargar tus lecturas.");
+      } finally {
+        setLoadingLecturas(false);
+      }
+    };
+    loadLecturas();
+  }, []);
+
+  // Libros actuales: mezclamos datos base + porcentaje real (si hay lectura asociada)
   const lecturasActuales: Libro[] = useMemo(
     () =>
-      LECTURAS_ACTUALES_BASE.map((b) => ({
-        ...b,
-        title: t(`books.${b.slug}.title`),
-        autor: t(`books.${b.slug}.author`),
-      })),
-    [t]
+      LECTURAS_ACTUALES_BASE.map((b) => {
+        const lecturaBack = b.libroId
+          ? lecturas.find((l) => l.libro_id === b.libroId)
+          : undefined;
+
+        return {
+          ...b,
+          title: t(`books.${b.slug}.title`),
+          autor: t(`books.${b.slug}.author`),
+          progreso:
+            lecturaBack?.porcentaje_lectura ??
+            b.progreso ??
+            0,
+        };
+      }),
+    [t, lecturas]
   );
 
+  // Catálogo traducido
   const catalogo: Libro[] = useMemo(
     () =>
       CATALOGO_BASE.map((b) => ({
@@ -206,6 +243,13 @@ export default function LeerAhoraPage() {
         <h2 className="text-4xl font-newsreader text-[var(--colorMenus)] mb-8">
           {t("title_current")}
         </h2>
+
+        {loadingLecturas && (
+          <p className="text-[var(--colorText)] mb-4">Cargando lecturas...</p>
+        )}
+        {errorLecturas && (
+          <p className="text-red-500 mb-4">{errorLecturas}</p>
+        )}
 
         <div className="flex flex-col gap-8">
           {lecturasActuales.map((b) => (

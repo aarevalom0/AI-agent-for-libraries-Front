@@ -2,7 +2,7 @@
 
 export type ChaptersMap = Record<
   string,
-  { title: string; chapters: string[] }
+  { libroId?: string; title: string; chapters: string[] }
 >;
 
 /**
@@ -12,6 +12,7 @@ export type ChaptersMap = Record<
 export const CHAPTERS_ES: ChaptersMap = {
   // ----- Lecturas actuales -----
   "1984": {
+      libroId: "691f49fa3faa28be5ca3b4ca",
     title: "1984",
     chapters: [
       `El Ministerio de la Verdad
@@ -127,6 +128,7 @@ Gatsby persigue un pasado que ya no existe. La desilusión se refleja en la supe
  */
 export const CHAPTERS_EN: ChaptersMap = {
   "1984": {
+      libroId: "691f49fa3faa28be5ca3b4ca",
     title: "1984",
     chapters: [
       `The Ministry of Truth

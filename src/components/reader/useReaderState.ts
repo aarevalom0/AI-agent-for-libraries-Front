@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  loadReader, saveReader, setChapter, addNote, deleteNote,
-  updateSettings, type ReaderState
+  loadReader,
+  saveReader,
+  setChapter,
+  addNote,
+  deleteNote,
+  updateSettings,
+  type ReaderState,
 } from "@/lib/readingClient";
 
 export function useReaderState(slug: string, totalChapters: number) {
@@ -15,7 +20,9 @@ export function useReaderState(slug: string, totalChapters: number) {
     const s = loadReader(slug);
     setState(s);
     requestAnimationFrame(() => {
-      if (containerRef.current) containerRef.current.scrollTop = s.scroll || 0;
+      if (containerRef.current) {
+        containerRef.current.scrollTop = s.scroll || 0;
+      }
     });
   }, [slug]);
 
@@ -23,66 +30,91 @@ export function useReaderState(slug: string, totalChapters: number) {
   useEffect(() => {
     const div = containerRef.current;
     if (!div) return;
-    const onScroll = () => setState(saveReader(slug, { scroll: div.scrollTop }));
+
+    const onScroll = () => {
+      const next = saveReader(slug, { scroll: div.scrollTop });
+      setState(next);
+    };
+
     div.addEventListener("scroll", onScroll, { passive: true });
     return () => div.removeEventListener("scroll", onScroll);
   }, [slug]);
-
 
   // Clases del contenedor del reader
   const applyClasses = useMemo(() => {
     const s = state.settings;
     const fontClass =
-      s.font === "Newsreader" ? "font-newsreader" :
-      s.font === "serif" ? "font-serif" : "font-sans";
-    // El contenedor raíz del reader
+      s.font === "Newsreader"
+        ? "font-newsreader"
+        : s.font === "serif"
+        ? "font-serif"
+        : "font-sans";
+
     return `${fontClass} reader-root`;
   }, [state.settings.font]);
 
-  // Atributos para el contenedor raíz del reader (control local del tema del lector)
+  // Atributos para el contenedor raíz del reader
   const readerAttrs = useMemo(
     () => ({
       "data-theme": state.settings.night ? "night" : "day",
-      "data-bg": state.settings.bg, // "default" | "cream" | "sepia"
+      "data-bg": state.settings.bg,
     }),
-    [state.settings.night, state.settings.bg]
+    [state.settings.night, state.settings.bg],
   );
 
-  // Acciones
+  // Acciones de navegación
   function goPrev() {
     if (state.chapter === 0) return;
     const next = setChapter(slug, state.chapter - 1);
     setState(next);
-    requestAnimationFrame(() => { if (containerRef.current) containerRef.current.scrollTop = 0; });
+    requestAnimationFrame(() => {
+      if (containerRef.current) containerRef.current.scrollTop = 0;
+    });
   }
 
   function goNext() {
     if (state.chapter >= totalChapters - 1) return;
     const next = setChapter(slug, state.chapter + 1);
     setState(next);
-    requestAnimationFrame(() => { if (containerRef.current) containerRef.current.scrollTop = 0; });
+    requestAnimationFrame(() => {
+      if (containerRef.current) containerRef.current.scrollTop = 0;
+    });
   }
 
+  // Notas
   function onAddNote(text: string) {
     if (!text.trim()) return;
-    setState(addNote(slug, state.chapter, text.trim()));
-  }
-
-  function onDeleteNote(id: string) {
-    setState(deleteNote(slug, id));
-  }
-
-  function setSetting(partial: Partial<ReaderState["settings"]>) {
-    const next = updateSettings(slug, partial);
+    const next = addNote(slug, state.chapter, text.trim());
     setState(next);
   }
 
-  const toggleSidebar = () => setSetting({ sidebarOpen: !state.settings.sidebarOpen });
+  function onDeleteNote(id: string) {
+    const next = deleteNote(slug, id);
+    setState(next);
+  }
+
+  // ⚠️ clave: setSetting estable con useCallback
+  const setSetting = useCallback(
+    (partial: Partial<ReaderState["settings"]>) => {
+      const next = updateSettings(slug, partial);
+      setState(next);
+    },
+    [slug],
+  );
+
+  const toggleSidebar = () =>
+    setSetting({ sidebarOpen: !state.settings.sidebarOpen });
 
   return {
-    state, setState,
-    containerRef, applyClasses, readerAttrs,
-    goPrev, goNext, onAddNote, onDeleteNote,
-    setSetting, toggleSidebar,
+    state,
+    containerRef,
+    applyClasses,
+    readerAttrs,
+    goPrev,
+    goNext,
+    onAddNote,
+    onDeleteNote,
+    setSetting,
+    toggleSidebar,
   };
 }
