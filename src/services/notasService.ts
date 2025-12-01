@@ -5,32 +5,25 @@ export type Nota = {
   id: string;
   usuario_id: string;
   libro_id: string;
-  capitulo?: number;
+  capitulo: number;
   contenido: string;
-  pagina?: number;
-  createdAt: string;
+  fecha_creacion: string;
 };
 
-export async function crearNota(input: {
-  libro_id: string;
-  contenido: string;
-  capitulo?: number;
-  pagina?: number;
-}) {
-  const res = await apiFetch("/notas", {
+export async function crearNota(
+  lecturaId: string,
+  input: { capitulo: number; contenido: string }
+): Promise<Nota> {
+  const res = await apiFetch(`/lecturas/${lecturaId}/notas`, {
     method: "POST",
     body: JSON.stringify(input),
   });
-  if (!res.ok) throw new Error("Error al crear nota");
-  return res.json();
-}
 
-export async function getNotasByLectura(
-  lecturaId: string,
-): Promise<Nota[]> {
-  const res = await apiFetch(`/lecturas/${lecturaId}/notas`, {
-    method: "GET",
-  });
-  if (!res.ok) throw new Error("Error al obtener notas");
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("Backend error al crear nota:", res.status, text);
+    throw new Error("Error al crear nota");
+  }
+
   return res.json();
 }

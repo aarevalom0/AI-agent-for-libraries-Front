@@ -1,3 +1,4 @@
+// src/services/lecturasServices.ts
 import { apiFetch } from "@/lib/authClient";
 
 export type Lectura = {
@@ -10,17 +11,37 @@ export type Lectura = {
 
 export async function getLecturas(): Promise<Lectura[]> {
   const res = await apiFetch("/lecturas", { method: "GET" });
-  if (!res.ok) throw new Error("Error al obtener lecturas");
+
+  if (res.status === 401 || res.status === 403) {
+    console.warn("No autorizado en /lecturas, devolviendo [].");
+    return [];
+  }
+
+  if (res.status === 204) {
+    return [];
+  }
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error("Error al obtener lecturas:", res.status, text);
+    return [];
+  }
+
   return res.json();
 }
 
 export async function getLectura(id: string): Promise<Lectura> {
   const res = await apiFetch(`/lecturas/${id}`, { method: "GET" });
-  if (!res.ok) throw new Error("Lectura no encontrada");
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error("Error al obtener lectura:", res.status, text);
+    throw new Error("Lectura no encontrada");
+  }
+
   return res.json();
 }
 
-// si en el back ya tomas usuario_id del JWT, aquí NO lo envías
 export async function createLectura(input: {
   libro_id: string;
   porcentaje_lectura: number;
@@ -30,7 +51,19 @@ export async function createLectura(input: {
     method: "POST",
     body: JSON.stringify(input),
   });
-  if (!res.ok) throw new Error("Error al crear lectura");
+
+  if (res.status === 401 || res.status === 403) {
+    const text = await res.text().catch(() => "");
+    console.error("No autorizado al crear lectura:", res.status, text);
+    throw new Error("UNAUTHORIZED");
+  }
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error("Error al crear lectura:", res.status, text);
+    throw new Error("Error al crear lectura");
+  }
+
   return res.json();
 }
 
@@ -42,7 +75,13 @@ export async function updateLectura(
     method: "PUT",
     body: JSON.stringify(input),
   });
-  if (!res.ok) throw new Error("Error al actualizar lectura");
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error("Error al actualizar lectura:", res.status, text);
+    throw new Error("Error al actualizar lectura");
+  }
+
   return res.json();
 }
 
@@ -50,32 +89,10 @@ export async function deleteLectura(id: string) {
   const res = await apiFetch(`/lecturas/${id}`, {
     method: "DELETE",
   });
-  if (!res.ok) throw new Error("Error al eliminar lectura");
-}
-
-// --- Notas de lectura ---
-
-export type NotaLectura = {
-  id: string;
-  lectura_id: string;
-  capitulo: number;
-  contenido: string;
-  createdAt: string;
-};
-
-export async function createNotaLectura(
-  lecturaId: string,
-  input: { capitulo: number; contenido: string },
-): Promise<NotaLectura> {
-  const res = await apiFetch(`/lecturas/${lecturaId}/notas`, {
-    method: "POST",
-    body: JSON.stringify(input),
-  });
 
   if (!res.ok) {
-    throw new Error("Error al crear nota de lectura");
+    const text = await res.text().catch(() => "");
+    console.error("Error al eliminar lectura:", res.status, text);
+    throw new Error("Error al eliminar lectura");
   }
-
-  return res.json();
 }
-

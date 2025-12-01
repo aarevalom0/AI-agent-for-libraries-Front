@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale } from "next-intl";
@@ -14,12 +14,8 @@ import {
   getLecturas,
   createLectura,
   updateLectura,
-  createNotaLectura,   // 👈 NUEVO
 } from "@/services/lecturasServices";
-import {
-  crearSesionLectura,
-  cerrarSesionLectura,
-} from "@/services/sesionLecturaService";
+import { crearNota } from "@/services/notasService";
 
 export default function ReaderPage() {
   const locale = useLocale();
@@ -41,7 +37,6 @@ export default function ReaderPage() {
     );
   }
 
-  // id real del libro en Mongo (debe venir de getChapters)
   const libroId: string | undefined = book.libroId;
   const totalChapters = book.chapters.length;
 
@@ -53,7 +48,7 @@ export default function ReaderPage() {
     applyClasses,
     goPrev,
     goNext,
-    onAddNote,         // maneja estado local (localStorage)
+    onAddNote,        // notas locales (localStorage)
     onDeleteNote,
     setSetting,
     toggleSidebar,
@@ -61,34 +56,34 @@ export default function ReaderPage() {
 
   const chapterText = book.chapters[state.chapter] ?? "";
 
-  // Inicializar Lectura en el backend (buscar o crear)
-  useEffect(() => {
-    if (!libroId) return;
+  // 1) Inicializar Lectura en el backend
+useEffect(() => {
+  if (!libroId) return;
 
-    const initLectura = async () => {
-      try {
-        const todas = await getLecturas(); // lecturas del usuario actual
-        let lectura = todas.find((l) => l.libro_id === libroId);
+  const initLectura = async () => {
+    try {
+      const todas = await getLecturas(); // ya trae solo del usuario actual
+      let lectura = todas.find((l) => l.libro_id === libroId);
 
-        if (!lectura) {
-          lectura = await createLectura({
-            libro_id: libroId,
-            porcentaje_lectura: 0,
-          });
-        }
-
-        if (lectura) {
-          setLecturaId(lectura.id);
-        }
-      } catch (e) {
-        console.error("Error inicializando lectura:", e);
+      if (!lectura) {
+        lectura = await createLectura({
+          libro_id: libroId,
+          porcentaje_lectura: 0,
+        });
       }
-    };
 
-    initLectura();
-  }, [libroId]);
+      if (lectura) {
+        setLecturaId(lectura.id);
+      }
+    } catch (e) {
+      console.error("Error inicializando lectura:", e);
+    }
+  };
 
-  // Actualizar porcentaje de lectura en el backend cada vez que cambie de capítulo
+  initLectura();
+}, [libroId]);
+
+  // 2) Sincronizar porcentaje de lectura
   useEffect(() => {
     if (!lecturaId) return;
 
@@ -105,35 +100,32 @@ export default function ReaderPage() {
     syncProgress();
   }, [state.chapter, lecturaId, totalChapters]);
 
-  // Handler que se pasa al sidebar para el botón "Guardar"
-  const handleAddNote = async (text: string) => {
-    const contenido = text.trim();
-    if (!contenido) return;
+  // 3) Handler para guardar nota: local + backend
+const handleAddNote = useCallback(
+  async (texto: string) => {
+    if (!texto.trim() || !lecturaId) return;
 
-    // 1. Actualizar inmediatamente el estado local (para que se vea al toque)
-    onAddNote(contenido);
-
-    // 2. Si ya tenemos lecturaId, persistimos en el backend
-    if (lecturaId) {
-      try {
-        await createNotaLectura(lecturaId, {
-          capitulo: state.chapter,   // o state.chapter + 1 si tus capítulos son 1-based
-          contenido,
-        });
-      } catch (e) {
-        console.error("Error guardando nota en backend:", e);
-        // opcional: mostrar toast / revertir nota local si quieres
-      }
+    try {
+      await crearNota(lecturaId, {
+        capitulo: state.chapter,     // o state.chapter + 1 si quieres 1-based
+        contenido: texto.trim(),
+      });
+      onAddNote(texto); // sigue actualizando el estado local
+    } catch (e) {
+      console.error(e);
+      alert("No se pudo guardar la nota.");
     }
-  };
+  },
+  [lecturaId, state.chapter, onAddNote]
+);
 
-  // Modo día por defecto al entrar al reader
+
+  // 4) modo día/noche
   useEffect(() => {
     setSetting({ night: false });
     document.documentElement.classList.remove("dark");
   }, [setSetting]);
 
-  // Sincronizar clase global "dark" con el estado del reader
   useEffect(() => {
     const root = document.documentElement;
     if (state.settings.night) root.classList.add("dark");
@@ -193,7 +185,7 @@ export default function ReaderPage() {
             settings={state.settings}
             onSet={setSetting}
             notes={state.notes.filter((n) => n.chapter === state.chapter)}
-            onAddNote={handleAddNote}
+            onAddNote={handleAddNote}   // 👈 aquí usamos el handler nuevo
             onDeleteNote={onDeleteNote}
             onToggleSidebar={toggleSidebar}
           />
