@@ -1,7 +1,7 @@
 import { API_CHAT_URL } from './api.config';
 
 export async function sendMessageToChat(message: string) {
-  console.log("➡️ Enviando al backend:", { message });
+  console.log("Enviando al backend:", { message });
 
   const res = await fetch(`${API_CHAT_URL}/chat`, {
     method: "POST",
@@ -11,14 +11,14 @@ export async function sendMessageToChat(message: string) {
     body: JSON.stringify({ message }),
   });
 
-  console.log("⬅️ Respuesta backend status:", res.status);
+  console.log("espuesta backend status:", res.status);
 
   const data = await res.json().catch(() => {
-    console.error("❌ Error parseando JSON");
+    console.error("Error parseando JSON");
     return { error: "JSON inválido" };
   });
 
-  console.log("⬅️ Respuesta backend:", data);
+  console.log("Respuesta backend:", data);
 
   if (!res.ok) {
     throw new Error("Error al enviar el mensaje al chat");
