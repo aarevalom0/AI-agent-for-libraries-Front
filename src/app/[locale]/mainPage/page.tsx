@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { BookRecomendations } from "@/types/book";
+import SeccionInsignias from "@/components/mainPage/SeccionInsignias";
 
 interface BookActual {
   title: string;
@@ -37,6 +38,7 @@ export default function MainPage() {
 
   const router = useRouter();
   const [usuario, setUsuario] = useState<string>("Usuario");
+  const [userId, setUserId] = useState<string>(""); 
   const [ready, setReady] = useState(false);
 
   const [racha, setRacha] = useState(0);
@@ -53,7 +55,10 @@ export default function MainPage() {
 
     // nombre viene del backend como `nombre`
     setUsuario(u.nombre || "Usuario");
-    console.log(u);
+
+    if (u?.id) {
+        setUserId(u.id);
+    }
     setRacha(u.racha_lectura.dias_consecutivos);
     setReady(true);
   }, [router]);
@@ -186,62 +191,10 @@ export default function MainPage() {
           <CalendarioRachas numStreaks={racha} />
         </div>
 
-        <div
-          title="Insignias y logros"
-          className="justify-between items-center w-full px-4 pb-4"
-        >
-          <h2
-            title="Titulo sección"
-            className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]"
-          >
-            {t("mainPage.badgesTitle")}
-          </h2>
-          <div
-            title="Insignias"
-            className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]"
-          >
-            <Insignias
-              nombre="Insignia Muchos Libros"
-              imageUrl="/Images/Insignia1.jpg"
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Insignia Gato lector"
-              imageUrl="/Images/Insignia2.jpeg"
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Insignia Gato cafetero"
-              imageUrl="/Images/Insignia3.jpeg"
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Insignia Libros muy altos"
-              imageUrl="/Images/Insignia4.jpeg"
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Insignia Libros cafeteros"
-              imageUrl="/Images/Insignia5.jpeg"
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Espacio nuevas Insignias"
-              imageUrl=""
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Espacio nuevas Insignias"
-              imageUrl=""
-              data-testid="Insignias"
-            />
-            <Insignias
-              nombre="Espacio nuevas Insignias"
-              imageUrl=""
-              data-testid="Insignias"
-            />
-          </div>
-        </div>
+        {userId && (
+            <SeccionInsignias userId={userId} />
+        )}
+        
       </aside>
     </div>
   );

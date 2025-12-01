@@ -7,20 +7,18 @@ interface SeccionInsigniasProps {
   userId: string;
 }
 export default function SeccionInsignias({ userId }: SeccionInsigniasProps) {
-  const t = useTranslations('mainPage');
+  const t = useTranslations("mainPage");
   const [badges, setBadges] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchBadges = async () => {
       try {
         setLoading(true);
         setError(null);
-        // 1. Obtener insignias del usuario desde el backend
         const userBadges = await getUserBadges(userId);
-        // 2. Completar hasta 8 espacios
         const badgesWithSlots = fillBadgeSlots(userBadges, 8);
-        // 3. Actualizar estado
         setBadges(badgesWithSlots);
       } catch (err) {
         console.error('Error cargando insignias:', err);
@@ -36,10 +34,11 @@ export default function SeccionInsignias({ userId }: SeccionInsigniasProps) {
       fetchBadges();
     }
   }, [userId]);
+
   return (
     <div title="Insignias y logros" className="justify-between items-center w-full px-4 pb-4">
       <h2 title="Titulo sección" className="text-xl font-bold !font-newsreader !text-[var(--colorClaro)]">
-        {t('badgesTitle')}
+        {t('mainPage.badgesTitle')}
       </h2>
       
       {loading ? (
