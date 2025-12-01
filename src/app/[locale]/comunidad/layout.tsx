@@ -1,6 +1,6 @@
 import Sidebar from "@/components/navigation/Sidebar";
 
-import { FaUsers, FaUserFriends, FaBook } from "react-icons/fa";
+import { FaUsers, FaUserFriends, FaBook, FaCommentDollar } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 
 export default function ComunidadLayout({
@@ -11,8 +11,8 @@ export default function ComunidadLayout({
   const t = useTranslations('communityLayout');
   const sidebarItems = [
     { name: t('communityLayout.authorsCommunity'), link: "/comunidad", icon: <FaUsers /> },
-    { name: t('communityLayout.friends'), link: "/comunidad/amigos", icon: <FaUserFriends /> },
-    { name: t('communityLayout.readingClub'), link: "/comunidad/club", icon: <FaBook /> },
+    //    { name: t('communityLayout.friends'), link: "/comunidad/amigos", icon: <FaUserFriends /> },
+    //{ name: t('communityLayout.readingClub'), link: "/comunidad/club", icon: <FaBook /> },
   ];
 
   return (

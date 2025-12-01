@@ -2,7 +2,7 @@
 
 export type ChaptersMap = Record<
   string,
-  { title: string; chapters: string[] }
+  { libroId?: string; title: string; chapters: string[] }
 >;
 
 /**
@@ -12,6 +12,7 @@ export type ChaptersMap = Record<
 export const CHAPTERS_ES: ChaptersMap = {
   // ----- Lecturas actuales -----
   "1984": {
+      libroId: "691f49fa3faa28be5ca3b4ca",
     title: "1984",
     chapters: [
       `El Ministerio de la Verdad
@@ -29,6 +30,7 @@ eliminas los pensamientos que la gente puede tener.`,
   },
 
   "girl-train": {
+      libroId: "692cf04149a83d2851f4edef",
     title: "La chica del tren",
     chapters: [
       `La rutina del vagón
@@ -46,6 +48,7 @@ y su propia credibilidad es el primer obstáculo que debe superar.`,
   },
 
   "harry-potter": {
+      libroId: "692cf01749a83d2851f4eded",
     title: "Harry Potter y la piedra filosofal",
     chapters: [
       `Cartas sin respuesta
@@ -79,6 +82,7 @@ El jardín florece y, con él, quienes lo cuidan. Mary entiende que la vida tamb
   },
 
   "pride-prejudice": {
+      libroId: "692cf04149a83d2851f4edef",
     title: "Pride and Prejudice",
     chapters: [
       `Primeras impresiones
@@ -127,6 +131,7 @@ Gatsby persigue un pasado que ya no existe. La desilusión se refleja en la supe
  */
 export const CHAPTERS_EN: ChaptersMap = {
   "1984": {
+      libroId: "691f49fa3faa28be5ca3b4ca",
     title: "1984",
     chapters: [
       `The Ministry of Truth
@@ -161,6 +166,7 @@ and her own credibility is the first obstacle to overcome.`,
   },
 
   "harry-potter": {
+      libroId: "692cf01749a83d2851f4eded",
     title: "Harry Potter and the Philosopher’s Stone",
     chapters: [
       `Letters without reply

@@ -20,5 +20,51 @@
     "pending": "Pending",
     "completed": "Completed"
   },
-  "empty": "No books matched your current filters."
+  "empty": "No books matched your current filters.",
+  "books": {
+    "1984": {
+      "title": "1984",
+      "author": "George Orwell"
+    },
+    "girl-train": {
+      "title": "The Girl on the Train",
+      "author": "Paula Hawkins"
+    },
+    "harry-potter": {
+      "title": "Harry Potter and the Philosopher's Stone",
+      "author": "J.K. Rowling"
+    },
+    "secret-garden": {
+      "title": "The Secret Garden",
+      "author": "Frances H. Burnett"
+    },
+    "pride-prejudice": {
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen"
+    },
+    "to-kill-mockingbird": {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee"
+    },
+    "great-gatsby": {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald"
+    },
+    "dune": {
+      "title": "Dune",
+      "author": "Frank Herbert"
+    },
+    "lotr": {
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien"
+    },
+    "sapiens": {
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari"
+    },
+    "cien-anios": {
+      "title": "One Hundred Years of Solitude",
+      "author": "Gabriel García Márquez"
+    }
+  }
 }
