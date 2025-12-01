@@ -112,7 +112,7 @@ export async function getAllUserBooks(userId) {
 /**
  * Crea una nueva biblioteca
  */
-export async function createCollection(userId, nombre, descripcion, icon) {
+export async function createCollection(userId, token, nombre, descripcion, icon) {
   try {
     const cuerpo = {
         usuario_id: userId,
@@ -121,10 +121,10 @@ export async function createCollection(userId, nombre, descripcion, icon) {
         icon,
         libros: []
       }
-    console.log(cuerpo);
+    console.log(token);
     const response = await fetch(`${API_BASE_URL}/library`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(cuerpo)
     });
     console.log(response);

@@ -67,7 +67,7 @@ function safeRemove(k: string) {
 
 // ---------- Sesión ----------
 
-function getSession(): Session | null {
+export function getSession(): Session | null {
   return safeGet<Session | null>(keySession, null);
 }
 
