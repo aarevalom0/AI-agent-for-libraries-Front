@@ -65,7 +65,6 @@ export async function getCollectionDetails(libraryId) {
         .map(item => {
           // Manejo defensivo de libro_id (puede venir populado o no)
           const libroData = item.libro_info || {};
-          console.log("info libro",libroData)
 
           return {
             id: libroData._id || libroData.id || 'unknown-id',
@@ -91,6 +90,7 @@ export async function getCollectionDetails(libraryId) {
  */
 export async function getAllUserBooks(userId) {
   if (!userId) return [];
+
   try {
     const response = await fetch(`${API_BASE_URL}/library/user/${userId}/all-books`, {
       method: 'GET',
@@ -99,21 +99,29 @@ export async function getAllUserBooks(userId) {
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
     const books = await response.json();
-    console.log(books);
-
+    console.log(books)
     if (!Array.isArray(books)) return [];
-    return books.map(book => ({
-      id: book._id || book.id,
-      title: book.titulo || 'Sin título',
-      author: book.autores?.[0]?.nombre || 'Autor desconocido',
-      cover: book.portada || '/placeholder-book.jpg',
-      estado: book.estado
-    }));
+
+    return books.map(item => {
+      // libroData puede estar dentro de libro_info o ser el propio objeto
+      const libroData = item.libro_info || item;
+
+      return {
+        id: libroData._id || libroData.id || item.libro_id || 'unknown-id',
+        title: libroData.titulo || 'Sin título',
+        author: libroData.autores?.[0]?.nombre || 'Autor desconocido',
+        cover: libroData.portada || '/placeholder-book.jpg',
+        estado: item.estado || 'por_leer',
+        progreso: item.progreso?.porcentaje || 0,
+        paginaActual: item.progreso?.pagina_actual || 0
+      };
+    });
   } catch (error) {
     console.error('Error obteniendo todos los libros:', error);
     return [];
   }
 }
+
 /**
  * Crea una nueva biblioteca
  */
