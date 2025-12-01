@@ -7,14 +7,15 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { getBookById } from '@/services/bookService';
 import type { Book } from '@/types/book';
+import { useParams } from 'next/navigation';
 
 
-export default function BookDetailPage({ params }: { params: { id: string } }) {
+export default function BookDetailPage() {
   const { getTranslatedBook } = useTranslatedContent();
   const tMiBiblioteca = useTranslations('miBiblioteca');
   const tBookDetail = useTranslations('bookDetail');
 
-  const { id } = params;
+  const { id } = useParams() as { id: string };
 
   const [book, setBook] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,14 +24,26 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     async function load() {
       try {
-        const b = await getBookById(id);
+        const b: any = await getBookById(id);
 
-        if (!b) {
+        console.log('API Response:', b);
+
+        if (!b || !b.title) {
           setError("notfound");
           return;
         }
 
-        const translated = getTranslatedBook(b as unknown as Book);
+        const bookData: Book = {
+          id: b.id,
+          title: b.title,
+          author: b.author.buffer ? 'Autor desconocido' : b.author,
+          description: b.description,
+          cover: b.cover,
+          genres: b.genres || [],
+          reviews: b.reviews || [],
+        };
+
+        const translated = getTranslatedBook(bookData);
         setBook(translated);
       } catch (e) {
         console.error(e);

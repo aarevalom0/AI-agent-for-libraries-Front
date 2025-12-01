@@ -3,13 +3,14 @@ import { Review } from "./review";
 
 export interface Book {
   id: string;
+  id_db?: string;
   title: string;
   author: string;
   cover?: string;
-  description?: string;
+  description: string;
   genres?: string[];
   infoURL?: string;
-  status: 'leido' | 'leyendo' | 'por-leer';
+  status?: 'leido' | 'leyendo' | 'por-leer';
   progress?: number; 
   completionDate?: string; 
   reviews: Review[];
