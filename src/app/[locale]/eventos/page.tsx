@@ -1,22 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EventCard from '@/components/eventos/EventCard';
-import { eventsData } from '@/lib/mock-data';
+import { getAllEvents } from '@/services/eventService';
 import { useTranslations } from 'next-intl';
+
+interface EventoAPI {
+  id: string | number;
+  titulo?: string;
+  nombre?: string;
+  descripcion?: string;
+  descripcion_corta?: string;
+  imagen?: string;
+  portada?: string;
+  ubicacion?: string;
+  fecha?: string;
+  hora?: string;
+}
 
 const EventosPage = () => {
   const t = useTranslations('eventos');
   const [searchTerm, setSearchTerm] = useState('');
+  const [events, setEvents] = useState<EventoAPI[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Filtrar eventos basado en el término de búsqueda (ahora usando traducciones)
-  const filteredEvents = eventsData.filter(event => {
-    const title = t(`event${event.id}Title`);
-    const description = t(`event${event.id}Description`);
-    
-    return title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           (event.location && event.location.toLowerCase().includes(searchTerm.toLowerCase()));
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllEvents();
+        setEvents(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error cargando eventos:', err);
+        setError(err instanceof Error ? err.message : 'Error desconocido');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  // Filtrar eventos basado en el término de búsqueda
+  const filteredEvents = events.filter(event => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      event.titulo?.toLowerCase().includes(searchLower) ||
+      event.nombre?.toLowerCase().includes(searchLower) ||
+      event.descripcion?.toLowerCase().includes(searchLower) ||
+      event.descripcion_corta?.toLowerCase().includes(searchLower) ||
+      event.ubicacion?.toLowerCase().includes(searchLower)
+    );
   });
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,14 +101,23 @@ const EventosPage = () => {
             role="list"
             aria-label={t('eventsList')}
           >
-            {filteredEvents.length > 0 ? (
+            {loading ? (
+              <div className="text-center py-8">
+                <p className="text-gray-500 text-lg">{t('loading') || 'Cargando eventos...'}</p>
+              </div>
+            ) : error ? (
+              <div className="text-center py-8">
+                <p className="text-red-500 text-lg">{t('errorLoading') || 'Error al cargar eventos'}</p>
+                <p className="text-gray-400 text-sm mt-2">{error}</p>
+              </div>
+            ) : filteredEvents.length > 0 ? (
               filteredEvents.map((event) => (
                 <div key={event.id} role="listitem">
                   <EventCard
-                    imageUrl={event.imageUrl}
-                    href={event.href}
-                    title={t(`event${event.id}Title`)}
-                    descripcion={t(`event${event.id}Description`)}
+                    imageUrl={event.imagen || event.portada || '/Images/default-event.jpg'}
+                    href={`/eventos/${event.id}`}
+                    title={event.titulo || event.nombre || t('untitledEvent')}
+                    descripcion={event.descripcion_corta || event.descripcion || ''}
                   />
                 </div>
               ))

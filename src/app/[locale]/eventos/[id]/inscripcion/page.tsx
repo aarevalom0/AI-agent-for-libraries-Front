@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState, use } from 'react';
 import { useRouter } from '@/i18n/routing';
+import { inscribirUsuarioEvento } from '@/services/eventService';
 
 export default function EventRegistrationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -40,6 +41,7 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    
     const email = formData.get('email') as string;
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
@@ -47,18 +49,50 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
     if (!validateEmail(email) || !validateNames(firstName, lastName)) {
       return;
     }
+    
     setIsSubmitting(true);
     
-    // Simular envío del formulario
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setShowSuccess(true);
-    
-    // Mostrar mensaje de éxito por 3 segundos y luego redireccionar
-    setTimeout(() => {
-      router.push(`/eventos/${id}`);
-    }, 3000);
+    try {
+      // Obtener usuario actual del localStorage
+      const currentUser = typeof window !== 'undefined' 
+        ? JSON.parse(localStorage.getItem('lecturium_current_user') || '{}') 
+        : {};
+      
+      const comentarios = formData.get('comments') as string;
+      
+      const inscripcionData: any = {
+        usuario_id: currentUser.id || `temp-user-${Date.now()}`, // Usa el ID real del usuario logueado
+        nombre: `${firstName} ${lastName}`,
+        email: email,
+        telefono: formData.get('phone') as string,
+        experiencia: formData.get('experience') as string,
+        tiene_libro: formData.get('hasBook') === 'on',
+      };
+      
+      // Solo incluir comentarios si no está vacío
+      if (comentarios && comentarios.trim() !== '') {
+        inscripcionData.comentarios = comentarios;
+      }
+      
+      console.log('📝 Enviando inscripción:', inscripcionData);
+      
+      // Llamar al backend
+      await inscribirUsuarioEvento(id, inscripcionData);
+      
+      console.log('✅ Inscripción exitosa');
+      setIsSubmitting(false);
+      setShowSuccess(true);
+      
+      // Mostrar mensaje de éxito por 3 segundos y luego redireccionar
+      setTimeout(() => {
+        router.push(`/eventos/${id}`);
+      }, 3000);
+      
+    } catch (error) {
+      console.error('❌ Error al inscribir:', error);
+      setIsSubmitting(false);
+      alert(t('errorInscripcion') || 'Hubo un error al procesar tu inscripción. Intenta nuevamente.');
+    }
   };
   
   // Mostrar mensaje de éxito

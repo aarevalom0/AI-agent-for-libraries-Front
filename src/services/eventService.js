@@ -62,3 +62,24 @@ export function transformEventFromAPI(eventFromAPI) {
     ubicacion: eventFromAPI.ubicacion,
   };
 }
+
+export async function inscribirUsuarioEvento(eventoId, inscripcionData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/eventos/${eventoId}/inscripcion`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inscripcionData),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error inscribiendo usuario al evento:', error);
+    throw error;
+  }
+}
