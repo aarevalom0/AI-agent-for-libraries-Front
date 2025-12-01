@@ -44,7 +44,9 @@ const schema = z.object({
   });
 
   const onSubmit = async (data: Inputs) => {
-
+    alert("Información enviada correctamente!, pronto sera contactado");
+    // redireccionar a comunidad
+    window.location.href = "/comunidad"; 
   };
 
   const handleImagePreview = (event: React.ChangeEvent<HTMLInputElement>) => {

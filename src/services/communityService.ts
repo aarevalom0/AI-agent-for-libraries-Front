@@ -1,4 +1,5 @@
 import { API_BASE_URL } from './api.config';
+import { getSession } from "@/lib/authClient";
 
 /**
  * Obtiene todas las comunidades desde el backend.
@@ -25,3 +26,30 @@ export async function getAllCommunities() {
   }
 }
 
+export async function createCommunity(formData: FormData) {
+  try {
+    const session = getSession();
+    if (!session?.token) {
+      throw new Error("No autenticado: token no encontrado.");
+    }
+
+    const token = session.token; 
+    const response = await fetch(`${API_BASE_URL}/community`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const msg = await response.text();
+      throw new Error(`Error HTTP: ${response.status} => ${msg}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creando comunidad:", error);
+    throw error;
+  }
+}
