@@ -2,9 +2,10 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useState, use } from 'react';
+import { useState, use, useEffect } from 'react';
 import { useRouter } from '@/i18n/routing';
 import { inscribirUsuarioEvento } from '@/services/eventService';
+import { getCurrentUser } from '@/lib/authClient';
 
 export default function EventRegistrationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -14,6 +15,21 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
   const [showSuccess, setShowSuccess] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [nameError, setNameError] = useState('');
+  const [userId, setUserId] = useState<string>('');
+
+  useEffect(() => {
+    const u = getCurrentUser();
+
+    // Si no hay sesión, redirige a login
+    if (!u) {
+      router.replace("/login");
+      return;
+    }
+    if (u?.id) {
+      setUserId(u.id);
+    }
+
+  });
   
   const validateEmail = (email: string): boolean => {
     if (/\s/.test(email)) {
@@ -54,14 +70,12 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
     
     try {
       // Obtener usuario actual del localStorage
-      const currentUser = typeof window !== 'undefined' 
-        ? JSON.parse(localStorage.getItem('lecturium_current_user') || '{}') 
-        : {};
+      const currentUser = userId
       
       const comentarios = formData.get('comments') as string;
       
       const inscripcionData: any = {
-        usuario_id: currentUser.id || `temp-user-${Date.now()}`, // Usa el ID real del usuario logueado
+        usuario_id: currentUser || `temp-user-${Date.now()}`, // Usa el ID real del usuario logueado
         nombre: `${firstName} ${lastName}`,
         email: email,
         telefono: formData.get('phone') as string,
