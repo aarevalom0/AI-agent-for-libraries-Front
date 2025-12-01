@@ -25,13 +25,8 @@ export async function getAllBooks() {
 }
 
 
-/**
- * Selecciona N libros aleatorios de un array
- * @param {Array} books - Array de libros
- * @param {number} count - Cantidad de libros a seleccionar
- * @returns {Array} Array de libros aleatorios
- */
 export function getRandomBooks(books, count = 5) {
   const shuffled = [...books].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
+

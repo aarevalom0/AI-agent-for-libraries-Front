@@ -4,6 +4,8 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl";
+import { API_BASE_URL } from "@/services/api.config";
+
 
 
 type Inputs = {
@@ -53,10 +55,31 @@ const FormularioSolLibro = () => {
     });
 
     const onSubmit = async (data: Inputs) => {
-        console.log(data);
-        reset();
-        //Hacer conexion con el backend para crear la solicitud del libro
-    }
+        try {
+            // Enviar los datos al backend
+            const response = await fetch(`${API_BASE_URL}/book-request`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+            throw new Error("Error al crear la solicitud de libro");
+            }
+
+            const result = await response.json();
+            console.log("Solicitud creada:", result);
+
+
+            alert("Solicitud enviada correctamente");
+            reset();
+        } catch (error) {
+            console.error(error);
+            alert("No se pudo enviar la solicitud. Intenta de nuevo.");
+        }
+    };
     
 
     return ( 
@@ -137,4 +160,7 @@ const FormularioSolLibro = () => {
     );
 }
 
+
 export default FormularioSolLibro;
+
+
