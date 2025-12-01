@@ -58,6 +58,7 @@ const LECTURAS_ACTUALES_BASE: LibroBase[] = [
     genero: "Misterio",
     estado: "Leyendo",
     progreso: 30,
+    libroId: "692d0ec5354415bd74b89a6c", // 👈 ID real del libro La chica del tren
   },
   {
     slug: "harry-potter",
@@ -65,6 +66,7 @@ const LECTURAS_ACTUALES_BASE: LibroBase[] = [
     genero: "Fantasía",
     estado: "Leyendo",
     progreso: 85,
+    libroId: "692cf01749a83d2851f4eded", // 👈 ID real del libro Harry Potter
   },
 ];
 
@@ -182,26 +184,30 @@ export default function LeerAhoraPage() {
   }, []);
 
   // Libros actuales: mezclamos datos base + porcentaje real (si hay lectura asociada)
-  const lecturasActuales: Libro[] = useMemo(
-    () =>
-      LECTURAS_ACTUALES_BASE.map((b) => {
-        const lecturaBack = b.libroId
-          ? lecturas.find((l) => l.libro_id === b.libroId)
-          : undefined;
+const lecturasActuales: Libro[] = useMemo(
+  () =>
+    LECTURAS_ACTUALES_BASE.map((b) => {
+      const lecturaBack = b.libroId
+        ? lecturas.find((l) => l.libro_id === b.libroId)
+        : undefined;
 
-        return {
-          ...b,
-          title: t(`books.${b.slug}.title`),
-          autor: t(`books.${b.slug}.author`),
-          progreso:
-            lecturaBack?.porcentaje_lectura ??
-            b.progreso ??
-            0,
-        };
-      }),
-    [t, lecturas]
-  );
+      console.log("DEBUG libro", b.slug, {
+        libroIdBase: b.libroId,
+        match: lecturaBack,
+      });
 
+      return {
+        ...b,
+        title: t(`books.${b.slug}.title`),
+        autor: t(`books.${b.slug}.author`),
+        progreso:
+          lecturaBack?.porcentaje_lectura ??
+          b.progreso ??
+          0,
+      };
+    }),
+  [t, lecturas]
+);
   // Catálogo traducido
   const catalogo: Libro[] = useMemo(
     () =>

@@ -1,20 +1,22 @@
-// src/services/sesionLecturaService.ts
 import { apiFetch } from "@/lib/authClient";
 
 export type SesionLectura = {
   id: string;
-  lectura_id: string;
-  fecha_inicio: string;
-  fecha_fin: string | null;
+  usuario_id: string;
+  libro_id: string;
+  fecha: string;           // ISO
+  tiempo_lectura: number;  // minutos
   paginas_leidas: number;
-  tiempo_minutos: number;
 };
 
-const BASE = "/sesion-lectura"; // o "/sesiones-lectura" según tu controller
+const BASE = "/sesion-lectura";
 
 export async function crearSesionLectura(input: {
-  lectura_id: string;
-}) {
+  libro_id: string;
+  fecha?: string;
+  tiempo_lectura?: number;
+  paginas_leidas?: number;
+}): Promise<SesionLectura> {
   const res = await apiFetch(BASE, {
     method: "POST",
     body: JSON.stringify(input),
@@ -29,17 +31,18 @@ export async function crearSesionLectura(input: {
     throw new Error("Error al crear sesión de lectura");
   }
 
-  return res.json() as Promise<SesionLectura>;
+  return res.json();
 }
 
-export async function cerrarSesionLectura(
+export async function actualizarSesionLectura(
   id: string,
   input: {
-    lectura_id: string;        // 👈 importante
-    paginas_leidas: number;
-    tiempo_minutos: number;
+    libro_id?: string;
+    fecha?: string;
+    tiempo_lectura?: number;
+    paginas_leidas?: number;
   },
-) {
+): Promise<SesionLectura> {
   const res = await apiFetch(`${BASE}/${id}`, {
     method: "PUT",
     body: JSON.stringify(input),
@@ -47,14 +50,14 @@ export async function cerrarSesionLectura(
 
   if (!res.ok) {
     console.error(
-      "cerrarSesionLectura ERROR",
+      "actualizarSesionLectura ERROR",
       res.status,
       await res.text(),
     );
-    throw new Error("Error al cerrar sesión de lectura");
+    throw new Error("Error al actualizar sesión de lectura");
   }
 
-  return res.json() as Promise<SesionLectura>;
+  return res.json();
 }
 
 export async function getSesionesPorLectura(
@@ -73,5 +76,5 @@ export async function getSesionesPorLectura(
     throw new Error("Error al obtener sesiones de lectura");
   }
 
-  return res.json() as Promise<SesionLectura[]>;
+  return res.json();
 }

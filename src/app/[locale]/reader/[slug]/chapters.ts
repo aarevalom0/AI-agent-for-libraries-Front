@@ -30,7 +30,7 @@ eliminas los pensamientos que la gente puede tener.`,
   },
 
   "girl-train": {
-      libroId: "692cf04149a83d2851f4edef",
+      libroId: "692d0ec5354415bd74b89a6c",
     title: "La chica del tren",
     chapters: [
       `La rutina del vagón
@@ -149,6 +149,7 @@ and you remove the thoughts people can have.`,
   },
 
   "girl-train": {
+      libroId: "692d0ec5354415bd74b89a6c",
     title: "The Girl on the Train",
     chapters: [
       `The carriage routine
@@ -166,7 +167,7 @@ and her own credibility is the first obstacle to overcome.`,
   },
 
   "harry-potter": {
-      libroId: "692cf01749a83d2851f4eded",
+      libroId: "692d1516ab3e358a838218d9",
     title: "Harry Potter and the Philosopher’s Stone",
     chapters: [
       `Letters without reply
