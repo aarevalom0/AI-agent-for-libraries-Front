@@ -1,10 +1,12 @@
 "use client"; 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl";
 import { API_BASE_URL } from "@/services/api.config";
+import { getCurrentUser, getSession } from "@/lib/authClient";
+import { useRouter } from "next/navigation";
 
 
 
@@ -24,6 +26,7 @@ type Inputs = {
 
 const FormularioSolLibro = () => {
     const t = useTranslations("formularios");
+    const router = useRouter();
 
     const schema = z.object({
         titulo: z.string().min(1,{message: t("formulario_sol_libro.errors.titulo")}),
@@ -49,6 +52,24 @@ const FormularioSolLibro = () => {
         
     })
 
+    const [userId, setUserId] = useState<string>('');
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+    const u = getCurrentUser();
+
+    // Si no hay sesión, redirige a login
+    if (!u) {
+        router.replace("/login");
+        return;
+    }
+    if (u?.id) {
+        setUserId(u.id);
+    }
+    const session = getSession();
+    setToken(session?.token?.toString() ?? "");
+    }, [router]);
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: "genero", 
@@ -61,6 +82,7 @@ const FormularioSolLibro = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data),
             });
