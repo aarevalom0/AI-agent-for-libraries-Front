@@ -7,8 +7,18 @@ jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key, // devuelve la clave como string
 }));
 
+// Mock de next/navigation
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+  }),
+}));
+
 describe('FormularioCrearColeccion', () => {
-  const renderForm = () => render(<FormularioCrearColeccion />);
+  const renderForm = () => render(<FormularioCrearColeccion userId="test-user-123" onCollectionCreated={() => {}} />);
 
   it('renderiza todos los campos del formulario', () => {
     renderForm();
