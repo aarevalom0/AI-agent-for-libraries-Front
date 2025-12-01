@@ -20,7 +20,7 @@ export default function BibliotecaPage() {
   const locale = useLocale(); // Detecta el idioma actual
   const t = useTranslations('miBiblioteca'); // Hook de next-intl
   const { getTranslatedBooks } = useTranslatedContent(); // Hook para contenido traducido
-  const translatedBooks = getTranslatedBooks(userBooks);
+  //const translatedBooks = getTranslatedBooks(userBooks);
 
   const router = useRouter();
 

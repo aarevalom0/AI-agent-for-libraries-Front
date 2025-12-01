@@ -51,7 +51,7 @@ export default function LibrosPage() {
                             title={book.titulo}
                             autor={book.autoresData[0]?.nombre || "Autor desconocido"}
                             imageUrl={book.portada || "/Images/default-book.jpg"}
-                            href={`/reader/${book._id}`}
+                            href={`/miBiblioteca/libros/${book._id}`}
                         />
                     ))}
                 </div>

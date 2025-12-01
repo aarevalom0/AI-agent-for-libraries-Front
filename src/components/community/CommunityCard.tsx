@@ -103,6 +103,10 @@ const CommunityCard = ({nombre, descripcion, authorId, fecha_creacion, puntuacio
           </div>
         </div>
 
+        <div title={`unirse al club `} className="mt-auto pb-5">
+          <BotonPersonalizado texto="Unirse al Club.." href="/comunidad" />
+        </div>
+
       
     </div>
   );
