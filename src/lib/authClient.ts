@@ -87,7 +87,7 @@ function normalizeToken(raw: unknown): string | null {
 
 // ---------- Sesión ----------
 
-function getSession(): Session | null {
+export function getSession(): Session | null {
   const raw = safeGet<any>(keySession, null);
   if (!raw) return null;
 
