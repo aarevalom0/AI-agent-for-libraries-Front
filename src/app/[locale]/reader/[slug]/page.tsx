@@ -185,7 +185,7 @@ const handleAddNote = useCallback(
             settings={state.settings}
             onSet={setSetting}
             notes={state.notes.filter((n) => n.chapter === state.chapter)}
-            onAddNote={handleAddNote}   // 👈 aquí usamos el handler nuevo
+            onAddNote={handleAddNote}   
             onDeleteNote={onDeleteNote}
             onToggleSidebar={toggleSidebar}
           />
