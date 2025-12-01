@@ -43,8 +43,9 @@ export default function BookDetailPage() {
           reviews: b.reviews || [],
         };
 
-        const translated = getTranslatedBook(bookData);
-        setBook(translated);
+        //const translated = getTranslatedBook(bookData);
+        //setBook(translated);
+        setBook(bookData);
       } catch (e) {
         console.error(e);
         setError("error");

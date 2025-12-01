@@ -181,7 +181,7 @@ export default function MainPage() {
                 title={book.titulo}
                 autor={book.autoresData[0]?.nombre}
                 imageUrl={book.portada || "/Images/default-book.jpg"}
-                href={`/reader/${book._id}`}
+                href={`/miBiblioteca/libros/${book._id}`}
                 data-testid="book-card"
               />
             ))
