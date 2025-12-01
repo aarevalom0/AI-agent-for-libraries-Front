@@ -30,8 +30,8 @@ export default function EventRegistrationPage({ params }: { params: Promise<{ id
   };
   
   const validateNames = (firstName: string, lastName: string): boolean => {
-    if (firstName.trim() !== firstName || lastName.trim() !== lastName) {
-      setNameError(t('nameNoSpaces') || 'Los nombres no pueden tener espacios al inicio o final');
+    if (!firstName || !lastName) {
+      setNameError(t('nameRequired') || 'El nombre y apellido son requeridos');
       return false;
     }
     setNameError('');
