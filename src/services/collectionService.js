@@ -50,8 +50,11 @@ export async function getCollectionDetails(libraryId) {
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
     const library = await response.json();
+
+    console.log(library)
     if (!library) return null;
     // Asegurar que libros es un array
+
     const librosRaw = Array.isArray(library.libros) ? library.libros : [];
     return {
       id: library.id || library._id,
@@ -61,7 +64,8 @@ export async function getCollectionDetails(libraryId) {
         .filter(item => item && item.libro_id) // Filtrar items inválidos
         .map(item => {
           // Manejo defensivo de libro_id (puede venir populado o no)
-          const libroData = item.libro_id || {};
+          const libroData = item.libro_info || {};
+          console.log("info libro",libroData)
 
           return {
             id: libroData._id || libroData.id || 'unknown-id',
@@ -95,6 +99,7 @@ export async function getAllUserBooks(userId) {
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
     const books = await response.json();
+    console.log(books);
 
     if (!Array.isArray(books)) return [];
     return books.map(book => ({

@@ -163,7 +163,6 @@ export default function BibliotecaPage() {
   ];
 
   const dynamicOptions = customCollections.map(col => {
-    console.log(col);
     let IconComponent;
     switch (col.icon) {
       case "check":
