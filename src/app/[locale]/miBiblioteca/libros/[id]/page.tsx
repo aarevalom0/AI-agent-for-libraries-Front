@@ -1,25 +1,53 @@
 'use client';
-import BookDetail from '../../../../../components/books/BookDetail';
-import { userBooks } from '@/lib/mock-data';
+
+import React, { useEffect, useState } from 'react';
+import BookDetail from '@/components/books/BookDetail';
 import { useTranslatedContent } from '@/lib/useTranslatedContent';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { use } from 'react';
+import { getBookById } from '@/services/bookService';
+import type { Book } from '@/types/book';
 
-// Esta función de Next.js recibe los parámetros de la URL
-export default function BookDetailPage({ params }: { params: Promise<{ id: string }> }) {
+
+export default function BookDetailPage({ params }: { params: { id: string } }) {
   const { getTranslatedBook } = useTranslatedContent();
   const tMiBiblioteca = useTranslations('miBiblioteca');
   const tBookDetail = useTranslations('bookDetail');
-  
-  // Unwrap params usando React.use()
-  const { id } = use(params);
-  
-  // Buscamos el libro en nuestros datos usando el ID de la URL
-  const originalBook = userBooks.find((b) => b.id === id);
 
-  // Si no se encuentra el libro, mostramos un mensaje amigable
-  if (!originalBook) {
+  const { id } = params;
+
+  const [book, setBook] = useState<any | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const b = await getBookById(id);
+
+        if (!b) {
+          setError("notfound");
+          return;
+        }
+
+        const translated = getTranslatedBook(b as unknown as Book);
+        setBook(translated);
+      } catch (e) {
+        console.error(e);
+        setError("error");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+  }, [id]);
+
+  if (loading) {
+    return <div className="text-center py-20">Cargando libro...</div>;
+  }
+
+  if (error === "notfound" || !book) {
     return (
       <div className="text-center py-20">
         <h1 className="text-2xl font-bold">{tBookDetail('errors.bookNotFound')}</h1>
@@ -31,16 +59,12 @@ export default function BookDetailPage({ params }: { params: Promise<{ id: strin
     );
   }
 
-  // Obtener el libro traducido
-  const book = getTranslatedBook(originalBook);
-
-  // Si se encuentra el libro, mostramos todos sus detalles traducidos
   return (
-    <BookDetail 
-      book={book} 
-      initialReviews={book.reviews} 
-      previousPage={tMiBiblioteca('menu.myLibrary')} 
-      previousPageHref={'/miBiblioteca'} 
+    <BookDetail
+      book={book}
+      initialReviews={book.reviews}
+      previousPage={tMiBiblioteca('menu.myLibrary')}
+      previousPageHref={'/miBiblioteca'}
     />
   );
 }
