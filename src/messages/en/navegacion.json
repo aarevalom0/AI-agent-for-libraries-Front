@@ -6,12 +6,13 @@
     "library": "My Library",
     "readNow": "Read Now",
     "community": "Community",
+    "books": "Books",
     "searchPlaceholder": "Search",
     "notifications": "Notifications",
     "profile": "Profile",
     "language": "Language"
   },
-  "footer":{
+  "footer": {
     "links": {
       "home": "Home",
       "events": "Events",
@@ -22,5 +23,4 @@
     },
     "rights": "All rights reserved"
   }
-    
 }
