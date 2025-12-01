@@ -14,7 +14,12 @@ import {
   getLecturas,
   createLectura,
   updateLectura,
+  createNotaLectura,   // 👈 NUEVO
 } from "@/services/lecturasServices";
+import {
+  crearSesionLectura,
+  cerrarSesionLectura,
+} from "@/services/sesionLecturaService";
 
 export default function ReaderPage() {
   const locale = useLocale();
@@ -48,7 +53,7 @@ export default function ReaderPage() {
     applyClasses,
     goPrev,
     goNext,
-    onAddNote,
+    onAddNote,         // maneja estado local (localStorage)
     onDeleteNote,
     setSetting,
     toggleSidebar,
@@ -62,7 +67,7 @@ export default function ReaderPage() {
 
     const initLectura = async () => {
       try {
-        const todas = await getLecturas(); // normalmente, lecturas del usuario actual
+        const todas = await getLecturas(); // lecturas del usuario actual
         let lectura = todas.find((l) => l.libro_id === libroId);
 
         if (!lectura) {
@@ -99,6 +104,28 @@ export default function ReaderPage() {
 
     syncProgress();
   }, [state.chapter, lecturaId, totalChapters]);
+
+  // Handler que se pasa al sidebar para el botón "Guardar"
+  const handleAddNote = async (text: string) => {
+    const contenido = text.trim();
+    if (!contenido) return;
+
+    // 1. Actualizar inmediatamente el estado local (para que se vea al toque)
+    onAddNote(contenido);
+
+    // 2. Si ya tenemos lecturaId, persistimos en el backend
+    if (lecturaId) {
+      try {
+        await createNotaLectura(lecturaId, {
+          capitulo: state.chapter,   // o state.chapter + 1 si tus capítulos son 1-based
+          contenido,
+        });
+      } catch (e) {
+        console.error("Error guardando nota en backend:", e);
+        // opcional: mostrar toast / revertir nota local si quieres
+      }
+    }
+  };
 
   // Modo día por defecto al entrar al reader
   useEffect(() => {
@@ -166,7 +193,7 @@ export default function ReaderPage() {
             settings={state.settings}
             onSet={setSetting}
             notes={state.notes.filter((n) => n.chapter === state.chapter)}
-            onAddNote={onAddNote}
+            onAddNote={handleAddNote}
             onDeleteNote={onDeleteNote}
             onToggleSidebar={toggleSidebar}
           />

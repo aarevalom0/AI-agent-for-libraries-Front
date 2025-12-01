@@ -52,3 +52,30 @@ export async function deleteLectura(id: string) {
   });
   if (!res.ok) throw new Error("Error al eliminar lectura");
 }
+
+// --- Notas de lectura ---
+
+export type NotaLectura = {
+  id: string;
+  lectura_id: string;
+  capitulo: number;
+  contenido: string;
+  createdAt: string;
+};
+
+export async function createNotaLectura(
+  lecturaId: string,
+  input: { capitulo: number; contenido: string },
+): Promise<NotaLectura> {
+  const res = await apiFetch(`/lecturas/${lecturaId}/notas`, {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al crear nota de lectura");
+  }
+
+  return res.json();
+}
+
