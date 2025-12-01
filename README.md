@@ -21,7 +21,15 @@ npm run dev -- -p 3001
 ## Backend
 
 1. Ubícate en la carpeta del backend.
-2. Ejecuta:
+2. Crea un archivo `.env` con el siguiente contenido:
+
+```env
+MONGODB_URI=mongodb+srv://lecturiumAdmin:LecturiumPass@lecturium.htemwr5.mongodb.net/?appName=Lecturium
+NODE_ENV=development
+PORT=3000
+```
+
+3. Ejecuta:
 
 ```bash
 npm install
