@@ -50,8 +50,11 @@ export async function getCollectionDetails(libraryId) {
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
     const library = await response.json();
+
+    console.log(library)
     if (!library) return null;
     // Asegurar que libros es un array
+
     const librosRaw = Array.isArray(library.libros) ? library.libros : [];
     return {
       id: library.id || library._id,
@@ -61,7 +64,8 @@ export async function getCollectionDetails(libraryId) {
         .filter(item => item && item.libro_id) // Filtrar items inválidos
         .map(item => {
           // Manejo defensivo de libro_id (puede venir populado o no)
-          const libroData = item.libro_id || {};
+          const libroData = item.libro_info || {};
+          console.log("info libro",libroData)
 
           return {
             id: libroData._id || libroData.id || 'unknown-id',
@@ -95,6 +99,7 @@ export async function getAllUserBooks(userId) {
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
     const books = await response.json();
+    console.log(books);
 
     if (!Array.isArray(books)) return [];
     return books.map(book => ({
@@ -112,7 +117,7 @@ export async function getAllUserBooks(userId) {
 /**
  * Crea una nueva biblioteca
  */
-export async function createCollection(userId, nombre, descripcion, icon) {
+export async function createCollection(userId, token, nombre, descripcion, icon) {
   try {
     const cuerpo = {
         usuario_id: userId,
@@ -121,10 +126,10 @@ export async function createCollection(userId, nombre, descripcion, icon) {
         icon,
         libros: []
       }
-    console.log(cuerpo);
+    console.log(token);
     const response = await fetch(`${API_BASE_URL}/library`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(cuerpo)
     });
     console.log(response);

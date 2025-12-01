@@ -12,7 +12,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useTranslatedContent } from '@/lib/useTranslatedContent';
 import { userBooks } from '@/lib/mock-data';
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/lib/authClient";
+import { getCurrentUser, getSession } from "@/lib/authClient";
 import { BookInLibrary, LibraryItem } from "@/types/library";
 import { getUserCollections, getCollectionDetails, getAllUserBooks } from '@/services/collectionService';
 
@@ -26,6 +26,7 @@ export default function BibliotecaPage() {
 
   // Estado de usuario
   const [userId, setUserId] = useState<string>('');
+  const [token, setToken] = useState('');
   const [ready, setReady] = useState<boolean>(false);
 
   // Estado de búsqueda y filtrado
@@ -50,6 +51,9 @@ export default function BibliotecaPage() {
     if (u?.id) {
       setUserId(u.id);
     }
+    const session = getSession();
+    setToken(session?.token?.toString() ?? "");
+
     getUserCollections(u.id).then(collections => {
       setCustomCollections(collections);
     });
@@ -65,24 +69,24 @@ export default function BibliotecaPage() {
   );
 
   const loadUserData = async (): Promise<void> => {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
+    setError(null);
 
-      try {
-        // Cargar colecciones personalizadas
-        const collections = await getUserCollections(userId);
-        setCustomCollections(collections);
+    try {
+      // Cargar colecciones personalizadas
+      const collections = await getUserCollections(userId);
+      setCustomCollections(collections);
 
-        // Cargar todos los libros
-        const books = await getAllUserBooks(userId);
-        setBooks(books);
-      } catch (err) {
-        setError('Error al cargar datos de la biblioteca');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+      // Cargar todos los libros
+      const books = await getAllUserBooks(userId);
+      setBooks(books);
+    } catch (err) {
+      setError('Error al cargar datos de la biblioteca');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // ========== Cargar colecciones y libros del usuario ==========
   useEffect(() => {
@@ -158,25 +162,24 @@ export default function BibliotecaPage() {
     { path: "crear", label: getTranslation('menu.createCollection', 'Crear Colección'), icon: <Plus size={18} /> },
   ];
 
- const dynamicOptions = customCollections.map(col => {
-  console.log(col);
+  const dynamicOptions = customCollections.map(col => {
     let IconComponent;
     switch (col.icon) {
       case "check":
-      IconComponent = Check;
-      break;
+        IconComponent = Check;
+        break;
       case "star":
-      IconComponent = Star;
-      break;
+        IconComponent = Star;
+        break;
       case "list":
       default:
-      IconComponent = List;
+        IconComponent = List;
     }
 
     return {
       path: col.id, // El ID de la colección será el path
       label: col.nombre,
-      icon:<IconComponent size={18} /> 
+      icon: <IconComponent size={18} />
     };
   });
 
@@ -235,8 +238,9 @@ export default function BibliotecaPage() {
                 {getTranslation('emptyStates.createFirstCollection', '¡Crea tu colección personalizada!')}
               </h2>
             </div>
-            <FormularioCrearColeccion 
+            <FormularioCrearColeccion
               userId={userId}
+              token={token}
               onCollectionCreated={loadUserData}
             />
           </section>

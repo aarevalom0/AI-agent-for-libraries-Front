@@ -16,7 +16,7 @@ type Inputs = {
     icon?: "list" | "check" | "star";
 };
 
-const FormularioCrearColeccion = ({ userId, onCollectionCreated }: { userId: string, onCollectionCreated: () => void }) => {
+const FormularioCrearColeccion = ({ userId, token, onCollectionCreated }: { userId: string, token:any, onCollectionCreated: () => void }) => {
     const t = useTranslations("formularios");
     const router = useRouter();
     const [selectedIcon, setSelectedIcon] = useState<"list" | "check" | "star">("list");
@@ -45,7 +45,7 @@ const FormularioCrearColeccion = ({ userId, onCollectionCreated }: { userId: str
     const onSubmit = async (data: Inputs) => {
         try {
             // Backend determines user from auth; passing empty string for userId placeholder
-            await createCollection(userId, data.nameCollection, data.description, data.icon);
+            await createCollection(userId, token, data.nameCollection, data.description, data.icon);
             onCollectionCreated(); // Refresh page to load new collection
             setSuccessMessage("Colección creada exitosamente!");
 
