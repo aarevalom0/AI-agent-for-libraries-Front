@@ -3,16 +3,53 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
+import { getEventById } from '@/services/eventService';
+
+interface EventoDetalle {
+  id: string | number;
+  titulo?: string;
+  nombre?: string;
+  descripcion?: string;
+  descripcion_corta?: string;
+  imagen?: string;
+  portada?: string;
+  ubicacion?: string;
+  fecha?: string;
+  hora?: string;
+}
 
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const t = useTranslations('eventos');
+  const [event, setEvent] = useState<EventoDetalle | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        setLoading(true);
+        const data = await getEventById(id);
+        setEvent(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error cargando evento:', err);
+        setError(err instanceof Error ? err.message : 'Error desconocido');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
   
   const handleShare = async () => {
+    if (!event) return;
+    
     const shareData = {
-      title: t(`event${id}Title`),
-      text: t(`event${id}Description`),
+      title: event.titulo || event.nombre || t('untitledEvent'),
+      text: event.descripcion_corta || event.descripcion || '',
       url: window.location.href
     };
     
@@ -27,10 +64,38 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       console.error('Error al compartir:', err);
     }
   };
+
+  if (loading) {
+    return (
+      <>
+        <title>{t('eventDetailPageTitle')}</title>
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <p className="text-center text-gray-500 text-lg">{t('loading') || 'Cargando evento...'}</p>
+        </div>
+      </>
+    );
+  }
+
+  if (error || !event) {
+    return (
+      <>
+        <title>{t('eventDetailPageTitle')}</title>
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <p className="text-center text-red-500 text-lg">{t('errorLoading') || 'Error al cargar evento'}</p>
+          {error && <p className="text-center text-gray-400 text-sm mt-2">{error}</p>}
+          <div className="text-center mt-4">
+            <Link href="/eventos" className="text-[var(--colorPrincipal)] hover:underline">
+              {t('backToEvents') || 'Volver a eventos'}
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
   
   return (
     <>
-      <title>{t('eventDetailPageTitle')}</title>
+      <title>{event.titulo || event.nombre || t('eventDetailPageTitle')}</title>
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb" className="mb-6">
@@ -47,8 +112,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             title={t('eventImageTooltip')}
           >
             <Image
-              src="/Images/secret-garden.jpg"
-              alt={t('bookCoverAlt')}
+              src={event.imagen || event.portada || '/Images/default-event.jpg'}
+              alt={event.titulo || event.nombre || t('eventImageAlt')}
               width={600}
               height={800}
               className="w-full rounded-lg shadow-lg object-cover"
@@ -62,44 +127,50 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 className="font-serif text-4xl text-[var(--colorPrincipal)] mb-4"
                 title={t('eventTitleTooltip')}
               >
-                {t(`event${id}Title`)}
+                {event.titulo || event.nombre || t('untitledEvent')}
               </h1>
             </header>
             
             <div className="space-y-4 mb-6 bg-gray-50 p-4 rounded-lg">
-  <div 
-    className="flex items-start"
-    title={t('eventDateTooltip')}
-  >
-    <span className="font-semibold text-[var(--colorPrincipal)] mr-3 min-w-[60px]">
-      {t('date')}:
-    </span>
-    <time dateTime="2025-10-25" className="text-gray-700">
-      {t(`event${id}Date`)}
-    </time>
-  </div>
+  {event.fecha && (
+    <div 
+      className="flex items-start"
+      title={t('eventDateTooltip')}
+    >
+      <span className="font-semibold text-[var(--colorPrincipal)] mr-3 min-w-[60px]">
+        {t('date')}:
+      </span>
+      <time className="text-gray-700">
+        {event.fecha}
+      </time>
+    </div>
+  )}
   
-  <div 
-    className="flex items-start"
-    title={t('eventTimeTooltip')}
-  >
-    <span className="font-semibold text-[var(--colorPrincipal)] mr-3 min-w-[60px]">
-      {t('time')}:
-    </span>
-    <span className="text-gray-700">{t(`event${id}Time`)}</span>
-  </div>
+  {event.hora && (
+    <div 
+      className="flex items-start"
+      title={t('eventTimeTooltip')}
+    >
+      <span className="font-semibold text-[var(--colorPrincipal)] mr-3 min-w-[60px]">
+        {t('time')}:
+      </span>
+      <span className="text-gray-700">{event.hora}</span>
+    </div>
+  )}
   
-  <div 
-    className="flex items-start"
-    title={t('eventLocationTooltip')}
-  >
-    <span className="font-semibold text-[var(--colorPrincipal)] mr-3 min-w-[60px]">
-      {t('location')}:
-    </span>
-    <address className="text-gray-700 not-italic">
-      {t(`event${id}Location`)}
-    </address>
-  </div>
+  {event.ubicacion && (
+    <div 
+      className="flex items-start"
+      title={t('eventLocationTooltip')}
+    >
+      <span className="font-semibold text-[var(--colorPrincipal)] mr-3 min-w-[60px]">
+        {t('location')}:
+      </span>
+      <address className="text-gray-700 not-italic">
+        {event.ubicacion}
+      </address>
+    </div>
+  )}
 </div>
            <div 
               className="mb-8 border-t pt-6"
@@ -109,7 +180,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 {t('aboutEvent')}
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg">
-                {t(`event${id}FullDescription`)}
+                {event.descripcion || event.descripcion_corta || t('noDescription')}
               </p>
             </div>
             
