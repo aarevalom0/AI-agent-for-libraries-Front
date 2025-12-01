@@ -6,19 +6,20 @@
     "library": "Mi biblioteca",
     "readNow": "Leer ahora",
     "community": "Comunidad",
+    "books": "Libros",
     "searchPlaceholder": "Buscar",
     "notifications": "Notificaciones",
     "profile": "Perfil",
     "language": "Idioma"
   },
-  "footer":{
+  "footer": {
     "links": {
-        "home": "Inicio",
-        "events": "Eventos",
-        "stats": "Estadísticas",
-        "library": "Mi biblioteca",
-        "readNow": "Leer ahora",
-        "community": "Comunidad"
+      "home": "Inicio",
+      "events": "Eventos",
+      "stats": "Estadísticas",
+      "library": "Mi biblioteca",
+      "readNow": "Leer ahora",
+      "community": "Comunidad"
     },
     "rights": "Todos los derechos reservados"
   }
