@@ -9,11 +9,12 @@ import { getCurrentUser } from "@/lib/authClient";
 import { getAllBooks, getRandomBooks } from "@/services/bookService";
 import { getFeaturedEvent, transformEventFromAPI } from "@/services/eventService";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { BookRecomendations } from "@/types/book";
 import SeccionInsignias from "@/components/mainPage/SeccionInsignias";
+import { getLecturas, Lectura } from "@/services/lecturasServices";
 
 interface BookActual {
   title: string;
@@ -25,6 +26,7 @@ interface BookActual {
 
 export default function MainPage() {
   const t = useTranslations("mainPage");
+  const tBooks = useTranslations("leerAhora");
 
   const [books, setBooks] = useState<BookRecomendations[]>([]);
   const [loadingBooks, setLoadingBooks] = useState(true);
@@ -34,11 +36,15 @@ export default function MainPage() {
   const [loadingEvento, setLoadingEvento] = useState(true);
   const [errorEvento, setErrorEvento] = useState<string | null>(null);
 
+  const [lecturas, setLecturas] = useState<Lectura[]>([]);
+  const [loadingLecturas, setLoadingLecturas] = useState(true);
+  const [errorLecturas, setErrorLecturas] = useState<string | null>(null);
+
   const books_actuales = t.raw("mainPage.books_actuales") as BookActual[];
 
   const router = useRouter();
   const [usuario, setUsuario] = useState<string>("Usuario");
-  const [userId, setUserId] = useState<string>(""); 
+  const [userId, setUserId] = useState<string>("");
   const [ready, setReady] = useState(false);
 
   const [racha, setRacha] = useState(0);
@@ -57,7 +63,7 @@ export default function MainPage() {
     setUsuario(u.nombre || "Usuario");
 
     if (u?.id) {
-        setUserId(u.id);
+      setUserId(u.id);
     }
     setRacha(u.racha_lectura.dias_consecutivos);
     setReady(true);
@@ -84,6 +90,43 @@ export default function MainPage() {
       fetchBooks();
     }
   }, [ready]);
+
+  //-------- Lecturas actuales -----------
+  useEffect(() => {
+    const loadLecturas = async () => {
+      try {
+        setLoadingLecturas(true);
+        setErrorLecturas(null);
+        const data = await getLecturas();
+        setLecturas(data);
+      } catch (e) {
+        console.error("Error cargando lecturas:", e);
+        setErrorLecturas("No se pudieron cargar tus lecturas.");
+      } finally {
+        setLoadingLecturas(false);
+      }
+    };
+
+    if (ready) {  // Solo cargar cuando el usuario esté listo
+      loadLecturas();
+    }
+  }, [ready]);
+
+  const lecturasActuales: Libro[] = useMemo(
+    () =>
+      LECTURAS_ACTUALES_BASE.map((b) => {
+        const lecturaBack = b.libroId
+          ? lecturas.find((l) => l.libro_id === b.libroId)
+          : undefined;
+        return {
+          ...b,
+          title: tBooks(`books.${b.slug}.title`),
+          autor: tBooks(`books.${b.slug}.author`),
+          progreso: lecturaBack?.porcentaje_lectura ?? b.progreso ?? 0,
+        };
+      }),
+    [t, lecturas]
+  );
 
   // --------- Evento recomendado ----------
   useEffect(() => {
@@ -150,14 +193,14 @@ export default function MainPage() {
             {t("mainPage.currentReads")}{" "}
           </h3>
           <div title="Lecturas actuales" className="flex flex-col gap-3 pl-2">
-            {books_actuales.map((book: BookActual) => (
+            {lecturasActuales.map((book: Libro) => (
               <BookCardProgress
                 key={book.title}
                 title={book.title}
-                autor={book.author}
+                autor={book.autor}
                 imageUrl={book.imageUrl}
-                href={book.href}
-                porcentaje={book.porcentaje}
+                href={`/reader/${book.title}`}
+                porcentaje={book.progreso!}
                 data-testid="book-card-progress"
               />
             ))}
@@ -192,10 +235,65 @@ export default function MainPage() {
         </div>
 
         {userId && (
-            <SeccionInsignias userId={userId} />
+          <SeccionInsignias userId={userId} />
         )}
-        
+
       </aside>
     </div>
   );
 }
+
+type GeneroTexto =
+  | "Fantasía"
+  | "Ciencia Ficción"
+  | "Clásico"
+  | "Misterio"
+  | "No Ficción";
+
+type EstadoTexto = "Leyendo" | "Pendiente" | "Completado";
+
+type Libro = {
+  slug: string;
+  title: string;
+  autor: string;
+  imageUrl: string;
+  genero: GeneroTexto;
+  estado: EstadoTexto;
+  progreso?: number;
+};
+
+type LibroBase = {
+  slug: string;
+  imageUrl: string;
+  genero: GeneroTexto;
+  estado: EstadoTexto;
+  progreso?: number;
+  libroId?: string; // 👈 id real del libro en Mongo (si lo tienes)
+};
+
+const LECTURAS_ACTUALES_BASE: LibroBase[] = [
+  {
+    slug: "1984",
+    imageUrl: "/Images/1984.jpg",
+    genero: "Ciencia Ficción",
+    estado: "Leyendo",
+    progreso: 60,
+    libroId: "691f49fa3faa28be5ca3b4ca", // 👈 ID real del libro 1984
+  },
+  {
+    slug: "girl-train",
+    imageUrl: "/Images/girl-train.jpg",
+    genero: "Misterio",
+    estado: "Leyendo",
+    progreso: 30,
+    libroId: "692d0ec5354415bd74b89a6c", // 👈 ID real del libro La chica del tren
+  },
+  {
+    slug: "harry-potter",
+    imageUrl: "/Images/harry-potter.jpg",
+    genero: "Fantasía",
+    estado: "Leyendo",
+    progreso: 85,
+    libroId: "692cf01749a83d2851f4eded", // 👈 ID real del libro Harry Potter
+  },
+];
