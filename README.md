@@ -14,7 +14,7 @@ npm install
 npm run dev -- -p 3001
 ```
 
-> Esto levantará el frontend en `http://localhost:3001`.
+> Esto levantará el frontend en `http://localhost:3001/es`.
 
 ---
 
@@ -28,7 +28,7 @@ npm install
 npm run start:dev
 ```
 
-> Esto levantará el backend en `http://localhost:3000`.
+> Esto levantará el backend en `http://localhost:3000/api/v1`.
 
 ---
 
