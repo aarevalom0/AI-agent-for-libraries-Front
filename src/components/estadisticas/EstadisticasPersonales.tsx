@@ -43,41 +43,33 @@ const EstadisticasPersonales = () => {
   const [booksReadCount, setBooksReadCount] = useState(0);
   const [pagesPerMonth, setPagesPerMonth] = useState<number[]>(Array(12).fill(0));
   const [genresData, setGenresData] = useState<[string, number][]>([]);
+  
+  // CORRECCIÓN 1: Estado inicial para mostrar que no hay libro aún
   const [mostRecentBook, setMostRecentBook] = useState<string>('Ninguno');
+  
   const [rachaLectura, setRachaLectura] = useState(0);
 
   useEffect(() => {
     const fetchEstadisticas = async () => {
       try {
         const user = getCurrentUser();
-        console.log('👤 Usuario actual:', user);
         
         if (!user || !user.id) {
-          console.error('❌ Usuario no autenticado');
           setError('Usuario no autenticado');
           setLoading(false);
           return;
         }
 
-        console.log('🔍 Obteniendo estadísticas para usuario:', user.id);
         const data = await getEstadisticasUsuario(user.id);
-        console.log('📊 Datos recibidos completos:', data);
-        console.log('📊 Tipo de datos:', typeof data);
 
-        // Validar que existan los datos
         if (!data) {
-          console.error('❌ No se recibieron datos del servidor');
           throw new Error('No se recibieron datos del servidor');
         }
 
-        // Procesar estadísticas con valores por defecto
         const stats = (data as any).estadisticas || {};
         const racha = (data as any).racha_lectura || {};
 
-        console.log('📊 Estadísticas procesadas:', stats);
-        console.log('🔥 Racha procesada:', racha);
-
-        // Calcular horas de lectura (40 páginas por hora)
+        // Calcular horas de lectura (40 páginas por hora aprox)
         const totalPaginas = stats.total_paginas_leidas || 0;
         const totalLibros = stats.total_libros_leidos || 0;
         
@@ -86,17 +78,20 @@ const EstadisticasPersonales = () => {
         setBooksReadCount(totalLibros);
         setRachaLectura(racha.dias_consecutivos || 0);
 
-        // Calcular promedio de páginas por día
+        // CORRECCIÓN 2: Asignar el último libro leído desde el backend
+        // Si viene null o vacío, mostramos "Ninguno"
+        if (stats.ultimo_libro_leido) {
+            setMostRecentBook(stats.ultimo_libro_leido);
+        } else {
+            setMostRecentBook('Ninguno');
+        }
+
         const daysIntoYear = Math.floor(
           (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24)
         );
         setAvgPagesPerDay(daysIntoYear > 0 ? Math.round(stats.total_paginas_leidas / daysIntoYear) : 0);
 
-        // Procesar géneros leídos
-        // El backend devuelve un array: ["Ficción", "Misterio", "Literatura Clásica"]
-        // Lo convertimos a formato [["Ficción", 1], ["Misterio", 1], ...]
         const generosArray = stats.generos_leidos || [];
-        console.log('📚 Géneros recibidos:', generosArray);
         
         const genreCounts: { [key: string]: number } = {};
         
@@ -108,9 +103,8 @@ const EstadisticasPersonales = () => {
         
         const sortedGenres = Object.entries(genreCounts)
           .sort((a, b) => b[1] - a[1])
-          .slice(0, 5); // Top 5 géneros
+          .slice(0, 5); 
         
-        console.log('📊 Géneros procesados:', sortedGenres);
         setGenresData(sortedGenres as [string, number][]);
 
         setLoading(false);
@@ -123,7 +117,7 @@ const EstadisticasPersonales = () => {
 
     fetchEstadisticas();
   }, []);
-  // Mostrar loading
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -134,7 +128,6 @@ const EstadisticasPersonales = () => {
     );
   }
 
-  // Mostrar error
   if (error) {
     return (
       <div className={styles.container}>
@@ -211,7 +204,7 @@ const EstadisticasPersonales = () => {
                 <span className={styles.statNumber}>{totalHoursRead}</span>
               </div>
               <div className={styles.card} title={t('mostReadTooltip')}>
-                <p className={styles.cardLabel}>{t('mostRead')}</p>
+                <p className={styles.cardLabel}>Último libro leído</p>
                 <span className={styles.statTitle}>{mostRecentBook}</span>
               </div>
               <div className={styles.card} title={t('avgPagesTooltip')}>
