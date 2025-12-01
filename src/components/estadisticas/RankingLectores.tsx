@@ -1,62 +1,79 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import styles from '@/components/estadisticas/Estadisticas.module.css';
-import { rankingData } from '@/lib/mock-data';
-
-// Función para formatear minutos a "X h Y min"
-const formatTime = (totalMinutes: number) => {
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  return `${hours} h ${minutes.toString().padStart(2, '0')} min`;
-};
+import React, { useEffect, useState } from 'react';
+import styles from './Estadisticas.module.css';
+import { getRankingGlobal } from '@/services/estadisticasService';
 
 const RankingLectores = () => {
-  const t = useTranslations('estadisticas');
-  const [timeFilter, setTimeFilter] = useState('Total');
+  const [ranking, setRanking] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // En una app real, aquí harías una llamada a la API con el filtro seleccionado.
-  // Por ahora, usamos los mismos datos para todos los filtros.
-  const sortedData = [...rankingData].sort((a, b) => b.readingTime - a.readingTime);
+  useEffect(() => {
+    const fetchRanking = async () => {
+      try {
+        const data = await getRankingGlobal();
+        setRanking(data);
+      } catch (error) {
+        console.error("Error cargando ranking:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRanking();
+  }, []);
+
+  if (loading) {
+    return <p className={styles.loadingText}>Cargando ranking...</p>;
+  }
 
   return (
     <div className={styles.rankingContainer}>
-      <h2 className={styles.rankingTitle}>{t('readersRanking')}</h2>
-
+      <h2 className={styles.rankingTitle}>Ranking de Lectores</h2>
+      
+      {/* Filtros visuales (opcional si solo tienes un ranking global) */}
       <div className={styles.filterButtons}>
-        {[
-          { key: 'Hoy', label: t('today') }, 
-          { key: 'Semana', label: t('week') }, 
-          { key: 'Mes', label: t('month') }, 
-          { key: 'Total', label: t('total') }
-        ].map((filter) => (
-          <button
-            key={filter.key}
-            className={`${styles.filterButton} ${timeFilter === filter.key ? styles.active : ''}`}
-            onClick={() => setTimeFilter(filter.key)}
-          >
-            {filter.label}
-          </button>
-        ))}
+        <button className={`${styles.filterButton} ${styles.active}`}>Global</button>
       </div>
 
       <table className={styles.rankingTable}>
         <thead>
           <tr>
-            <th>{t('position')}</th>
-            <th>{t('reader')}</th>
-            <th>{t('readingTime')}</th>
+            <th>Posición</th>
+            <th>Lector</th>
+            <th>Libros Leídos</th>
+            <th>Tiempo de Lectura (días)</th>
           </tr>
         </thead>
         <tbody>
-          {sortedData.map((user, index) => (
-            <tr key={user.id}>
-              <td>{index + 1}º</td>
-              <td>{user.name}</td>
-              <td>{formatTime(user.readingTime)}</td>
+          {ranking.length > 0 ? (
+            ranking.map((user) => (
+              <tr key={user.id}>
+                <td>{user.posicion}°</td>
+                <td>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        {user.foto_perfil && (
+                            <img 
+                                src={user.foto_perfil} 
+                                alt={user.nombre} 
+                                style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }}
+                            />
+                        )}
+                        <span>{user.nombre}</span>
+                    </div>
+                </td>
+                <td>{user.libros_leidos}</td>
+                {/* Mostramos el tiempo. Si el backend manda días, mostramos días. */}
+                <td>{user.tiempo_lectura} días</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={4} style={{ textAlign: 'center', padding: '20px' }}>
+                Aún no hay datos de lectura registrados.
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

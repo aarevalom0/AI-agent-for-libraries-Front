@@ -3,22 +3,9 @@ import { API_BASE_URL } from './api.config';
 /**
  * Obtiene las estadísticas del usuario desde el backend
  * Endpoint: GET /users/:user_id/estadisticas
- * @param {string} userId - ID del usuario
- * @returns {Promise<Object>} Estadísticas del usuario con formato:
- * {
- *   estadisticas: {
- *     total_libros_leidos, total_paginas_leidas, 
- *     tiempo_total_lectura, generos_leidos
- *   },
- *   racha_lectura: {
- *     dias_consecutivos, fecha_inicio_racha, ultima_fecha_lectura
- *   }
- * }
  */
 export async function getEstadisticasUsuario(userId) {
   try {
-    console.log(`📡 Llamando a: ${API_BASE_URL}/users/${userId}/estadisticas`);
-    
     const response = await fetch(`${API_BASE_URL}/users/${userId}/estadisticas`, {
       method: 'GET',
       headers: {
@@ -33,7 +20,6 @@ export async function getEstadisticasUsuario(userId) {
     }
     
     const data = await response.json();
-    console.log('✅ Estadísticas recibidas:', data);
     return data;
   } catch (error) {
     console.error('❌ Error obteniendo estadísticas del usuario:', error);
@@ -43,10 +29,6 @@ export async function getEstadisticasUsuario(userId) {
 
 /**
  * Actualiza las estadísticas del usuario
- * Endpoint: PUT /users/:user_id/estadisticas
- * @param {string} userId - ID del usuario
- * @param {Object} estadisticasData - Datos de estadísticas a actualizar
- * @returns {Promise<Object>} Usuario actualizado
  */
 export async function updateEstadisticasUsuario(userId, estadisticasData) {
   try {
@@ -65,6 +47,32 @@ export async function updateEstadisticasUsuario(userId, estadisticasData) {
     return await response.json();
   } catch (error) {
     console.error('Error actualizando estadísticas del usuario:', error);
+    throw error;
+  }
+}
+
+/**
+ * Obtiene el Ranking Global de lectores
+ * Endpoint: GET /users/ranking/global
+ */
+export async function getRankingGlobal() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/ranking/global`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.log('🏆 Ranking recibido:', data);
+    return data;
+  } catch (error) {
+    console.error('❌ Error obteniendo ranking:', error);
     throw error;
   }
 }
